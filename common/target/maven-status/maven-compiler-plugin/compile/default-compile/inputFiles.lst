@@ -1,0 +1,12 @@
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\MyEntityNotFoundException.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\interfaces\model\IEntity.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\ForbiddenException.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\Main.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\interfaces\model\IByName.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\UserAlreadyExistException.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\CommonConfiguration.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\messages\Messages.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\interfaces\IOperations.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\BadRequestExpception.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\EntityNotFoundException.java
+F:\workspace\um\common\src\main\java\com\bytmasoft\common\exception\ValidationException.java

@@ -1,0 +1,14 @@
+com\bytmasoft\UmApplication.class
+com\bytmasoft\um\configuration\UmSecurityConfig.class
+com\bytmasoft\um\controller\AddressController.class
+com\bytmasoft\um\controller\UserManagementController.class
+com\bytmasoft\um\utils\UmMapping.class
+com\bytmasoft\um\configuration\Swagger2Config.class
+com\bytmasoft\um\configuration\UmAuthenticationEntryPoint.class
+com\bytmasoft\um\controller\RoleController.class
+com\bytmasoft\um\utils\UmMapping$Singular.class
+com\bytmasoft\um\configuration\UmProperties.class
+com\bytmasoft\ServletInitializer.class
+com\bytmasoft\um\controller\PrivilegeController.class
+com\bytmasoft\um\configuration\JwtRequestFilter.class
+com\bytmasoft\um\controller\LoginController.class

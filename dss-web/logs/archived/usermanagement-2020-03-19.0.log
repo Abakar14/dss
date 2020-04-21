@@ -1,0 +1,361 @@
+2020-03-19 13:26:15,831 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 24616 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 13:26:15,892 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 13:26:18,515 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 13:26:18,726 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 194ms. Found 5 JPA repository interfaces.
+2020-03-19 13:26:22,046 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 13:26:22,085 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 13:26:22,088 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 13:26:22,089 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 13:26:22,434 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 13:26:22,436 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6115 ms
+2020-03-19 13:26:23,002 ERROR com.zaxxer.hikari.HikariConfig [main] Failed to load driver class com.mysql.cj.jdbc.Driver from HikariConfig class classloader sun.misc.Launcher$AppClassLoader@73d16e93
+2020-03-19 13:26:23,012 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.context.properties.bind.BindException: Failed to bind properties under '' to com.zaxxer.hikari.HikariDataSource
+2020-03-19 13:26:23,032 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2020-03-19 13:26:23,110 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-03-19 13:26:23,122 ERROR org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter [main] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under '' to com.zaxxer.hikari.HikariDataSource:
+
+    Property: driverclassname
+    Value: com.mysql.cj.jdbc.Driver
+    Origin: "driverClassName" from property source "source"
+    Reason: Failed to load driver class com.mysql.cj.jdbc.Driver in either of HikariConfig class loader or Thread context classloader
+
+Action:
+
+Update your application's configuration
+
+2020-03-19 13:30:58,691 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 11704 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 13:30:58,703 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 13:31:01,552 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 13:31:02,051 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 463ms. Found 5 JPA repository interfaces.
+2020-03-19 13:31:05,928 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 13:31:05,965 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 13:31:05,968 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 13:31:05,969 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 13:31:06,374 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 13:31:06,375 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 7475 ms
+2020-03-19 13:31:07,399 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 13:31:07,805 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 13:31:08,380 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 13:31:08,880 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-03-19 13:31:09,353 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-03-19 13:31:09,397 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 13:31:13,542 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 13:31:13,570 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 13:31:17,003 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-03-19 13:31:17,307 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-19 13:31:17,822 INFO org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration [main] 
+
+Using generated security password: 09da4cab-98cd-4a12-9cea-b8a79f6bd3ef
+
+2020-03-19 13:31:18,046 INFO org.springframework.security.web.DefaultSecurityFilterChain [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37b238da, org.springframework.security.web.context.SecurityContextPersistenceFilter@45eacb70, org.springframework.security.web.header.HeaderWriterFilter@6b3b2c34, org.springframework.security.web.csrf.CsrfFilter@c5a2d5, org.springframework.security.web.authentication.logout.LogoutFilter@12266084, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@d0fabc8, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@6f65aa58, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@1c792107, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@749ad37c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7a30e30b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4ed19b69, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@ce19c86, org.springframework.security.web.session.SessionManagementFilter@407f2029, org.springframework.security.web.access.ExceptionTranslationFilter@72f35a31, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4882b9a]
+2020-03-19 13:31:18,124 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2020-03-19 13:31:18,175 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path '/um/api/v1'
+2020-03-19 13:31:18,179 INFO org.springframework.boot.StartupInfoLogger [main] Started UmApplication in 21.311 seconds (JVM running for 22.885)
+2020-03-19 13:32:01,479 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-03-19 13:32:01,481 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2020-03-19 13:32:01,547 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 56 ms
+2020-03-19 17:32:09,814 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 20908 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 17:32:09,823 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 17:32:12,350 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 17:32:12,864 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 465ms. Found 5 JPA repository interfaces.
+2020-03-19 17:32:16,214 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 17:32:16,252 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 17:32:16,254 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 17:32:16,256 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 17:32:16,648 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 17:32:16,650 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6699 ms
+2020-03-19 17:32:17,618 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 17:32:18,047 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 17:32:18,691 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 17:32:19,225 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-03-19 17:32:19,891 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-03-19 17:32:19,965 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 17:32:24,346 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 17:32:24,377 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 17:32:24,423 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userManagementController' defined in file [F:\workspace\um\um-web\target\classes\com\bytmasoft\um\controller\UserManagementController.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+2020-03-19 17:32:24,424 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 17:32:24,435 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown initiated...
+2020-03-19 17:32:24,495 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown completed.
+2020-03-19 17:32:24,504 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2020-03-19 17:32:24,554 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-03-19 17:32:24,570 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userManagementController' defined in file [F:\workspace\um\um-web\target\classes\com\bytmasoft\um\controller\UserManagementController.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1320)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1214)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:878)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at com.bytmasoft.UmApplication.main(UmApplication.java:20)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:216)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1312)
+	... 17 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at com.bytmasoft.um.controller.UserManagementController.<init>(UserManagementController.java:11)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:203)
+	... 19 common frames omitted
+2020-03-19 17:33:03,701 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 17100 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 17:33:03,712 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 17:33:06,530 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 17:33:06,991 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 411ms. Found 5 JPA repository interfaces.
+2020-03-19 17:33:10,093 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 17:33:10,131 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 17:33:10,134 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 17:33:10,135 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 17:33:10,462 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 17:33:10,464 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6573 ms
+2020-03-19 17:33:11,636 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 17:33:11,981 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 17:33:12,752 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 17:33:13,311 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-03-19 17:33:13,892 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-03-19 17:33:13,972 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 17:33:19,020 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 17:33:19,054 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 17:33:19,105 WARN org.springframework.context.support.AbstractApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userManagementController' defined in file [F:\workspace\um\um-web\target\classes\com\bytmasoft\um\controller\UserManagementController.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+2020-03-19 17:33:19,107 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 17:33:19,118 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown initiated...
+2020-03-19 17:33:19,226 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Shutdown completed.
+2020-03-19 17:33:19,237 INFO org.apache.juli.logging.DirectJDKLog [main] Stopping service [Tomcat]
+2020-03-19 17:33:19,299 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [main] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-03-19 17:33:19,318 ERROR org.springframework.boot.SpringApplication [main] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userManagementController' defined in file [F:\workspace\um\um-web\target\classes\com\bytmasoft\um\controller\UserManagementController.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1320)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1214)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:879)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:878)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:141)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:747)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at com.bytmasoft.UmApplication.main(UmApplication.java:20)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.bytmasoft.um.controller.UserManagementController]: Constructor threw exception; nested exception is java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:216)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1312)
+	... 17 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import org.springframework.security cannot be resolved
+	PreAuthorize cannot be resolved to a type
+
+	at com.bytmasoft.um.controller.UserManagementController.<init>(UserManagementController.java:11)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:203)
+	... 19 common frames omitted
+2020-03-19 17:33:59,960 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 26132 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 17:33:59,973 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 17:34:02,767 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 17:34:03,152 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 352ms. Found 5 JPA repository interfaces.
+2020-03-19 17:34:06,728 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 17:34:06,765 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 17:34:06,768 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 17:34:06,769 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 17:34:07,149 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 17:34:07,151 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6957 ms
+2020-03-19 17:34:08,425 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 17:34:08,887 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 17:34:09,761 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 17:34:10,140 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-03-19 17:34:10,607 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-03-19 17:34:10,703 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 17:34:15,367 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 17:34:15,396 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 17:34:19,102 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-03-19 17:34:19,484 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-19 17:34:19,943 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2020-03-19 17:34:19,990 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path '/um/api/v1'
+2020-03-19 17:34:19,994 INFO org.springframework.boot.StartupInfoLogger [main] Started UmApplication in 21.995 seconds (JVM running for 23.695)
+2020-03-19 17:34:31,788 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-03-19 17:34:31,790 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2020-03-19 17:34:31,823 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 32 ms
+2020-03-19 17:34:32,156 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([id1_5_] : [BIGINT]) - [1]
+2020-03-19 17:34:32,184 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([created_2_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:32,186 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([inserted3_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,188 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([inserted4_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,189 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([status5_5_] : [VARCHAR]) - [A]
+2020-03-19 17:34:32,192 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([updated_6_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,194 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([updated_7_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:32,197 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([updated_8_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,204 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([birthday9_5_] : [DATE]) - [1982-04-23]
+2020-03-19 17:34:32,206 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([email10_5_] : [VARCHAR]) - [abakar@web.de]
+2020-03-19 17:34:32,208 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([first_n11_5_] : [VARCHAR]) - [Mahamat]
+2020-03-19 17:34:32,213 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([foto12_5_] : [BLOB]) - [null]
+2020-03-19 17:34:32,216 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([last_lo13_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:32,219 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([last_na14_5_] : [VARCHAR]) - [Abakar]
+2020-03-19 17:34:32,223 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([middel_15_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,225 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([passwor16_5_] : [VARCHAR]) - [Aba14mah]
+2020-03-19 17:34:32,227 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([type17_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:32,228 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-2] extracted value ([usernam18_5_] : [VARCHAR]) - [abakam2]
+2020-03-19 17:34:32,302 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-2] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 17:34:32,746 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-2] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 17:34:54,898 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([id1_5_] : [BIGINT]) - [1]
+2020-03-19 17:34:54,900 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([created_2_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:54,902 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([inserted3_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,903 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([inserted4_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,905 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([status5_5_] : [VARCHAR]) - [A]
+2020-03-19 17:34:54,906 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_6_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,908 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_7_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:54,910 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_8_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,912 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([birthday9_5_] : [DATE]) - [1982-04-23]
+2020-03-19 17:34:54,914 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([email10_5_] : [VARCHAR]) - [abakar@web.de]
+2020-03-19 17:34:54,916 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([first_n11_5_] : [VARCHAR]) - [Mahamat]
+2020-03-19 17:34:54,918 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([foto12_5_] : [BLOB]) - [null]
+2020-03-19 17:34:54,920 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([last_lo13_5_] : [TIMESTAMP]) - [null]
+2020-03-19 17:34:54,922 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([last_na14_5_] : [VARCHAR]) - [Abakar]
+2020-03-19 17:34:54,924 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([middel_15_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,926 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([passwor16_5_] : [VARCHAR]) - [Aba14mah]
+2020-03-19 17:34:54,927 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([type17_5_] : [VARCHAR]) - [null]
+2020-03-19 17:34:54,929 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([usernam18_5_] : [VARCHAR]) - [abakam2]
+2020-03-19 17:34:54,934 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-3] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 17:34:54,948 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-3] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:21:54,970 DEBUG org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator [background-preinit] Loaded expression factory via original TCCL
+2020-03-19 21:21:55,532 INFO org.springframework.boot.StartupInfoLogger [main] Starting UmApplication on Hawa with PID 11568 (F:\workspace\um\um-web\target\classes started by Mahamat in F:\workspace\um\um-web)
+2020-03-19 21:21:55,537 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2020-03-19 21:21:58,427 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-03-19 21:21:58,746 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 273ms. Found 5 JPA repository interfaces.
+2020-03-19 21:22:02,136 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2020-03-19 21:22:02,175 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-03-19 21:22:02,177 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2020-03-19 21:22:02,179 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-03-19 21:22:02,616 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2020-03-19 21:22:02,618 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 6880 ms
+2020-03-19 21:22:03,601 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-03-19 21:22:04,033 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.12.Final
+2020-03-19 21:22:04,721 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-03-19 21:22:05,182 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2020-03-19 21:22:05,784 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2020-03-19 21:22:05,867 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2020-03-19 21:22:10,139 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-03-19 21:22:10,170 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-03-19 21:22:13,352 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-03-19 21:22:14,680 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-03-19 21:22:15,321 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2020-03-19 21:22:15,379 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path '/um/api/v1'
+2020-03-19 21:22:15,384 INFO org.springframework.boot.StartupInfoLogger [main] Started UmApplication in 21.759 seconds (JVM running for 23.41)
+2020-03-19 21:22:22,741 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-03-19 21:22:22,743 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2020-03-19 21:22:22,780 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 36 ms
+2020-03-19 21:22:23,143 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([id1_5_] : [BIGINT]) - [1]
+2020-03-19 21:22:23,171 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([created_2_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:23,172 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([inserted3_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,176 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([inserted4_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,177 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([status5_5_] : [VARCHAR]) - [A]
+2020-03-19 21:22:23,179 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([updated_6_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,180 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([updated_7_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:23,182 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([updated_8_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,187 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([birthday9_5_] : [DATE]) - [1982-04-23]
+2020-03-19 21:22:23,189 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([email10_5_] : [VARCHAR]) - [abakar@web.de]
+2020-03-19 21:22:23,190 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([first_n11_5_] : [VARCHAR]) - [Mahamat]
+2020-03-19 21:22:23,193 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([foto12_5_] : [BLOB]) - [null]
+2020-03-19 21:22:23,194 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([last_lo13_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:23,196 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([last_na14_5_] : [VARCHAR]) - [Abakar]
+2020-03-19 21:22:23,197 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([middel_15_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,198 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([passwor16_5_] : [VARCHAR]) - [Aba14mah]
+2020-03-19 21:22:23,200 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([type17_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:23,202 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-1] extracted value ([usernam18_5_] : [VARCHAR]) - [abakam2]
+2020-03-19 21:22:23,258 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-1] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:22:23,624 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-1] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:22:26,317 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([id1_5_] : [BIGINT]) - [1]
+2020-03-19 21:22:26,320 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([created_2_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:26,321 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([inserted3_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,323 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([inserted4_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,326 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([status5_5_] : [VARCHAR]) - [A]
+2020-03-19 21:22:26,328 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_6_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,330 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_7_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:26,332 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([updated_8_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,335 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([birthday9_5_] : [DATE]) - [1982-04-23]
+2020-03-19 21:22:26,336 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([email10_5_] : [VARCHAR]) - [abakar@web.de]
+2020-03-19 21:22:26,338 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([first_n11_5_] : [VARCHAR]) - [Mahamat]
+2020-03-19 21:22:26,340 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([foto12_5_] : [BLOB]) - [null]
+2020-03-19 21:22:26,360 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([last_lo13_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:26,365 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([last_na14_5_] : [VARCHAR]) - [Abakar]
+2020-03-19 21:22:26,367 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([middel_15_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,369 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([passwor16_5_] : [VARCHAR]) - [Aba14mah]
+2020-03-19 21:22:26,379 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([type17_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:26,396 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-3] extracted value ([usernam18_5_] : [VARCHAR]) - [abakam2]
+2020-03-19 21:22:26,401 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-3] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:22:26,413 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-3] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:22:28,551 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([id1_5_] : [BIGINT]) - [1]
+2020-03-19 21:22:28,553 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([created_2_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:28,555 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([inserted3_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,557 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([inserted4_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,559 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([status5_5_] : [VARCHAR]) - [A]
+2020-03-19 21:22:28,561 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([updated_6_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,563 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([updated_7_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:28,564 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([updated_8_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,567 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([birthday9_5_] : [DATE]) - [1982-04-23]
+2020-03-19 21:22:28,568 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([email10_5_] : [VARCHAR]) - [abakar@web.de]
+2020-03-19 21:22:28,569 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([first_n11_5_] : [VARCHAR]) - [Mahamat]
+2020-03-19 21:22:28,571 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([foto12_5_] : [BLOB]) - [null]
+2020-03-19 21:22:28,573 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([last_lo13_5_] : [TIMESTAMP]) - [null]
+2020-03-19 21:22:28,575 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([last_na14_5_] : [VARCHAR]) - [Abakar]
+2020-03-19 21:22:28,577 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([middel_15_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,578 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([passwor16_5_] : [VARCHAR]) - [Aba14mah]
+2020-03-19 21:22:28,580 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([type17_5_] : [VARCHAR]) - [null]
+2020-03-19 21:22:28,581 TRACE org.hibernate.type.descriptor.sql.BasicExtractor [http-nio-8080-exec-4] extracted value ([usernam18_5_] : [VARCHAR]) - [abakam2]
+2020-03-19 21:22:28,585 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-4] binding parameter [1] as [BIGINT] - [1]
+2020-03-19 21:22:28,597 TRACE org.hibernate.type.descriptor.sql.BasicBinder [http-nio-8080-exec-4] binding parameter [1] as [BIGINT] - [1]
