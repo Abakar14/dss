@@ -1,6 +1,6 @@
 com\bytmasoft\persistance\interfaces\RoleService.class
 com\bytmasoft\persistance\repositories\CountryRepository.class
-META-INF\MANIFEST.MF
+com\bytmasoft\persistance\filters\UserPredicates.class
 com\bytmasoft\persistance\interfaces\UmBaseRepository.class
 com\bytmasoft\persistance\interfaces\CountryService.class
 com\bytmasoft\persistance\interfaces\UserManagementService.class
@@ -9,6 +9,7 @@ com\bytmasoft\persistance\services\SchoolServiceImpl.class
 com\bytmasoft\persistance\interfaces\AddressService.class
 com\bytmasoft\persistance\repositories\SchoolRepository.class
 com\bytmasoft\persistance\repositories\AddressRepository.class
+com\bytmasoft\persistance\interfaces\DSSMailService.class
 com\bytmasoft\persistance\interfaces\BirthdayService.class
 com\bytmasoft\persistance\repositories\PrivilegeRepository.class
 com\bytmasoft\persistance\interfaces\PrivilegeService.class
@@ -16,9 +17,8 @@ com\bytmasoft\persistance\services\CountryServiceImpl.class
 com\bytmasoft\persistance\services\BasicBirthdayService.class
 com\bytmasoft\persistance\services\AddressServiceImpl.class
 com\bytmasoft\persistance\repositories\UserRepository.class
-META-INF\maven\com.bytmasoft\persistance\pom.properties
 com\bytmasoft\persistance\interfaces\SchoolService.class
 com\bytmasoft\persistance\services\PrivilegeServiceImpl.class
-META-INF\maven\com.bytmasoft\persistance\pom.xml
 com\bytmasoft\persistance\repositories\RoleRepository.class
+com\bytmasoft\persistance\services\DSSMailServiceImpl.class
 com\bytmasoft\persistance\services\RoleServiceImpl.class
