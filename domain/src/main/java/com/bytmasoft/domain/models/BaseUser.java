@@ -1,40 +1,24 @@
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.bytmasoft.domain.enums.GenderType;
 import com.bytmasoft.domain.enums.UserType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -49,16 +33,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@XmlRootElement
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class User extends BaseEntity implements Serializable {
+@MappedSuperclass
+public abstract class BaseUser extends BaseEntity  {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7706628628381104293L;
+	private static final long serialVersionUID = -7764311919115841229L;
 
+	
+	@ApiModelProperty(notes = "The api will generate the status")
+	@JsonProperty(value = "status")
+	@Size(max = 1)
+	private String status;
+	
 	@ApiModelProperty(allowEmptyValue = false)
 	@JsonProperty(value = "gender")
 	@Column(name = "gender", nullable = false)
@@ -118,41 +106,27 @@ public class User extends BaseEntity implements Serializable {
 	@JsonProperty(value = "foto")
 	private Blob foto;
 
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "user_address", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "address_id", referencedColumnName = "id") })
-	private List<Address> addresses = new ArrayList<>();
+//	@JsonProperty(value = "school")
+//	@Fetch(FetchMode.JOIN)
+//	@ManyToOne
+//	@JoinColumn(name = "school_id")
+//	private School school;
 
-	@Fetch(FetchMode.JOIN)
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	List<Role> roles = new ArrayList<>();
+//	public void addAddress(Addresse address) {
+//		this.addresses.add(address);
+//		address.getUsers().add(this);
+//	}
 
-	@JsonProperty(value = "school")
-	@Fetch(FetchMode.JOIN)
-	@ManyToOne
-	@JoinColumn(name = "school_id")
-	private School school;
+//	public void addRole(Role role) {
+//		this.roles.add(role);
+//	}
 
-	public void addAddress(Address address) {
-		this.addresses.add(address);
-		address.getUsers().add(this);
-	}
-
-	public void addRole(Role role) {
-		this.roles.add(role);
-	}
-
-	public void RemoveRole(Role role) {
-
-		roles.remove(role);
-		role.getUsers().remove(this);
-
-	}
+//	public void RemoveRole(Role role) {
+//
+//		roles.remove(role);
+//		role.getUsers().remove(this);
+//
+//	}
 
 	public int getAge() {
 
@@ -172,8 +146,11 @@ public class User extends BaseEntity implements Serializable {
 		builder.append("User [id=").append(this.getId()).append(", firstname=").append(this.getFirstName())
 				.append(", lastname=").append(this.getLastName()).append(", status=").append(this.getStatus())
 				.append(", email=").append(this.getEmail()).append(", password=").append(this.getPassword())
-				.append(", age").append(this.getAge()).append(", addresses=").append(this.getAddresses())
-				.append(", roles=").append(this.getRoles()).append("]");
+				
+//				.append(", age").append(this.getAge()).append(", addresses=").append(this.getAddresses())
+//				.append(", roles=").append(this.getRoles())
+				.append("]"
+						);
 
 		return builder.toString();
 	}
@@ -204,7 +181,7 @@ public class User extends BaseEntity implements Serializable {
 			return false;
 		}
 
-		final User user = (User) obj;
+		final BaseUser user = (BaseUser) obj;
 		if (!email.equals(user.getEmail())) {
 			return false;
 		}

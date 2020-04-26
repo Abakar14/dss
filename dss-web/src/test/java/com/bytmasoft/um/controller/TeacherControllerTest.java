@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Mahamat Date 19.03.2020 : 19:02:02
  */
-class UserManagementControllerTest {
+class TeacherControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#findUserById(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#findUserById(java.lang.Long)}.
 	 */
 	@Test
 	void testFindUserById() {
@@ -24,7 +24,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#findAllUsersByAgeMoreThan(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#findAllUsersByAgeMoreThan(java.lang.Long)}.
 	 */
 	@Test
 	void testFindAllUsersByAgeMoreThan() {
@@ -33,7 +33,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#findAllUsersByAgeLessThan(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#findAllUsersByAgeLessThan(java.lang.Long)}.
 	 */
 	@Test
 	void testFindAllUsersByAgeLessThan() {
@@ -42,7 +42,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#findByRequestParams(java.util.Map)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#findByRequestParams(java.util.Map)}.
 	 */
 	@Test
 	void testFindByRequestParams() {
@@ -51,7 +51,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#countAllUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#countAllUsers()}.
 	 */
 	@Test
 	void testCountAllUsers() {
@@ -60,7 +60,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#countActiveUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#countActiveUsers()}.
 	 */
 	@Test
 	void testCountActiveUsers() {
@@ -69,7 +69,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#countInActiveUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#countInActiveUsers()}.
 	 */
 	@Test
 	void testCountInActiveUsers() {
@@ -78,7 +78,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#getUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#getUsers()}.
 	 */
 	@Test
 	void testGetUsers() {
@@ -87,7 +87,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#getAllActiveUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#getAllActiveUsers()}.
 	 */
 	@Test
 	void testGetAllActiveUsers() {
@@ -96,7 +96,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#getAllInActiveUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#getAllInActiveUsers()}.
 	 */
 	@Test
 	void testGetAllInActiveUsers() {
@@ -105,7 +105,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#register(com.bytmasoft.api.models.User)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#register(com.bytmasoft.api.models.User)}.
 	 */
 	@Test
 	void testRegister() {
@@ -114,7 +114,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#updateUser(java.lang.Long, com.bytmasoft.api.models.User)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#updateUser(java.lang.Long, com.bytmasoft.api.models.User)}.
 	 */
 	@Test
 	void testUpdateUser() {
@@ -123,7 +123,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#activateAll()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#activateAll()}.
 	 */
 	@Test
 	void testActivateAll() {
@@ -132,7 +132,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#deactivateAll()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#deactivateAll()}.
 	 */
 	@Test
 	void testDeactivateAll() {
@@ -141,7 +141,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#activateUserById(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#activateUserById(java.lang.Long)}.
 	 */
 	@Test
 	void testActivateUserById() {
@@ -150,7 +150,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#deactivateUserById(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#deactivateUserById(java.lang.Long)}.
 	 */
 	@Test
 	void testDeactivateUserById() {
@@ -159,7 +159,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#assignAllUsersToGroup(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#assignAllUsersToGroup(java.lang.Long)}.
 	 */
 	@Test
 	void testAssignAllUsersToGroup() {
@@ -168,7 +168,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#assignRoleToAllUsers(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#assignRoleToAllUsers(java.lang.Long)}.
 	 */
 	@Test
 	void testAssignRoleToAllUsers() {
@@ -177,7 +177,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#assignRoleToUser(java.lang.Long, java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#assignRoleToUser(java.lang.Long, java.lang.Long)}.
 	 */
 	@Test
 	void testAssignRoleToUser() {
@@ -186,7 +186,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#assignAddressToUser(java.lang.Long, java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#assignAddressToUser(java.lang.Long, java.lang.Long)}.
 	 */
 	@Test
 	void testAssignAddressToUser() {
@@ -195,7 +195,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#deleteUser()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#deleteUser()}.
 	 */
 	@Test
 	void testDeleteUser() {
@@ -204,7 +204,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#deleteUser(java.lang.Long)}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#deleteUser(java.lang.Long)}.
 	 */
 	@Test
 	void testDeleteUserLong() {
@@ -213,7 +213,7 @@ class UserManagementControllerTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.um.controller.UserManagementController#deleteInActiveUsers()}.
+	 * {@link com.bytmasoft.um.controller.TeacherController#deleteInActiveUsers()}.
 	 */
 	@Test
 	void testDeleteInActiveUsers() {

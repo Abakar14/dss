@@ -3,31 +3,34 @@
  */
 package com.bytmasoft.login.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.domain.models.User;
+import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.login.models.UmUserDetails;
-import com.bytmasoft.login.repository.LoginRepository;
+import com.bytmasoft.login.repository.TeacherLoginRepository;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 
  * @author Mahamat Abakar Date 19.12.2019
  */
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class LoginServiceImpl implements UserDetailsService {
 
-	@Autowired
-	LoginRepository loginRepository;
+	private final TeacherLoginRepository repository;
 
 	@Override
 	public UmUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = loginRepository.findByUsernameOrEmail(username, username);
+		BaseUser user = null;
+//		User user = loginRepository.findByUsernameOrEmail(username, username);
 
+		 user = repository.findByUsernameOrEmail(username, username);
+				
 		if (user != null) {
 
 			return new UmUserDetails(user);

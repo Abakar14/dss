@@ -24,26 +24,26 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-	private final RoleRepository roleRepository;
+	private final RoleRepository repository;
 
 	@Value("${spring.application.name}")
 	private String appName;
 
 	@Override
 	public Role findOne(long id) {
-		return roleRepository.findById(id)
+		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("There is no role with this id: " + id));
 
 	}
 
 	@Override
 	public Role findByName(String name) {
-		return roleRepository.findByName(name);
+		return repository.findByName(name);
 	}
 
 	@Override
 	public List<Role> findAllResources() {
-		return (List<Role>) roleRepository.findAll();
+		return (List<Role>) repository.findAll();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class RoleServiceImpl implements RoleService {
 
 		}
 
-		Page<Role> result = roleRepository.findAll(pageable);
+		Page<Role> result = repository.findAll(pageable);
 		if (result.hasContent()) {
 			return result.getContent();
 		} else {
@@ -76,47 +76,47 @@ public class RoleServiceImpl implements RoleService {
 	public Role create(Role role) {
 		role.setInsertedProg(appName);
 
-		return roleRepository.save(role);
+		return repository.save(role);
 	}
 
 	@Override
 	public void addPrivilegeToRole(Long role_id, Long privilege_id) {
 
-		roleRepository.addPrivilegeToRole(role_id, privilege_id);
+		repository.addPrivilegeToRole(role_id, privilege_id);
 
 	}
 
 	@Override
 	public void update(Role role) {
-		roleRepository.save(setUpdateParams(role));
+		repository.save(setUpdateParams(role));
 	}
 
 	@Override
 	public void deleteById(long id) {
-		roleRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		roleRepository.deleteAll();
+		repository.deleteAll();
 
 	}
 
 	@Override
 	public long count() {
-		return roleRepository.count();
+		return repository.count();
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
-		return roleRepository.countActiveResources();
+		return repository.findByStatus("A").size();
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
-		return roleRepository.countAllInActiveRights();
+		return repository.findByStatus("I").size();
 	}
 
 	@Override
@@ -125,36 +125,36 @@ public class RoleServiceImpl implements RoleService {
 		Role role = findOne(id);
 		role.setStatus("I");
 		this.setUpdateParams(role);
-		roleRepository.save(role);
+		repository.save(role);
 
 	}
 
 	@Override
 	public void activateById(long id) {
 		Role role = findOne(id);
-		role.setStatus("I");
+		role.setStatus("A");
 
 		this.setUpdateParams(role);
 
-		roleRepository.save(role);
+		repository.save(role);
 
 	}
 
 	@Override
 	public void activateAll() {
-		roleRepository.activateAll();
+		repository.activateAll();
 
 	}
 
 	@Override
 	public void deactivateAll() {
-		roleRepository.deactivateAll();
+		repository.deactivateAll();
 	}
 
 	@Override
 	public void deleteAllInActiveResources() {
 
-		roleRepository.deleteAllInActiveResources();
+		repository.deleteAllInActiveResources();
 
 	}
 
@@ -171,75 +171,63 @@ public class RoleServiceImpl implements RoleService {
 		return source;
 	}
 
-	/**
-	 * 
-	 * @param source
-	 * @return
-	 */
-//	private Role ListUpdateParams(Role source) {
-//		source.setUpdatedProg(appName);
-//		source.setUpdatedOn(LocalDateTime.now());
-//
-//		return source;
-//	}
-
-	/**
-	 * 
-	 * @param sortBy
-	 * @param sortOrder
-	 * @return
-	 */
-//	private Sort getSort(String sortBy, String sortOrder) {
-//
-//		Sort sort;
-//		if ("DESC".equals(sortOrder)) {
-//
-//			sort = new Sort(Direction.DESC, sortBy);
-//		} else {
-//			sort = new Sort(Direction.ASC, sortBy);
-//		}
-//
-//		return sort;
-//	}
-
+	
 	@Override
 	public List<Role> findByStatus(String status) {
 
-		return roleRepository.findByStatus(status);
+		return repository.findByStatus(status);
 	}
 
 	@Override
 	public List<Role> findByType(String type) {
 
-		return roleRepository.findByType(RoleType.valueOf(type));
+		return repository.findByType(RoleType.valueOf(type));
 	}
 
 	@Override
 	public List<Role> findAllInActive() {
 
-		return roleRepository.findByStatus("I");
+		return repository.findByStatus("I");
 	}
 
 	@Override
 	public List<Role> findAllActive() {
 
-		return roleRepository.findByStatus("A");
+		return repository.findByStatus("A");
 	}
 
 	@Override
 	public List<Role> findRolesByUserId(Long user_id) {
 
-		return roleRepository.findRoleByUserId(user_id);
+		return repository.findRoleByUserId(user_id);
 	}
 
 	@Override
 	public void addTypeToRole(Long roleId, RoleType type) {
-		Role role = roleRepository.findById(roleId)
+		Role role = repository.findById(roleId)
 				.orElseThrow(() -> new EntityNotFoundException(Messages.ROLE_NOT_FOUND));
 
 		role.setType(type);
-		roleRepository.save(role);
+		repository.save(role);
 
+	}
+
+	@Override
+	public void remerkForDelete(Long id) {
+		Role r  = this.findOne(id);
+		if(r != null) {
+			r.setDeletestatus(true);
+			this.update(r);
+		}
+		
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		findByStatus(status).forEach(c -> {
+			c.setDeletestatus(true);
+			this.update(c);
+		});		
 	}
 
 }

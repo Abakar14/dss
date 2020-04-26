@@ -4,7 +4,6 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +37,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
+@Entity(name = "schools")
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class School extends BaseEntity implements Serializable {
+public class School extends BaseEntity {
 
+		
 	/**
 	 * 
 	 */
@@ -76,7 +76,7 @@ public class School extends BaseEntity implements Serializable {
 	@ApiModelProperty(hidden = true)
 	@XmlElement
 	@OneToMany(mappedBy = "school")
-	private List<User> users = new ArrayList<>();
+	private List<Teacher> teachers = new ArrayList<>();
 
 	@JsonIgnore
 	@ApiModelProperty(hidden = true)
@@ -85,10 +85,10 @@ public class School extends BaseEntity implements Serializable {
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
 
-	public void addUser(User user) {
-		this.users.add(user);
-		user.setSchool(this);
-	}
+//	public void addUser(User user) {
+//		this.users.add(user);
+//		user.setSchool(this);
+//	}
 
 	@Override
 	public int hashCode() {

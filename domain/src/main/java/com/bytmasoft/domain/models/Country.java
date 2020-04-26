@@ -1,6 +1,5 @@
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,8 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Country extends BaseEntity implements Serializable {
+public class Country extends BaseEntity {
+	
 
 	/**
 	 * 

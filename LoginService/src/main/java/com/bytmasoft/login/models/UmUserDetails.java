@@ -11,8 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.bytmasoft.domain.models.Manager;
 import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.domain.models.User;
+import com.bytmasoft.domain.models.BaseUser;
 
 /**
  * 
@@ -26,14 +27,14 @@ public class UmUserDetails implements UserDetails {
 	 */
 	private static final long serialVersionUID = -7282182398219186511L;
 
-	private User user;
+	private BaseUser user;
 
 	private List<GrantedAuthority> authorities;
 
 	/**
 	 * @param user
 	 */
-	public UmUserDetails(User user) {
+	public UmUserDetails(BaseUser user) {
 
 		this.user = user;
 
@@ -45,9 +46,13 @@ public class UmUserDetails implements UserDetails {
 
 		authorities = new ArrayList<>();
 
-		for (Role role : user.getRoles()) {
-			authorities.add(new SimpleGrantedAuthority(role.getType().toString()));
+		if(user instanceof Manager) {
+			
+			for (Role role : ((Manager) user).getRoles()) {
+				authorities.add(new SimpleGrantedAuthority(role.getType().toString()));
+			}
 		}
+		
 
 		return authorities;
 	}

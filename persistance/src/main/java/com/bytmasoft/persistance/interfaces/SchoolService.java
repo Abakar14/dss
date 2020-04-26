@@ -6,7 +6,7 @@ import com.bytmasoft.common.interfaces.IOperations;
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.School;
-import com.bytmasoft.domain.models.User;
+import com.bytmasoft.domain.models.BaseUser;
 
 public interface SchoolService extends IOperations<School> {
 
@@ -27,9 +27,9 @@ public interface SchoolService extends IOperations<School> {
 	/**
 	 * 
 	 * @param school_id
-	 * @return a list of {@link User}
+	 * @return a list of {@link BaseUser}
 	 */
-	public List<User> findUsersBySchoolId(Long school_id);
+	public List<BaseUser> findUsersBySchoolId(Long school_id);
 
 	/**
 	 * 

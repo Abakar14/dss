@@ -25,6 +25,13 @@ public interface AddressRepository extends UmBaseRepository<Address, Long> {
 	 * @return List of {@link Address}
 	 */
 	public List<Address> findByStreet(String street);
+	
+	/**
+	 * 
+	 * @param street
+	 * @return List of {@link Address}
+	 */
+	public List<Address> findByStatus(String status);
 
 	/**
 	 * 
@@ -40,29 +47,6 @@ public interface AddressRepository extends UmBaseRepository<Address, Long> {
 	 */
 	public List<Address> findByPostalCode(String postalCode);
 
-	/**
-	 * @return list of {@link Address}
-	 */
-	@Query(value = "FROM Address a WHERE a.status ='I'")
-	List<Address> findInActiveAddresses();
-
-	/**
-	 * @return list of {@link Address}
-	 */
-	@Query(value = "FROM Address a WHERE a.status ='A'")
-	List<Address> findActiveAddresses();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(a) FROM Address a WHERE a.status ='A'")
-	long countActiveResources();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(a) FROM Address a WHERE a.status ='I'")
-	long countInActiveAddresses();
 
 	/**
 	 * 

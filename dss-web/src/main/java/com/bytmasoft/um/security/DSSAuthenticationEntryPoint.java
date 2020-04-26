@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bytmasoft.um.configuration;
+package com.bytmasoft.um.security;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author Mahamat Abakar Date 19.12.2019 
  */
 @Component
-public class UmAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
+public class DSSAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 
 	/**
 	 * 

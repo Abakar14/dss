@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bytmasoft.um.configuration;
+package com.bytmasoft.um.security;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
-	LoginServiceImpl userDetailsService;
+	LoginServiceImpl loginService;
 
 	@Autowired
 	TokenUtil tokenUtil;
@@ -78,7 +78,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 //		if(loginname != null && SecurityContextHolder.getContext().getAuthentication() != null) {
 		if (loginname != null) {
-			UserDetails userDetail = this.userDetailsService.loadUserByUsername(loginname);
+			UserDetails userDetail = this.loginService.loadUserByUsername(loginname);
 			try {
 				if (tokenUtil.validateToken(token, userDetail)) {
 

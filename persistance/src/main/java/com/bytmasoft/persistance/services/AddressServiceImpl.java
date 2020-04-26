@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ReportAsSingleViolation;
 
+import org.aspectj.apache.bcel.Repository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,49 +25,49 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-	private final AddressRepository addressRepository;
+	private final AddressRepository repository;
 
 	@Value("${spring.application.name}")
 	private String appName;
 
 	@Override
 	public Address findOne(long id) {
-		return addressRepository.findById(id)
+		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("There is no user with this id: " + id));
 	}
 
 	@Override
 	public List<Address> findAllActive() {
-		return addressRepository.findActiveAddresses();
+		return repository.findByStatus("A");
 	}
 
 	@Override
 	public List<Address> findAllInActive() {
 
-		return addressRepository.findInActiveAddresses();
+		return repository.findByStatus("I");
 	}
 
 	@Override
 	public List<Address> findByCity(String city) {
 
-		return addressRepository.findByCity(city);
+		return repository.findByCity(city);
 	}
 
 	@Override
 	public List<Address> findByStreet(String street) {
 
-		return addressRepository.findByStreet(street);
+		return repository.findByStreet(street);
 	}
 
 	@Override
 	public List<Address> findByPostalCode(String postalCode) {
 
-		return addressRepository.findByPostalCode(postalCode);
+		return repository.findByPostalCode(postalCode);
 	}
 
 	@Override
 	public List<Address> findAllResources() {
-		return (List<Address>) addressRepository.findAll();
+		return (List<Address>) repository.findAll();
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class AddressServiceImpl implements AddressService {
 
 		}
 
-		Page<Address> result = addressRepository.findAll(pageable);
+		Page<Address> result = repository.findAll(pageable);
 
 		if (result.hasContent()) {
 
@@ -95,41 +97,42 @@ public class AddressServiceImpl implements AddressService {
 	public Address create(Address resource) {
 
 		resource.setInsertedProg(appName);
-		return addressRepository.save(resource);
+		return repository.save(resource);
 	}
 
 	@Override
 	public void update(Address resource) {
 		setUpdateParams(resource);
-		addressRepository.save(resource);
+		repository.save(resource);
 
 	}
 
 	@Override
 	public void deleteById(long id) {
-		addressRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		addressRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Override
 	public long count() {
-		return addressRepository.count();
+		return repository.count();
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
-		return addressRepository.countActiveResources();
+		return repository.findByStatus("A").size();
+		
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
-		return addressRepository.countInActiveAddresses();
+		return repository.findByStatus("I").size();
 	}
 
 	@Override
@@ -138,7 +141,7 @@ public class AddressServiceImpl implements AddressService {
 		Address country = findOne(id);
 		country.setStatus("A");
 		this.setUpdateParams(country);
-		addressRepository.save(country);
+		repository.save(country);
 
 	}
 
@@ -147,31 +150,31 @@ public class AddressServiceImpl implements AddressService {
 		Address country = findOne(id);
 		country.setStatus("I");
 		this.setUpdateParams(country);
-		addressRepository.save(country);
+		repository.save(country);
 
 	}
 
 	@Override
 	public void activateAll() {
-		addressRepository.activateAll();
+		repository.activateAll();
 
 	}
 
 	@Override
 	public void deactivateAll() {
-		addressRepository.deactivateAll();
+		repository.deactivateAll();
 
 	}
 
 	@Override
 	public void deleteAllInActiveResources() {
-		addressRepository.deleteInActiveAddress();
+		repository.deleteInActiveAddress();
 
 	}
 
 	@Override
 	public Address findAddressByUserId(Long user_id) {
-		return addressRepository.findAddressByUserId(user_id);
+		return repository.findAddressByUserId(user_id);
 	}
 
 	/**
@@ -183,6 +186,33 @@ public class AddressServiceImpl implements AddressService {
 		resource.setUpdatedOn(LocalDateTime.now());
 		return resource;
 
+	}
+
+	@Override
+	public void remerkForDelete(Long id) {
+		
+		Address a = this.findOne(id);
+		if(a != null) {
+			a.setDeletestatus(true);
+			this.update(a);
+		}
+		
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		
+		this.findByStatus(status).forEach(a -> {
+			a.setDeletestatus(true);
+			update(a);
+		});
+		
+	}
+
+	@Override
+	public List<Address> findByStatus(String status) {
+		
+		return repository.findByStatus(status);
 	}
 
 }

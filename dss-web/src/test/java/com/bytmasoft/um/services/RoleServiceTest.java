@@ -396,7 +396,7 @@ class RoleServiceTest {
 		role4.setType(RoleType.GUEST);
 
 		roles.add(role1);
-		// roles.add(role2);
+		roles.add(role2);
 		roles.add(role3);
 		roles.add(role4);
 		return roles;

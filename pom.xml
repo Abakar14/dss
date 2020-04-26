@@ -30,6 +30,8 @@
 		<module>dss-web</module>
 		<module>common</module>
 		<module>LoginService</module>
+		<module>dssCalender</module>
+		<module>dssTimetable</module>
 	</modules>
 
 	<dependencies>

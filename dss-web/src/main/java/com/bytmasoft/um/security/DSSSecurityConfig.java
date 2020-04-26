@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bytmasoft.um.configuration;
+package com.bytmasoft.um.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +27,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class UmSecurityConfig extends WebSecurityConfigurerAdapter {
+public class DSSSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UmAuthenticationEntryPoint authenticationEntryPoint;
+	private DSSAuthenticationEntryPoint authenticationEntryPoint;
 
 	@Autowired
 	private UserDetailsService userDetailsService;

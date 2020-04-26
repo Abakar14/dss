@@ -3,7 +3,6 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,6 @@ import org.hibernate.annotations.FetchMode;
 import com.bytmasoft.domain.enums.RoleType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -41,7 +39,8 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
+
 
 	private static final long serialVersionUID = -8409570516606378132L;
 
@@ -58,10 +57,10 @@ public class Role extends BaseEntity implements Serializable {
 					@JoinColumn(name = "privilege_id", referencedColumnName = "id") })
 	List<Privilege> privileges = new ArrayList<>();
 
-	@JsonIgnore
+//	@JsonIgnore
 //	@Fetch(FetchMode.JOIN)
 	@ManyToMany(mappedBy = "roles")
-	List<User> users = new ArrayList<>();
+	private List<Teacher> teachers = new ArrayList<>();
 
 	public void addPrivilege(Privilege privilege) {
 

@@ -3,7 +3,6 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,8 +42,8 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 @XmlRootElement
 @Entity
-public class Address extends BaseEntity implements Serializable {
-
+public class Address extends BaseEntity{
+	
 	/**
 	 * 
 	 */
@@ -65,7 +64,16 @@ public class Address extends BaseEntity implements Serializable {
 	private Country country;
 
 	@ManyToMany(mappedBy = "addresses")
-	private List<User> users;
+	private List<Student> students;
+	
+	@ManyToMany(mappedBy = "addresses")
+	private List<Manager> managers;
+	
+	@ManyToMany(mappedBy = "addresses")
+	private List<Teacher> teachers;
+	
+	@ManyToMany(mappedBy = "addresses")
+	private List<ContactPerson> contactPersons;
 
 	@JsonIgnore
 	@ApiModelProperty(hidden = true)

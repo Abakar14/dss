@@ -24,32 +24,12 @@ public interface CountryRepository extends UmBaseRepository<Country, Long> {
 	 * @param name
 	 * @return list of {@link Country}
 	 */
-	@Query(value = "FROM Country WHERE name = ?1")
 	Optional<Country> findByName(String name);
-
+	
 	/**
 	 * @return list of {@link Country}
 	 */
-	@Query(value = "FROM Country c WHERE c.status ='I'")
-	List<Country> findAllInActiveCountries();
-
-	/**
-	 * @return list of {@link Country}
-	 */
-	@Query(value = "FROM Country c WHERE c.status ='A'")
-	List<Country> findAllActiveCountries();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(c) FROM Country c WHERE c.status ='A'")
-	long countActiveResources();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(c) FROM Country c WHERE c.status ='I'")
-	long countAllInActiveUsers();
+	List<Country> findByStatus(String status);
 
 	/**
 	 * 
@@ -68,13 +48,6 @@ public interface CountryRepository extends UmBaseRepository<Country, Long> {
 	@Transactional
 	@Query(value = "delete from Country c where c.status = 'I'")
 	void deleteInActiveCountry();
-
-	/**
-	 * @param user_id
-	 * @return
-	 */
-//	@Query(value = "SELECT c.* FROM Country c JOIN User u ON c.id = u.country_id WHERE u.id=:user_id ", nativeQuery = true)
-//	Country findCountryByUserId(@Param("user_id") long user_id);
 
 	/**
 	 * @param country_id

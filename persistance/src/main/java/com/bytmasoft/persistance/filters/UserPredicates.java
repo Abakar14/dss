@@ -11,45 +11,39 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 
 import com.bytmasoft.domain.enums.UserType;
-import com.bytmasoft.domain.models.User;
+import com.bytmasoft.domain.model.interfaces.BaseEntity;
+import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Teacher;
 
 /**
  * @author Mahamat Date 13.04.2020 : 23:05:44
  */
 public class UserPredicates {
 
-	public static Predicate<User> isRemerkedForDelete() {
-		return u -> u.getDeletestatus().booleanValue() == true;
+	public static <T> Predicate<T> isRemerkedForDelete() {
+		return u -> ((BaseEntity) u).getDeletestatus().booleanValue() == true;
 	}
 
-	public static Predicate<User> isNotRemerkedForDelete() {
-		return u -> u.getDeletestatus().booleanValue() == false;
+	public static <T> Predicate<T> isNotRemerkedForDelete() {
+		return u -> ((BaseEntity) u).getDeletestatus().booleanValue() == false;
 	}
 
-	public static Predicate<User> isTeacher() {
-		return u -> u.getType().equals(UserType.TEACHER);
+	public static Predicate<BaseUser> isMachine() {
+		return u -> u.getType().equals(UserType.MACHINE);
+	}
+	
+	public static Predicate<BaseUser> isHuman() {
+		return u -> u.getType().equals(UserType.HUMAN);
 	}
 
-	public static Predicate<User> isManager() {
-		return u -> u.getType().equals(UserType.MANAGER);
-	}
-
-	public static Predicate<User> isStudent() {
-		return u -> u.getType().equals(UserType.STUDENT);
-	}
-
-	public static Predicate<User> isParent() {
-		return u -> u.getType().equals(UserType.PARENT);
-	}
-
-	public static List<User> filterUsers(List<User> users, Predicate<User> predicate) {
+	public static <T> List<T> filterUsers(List<T> users, Predicate<T> predicate) {
 
 		return users.stream().filter(predicate).collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Page<User> filterUsers(Page<User> users, Predicate<User> predicate) {
+	public static <T> Page<T> filterPages(Page<T> users, Predicate<T> predicate) {
 
-		return (Page<User>) users.stream().filter(predicate).collect(Collectors.toList());
+		return (Page<T>) users.stream().filter(predicate).collect(Collectors.toList());
 	}
 }

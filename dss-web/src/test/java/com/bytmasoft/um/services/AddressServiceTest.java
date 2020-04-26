@@ -141,7 +141,7 @@ class AddressServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.persistance.services.AddressServiceImpl#create(com.bytmasoft.api.models.Address)}.
+	 * {@link com.bytmasoft.persistance.services.AddressServiceImpl#create(com.bytmasoft.Address.models.Address)}.
 	 */
 	@Test
 	@Order(1)
@@ -155,7 +155,7 @@ class AddressServiceTest {
 
 	/**
 	 * Test method for
-	 * {@link com.bytmasoft.persistance.services.AddressServiceImpl#update(com.bytmasoft.api.models.Address)}.
+	 * {@link com.bytmasoft.persistance.services.AddressServiceImpl#update(com.bytmasoft.Address.models.Address)}.
 	 */
 	@Test
 	void testUpdate() {

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,7 +40,7 @@ public abstract class BaseEntity implements IEntity {
 	@ApiModelProperty(notes = "The api will generate the status")
 	@JsonProperty(value = "status")
 	@Size(max = 1)
-	private String status;
+	String status;
 
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	Boolean deletestatus = false;
@@ -56,11 +57,18 @@ public abstract class BaseEntity implements IEntity {
 	@ApiModelProperty(notes = "The api will generate the updatedProg", hidden = true)
 	String updatedProg;
 
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dssSeq")
+//	@SequenceGenerator(name = "dssSeq", sequenceName = "DSS_SEQ", allocationSize = 1)
+//    this will not work in this place muss be in the Entity class
 	@ApiModelProperty(notes = "The database will generate the id", hidden = true)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
+	
+	
+	
 	@PrePersist
 	public void init() {
 		this.createdOn = LocalDateTime.now();

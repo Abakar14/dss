@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import com.bytmasoft.common.exception.EntityNotFoundException;
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.models.Address;
+import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.domain.models.School;
-import com.bytmasoft.domain.models.User;
 import com.bytmasoft.persistance.interfaces.SchoolService;
 import com.bytmasoft.persistance.repositories.SchoolRepository;
 
@@ -113,8 +113,13 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public void deleteAllInActiveResources() {
 
-//		schoolRepository.deleteInActiveSchool();
-
+		repository.findByStatus("I").forEach(s ->{
+			
+			if(s.getDeletestatus().equals(true)) {
+				this.deleteById(s.getId());
+			}
+		});
+		
 	}
 
 	@Override
@@ -124,14 +129,14 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
 		return repository.findByStatus("A").size();
 
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
 		return repository.findByStatus("I").size();
 
@@ -183,9 +188,10 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<User> findUsersBySchoolId(Long school_id) {
-		School school = findOne(school_id);
-		return school.getUsers();
+	public List<BaseUser> findUsersBySchoolId(Long school_id) {
+//		School school = findOne(school_id);
+//		return school.getUsers();
+		return null;
 
 	}
 
@@ -213,6 +219,32 @@ public class SchoolServiceImpl implements SchoolService {
 	public List<School> findSchoolsByUserId(Long id) {
 
 		return repository.findSchoolsByUserId(id);
+	}
+
+	@Override
+	public void remerkForDelete(Long id) {
+		
+		School s = this.findOne(id);
+		if(s != null) {
+			s.setDeletestatus(true);
+			this.setUpdateParams(s);
+			
+		}
+		
+	}
+
+	@Override
+	public List<School> findByStatus(String status) {
+		return repository.findByStatus(status);
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		findByStatus(status).forEach(c -> {
+			c.setDeletestatus(true);
+			this.update(c);
+		});
+				
 	}
 
 }
