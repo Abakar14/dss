@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.domain.models.Address;
+import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.persistance.interfaces.AddressService;
 import com.bytmasoft.persistance.repositories.AddressRepository;
 
@@ -96,8 +97,13 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public Address create(Address resource) {
 
+		Address a = this.CreateIfNotExists(resource);
+		if(a == null) {
 		resource.setInsertedProg(appName);
 		return repository.save(resource);
+		}else {
+			return a;
+		}
 	}
 
 	@Override
@@ -213,6 +219,12 @@ public class AddressServiceImpl implements AddressService {
 	public List<Address> findByStatus(String status) {
 		
 		return repository.findByStatus(status);
+	}
+
+	@Override
+	public Address CreateIfNotExists(Address address) {
+		return repository.findByCityAndPostalCodeAndStreetAndHauseNumber(address.getCity(), address.getPostalCode(), address.getStreet(), address.getHauseNumber());
+
 	}
 
 }

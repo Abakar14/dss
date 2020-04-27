@@ -139,7 +139,7 @@ public interface BaseUserService  <T extends BaseEntity> extends IOperations<T> 
 	 * @param email
 	 * @return
 	 */
-	List<T> findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email);
+	T findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email);
 
 	/**
 	 * @param firstname

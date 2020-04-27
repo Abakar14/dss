@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Country;
 import com.bytmasoft.persistance.interfaces.CountryService;
 import com.bytmasoft.persistance.repositories.CountryRepository;
@@ -78,8 +79,14 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public Country create(Country resource) {
 
-		resource.setInsertedProg(appName);
-		return repository.save(resource);
+	  Country c = this.CreateIfNotExists(resource);
+	  if(c == null) {
+		  resource.setInsertedProg(appName);
+		  return repository.save(resource);
+		  
+	  }else {
+		  return c;
+	  }
 	}
 
 	@Override
@@ -196,6 +203,11 @@ public class CountryServiceImpl implements CountryService {
 			this.update(c);
 		});
 		
+	}
+
+	@Override
+	public Country CreateIfNotExists(Country country) {
+		return findByName(country.getName());		
 	}
 
 

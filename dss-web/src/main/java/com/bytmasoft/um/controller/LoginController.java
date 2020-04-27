@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bytmasoft.domain.models.JwtRequest;
 import com.bytmasoft.domain.models.JwtResponse;
-import com.bytmasoft.login.models.UmUserDetails;
+import com.bytmasoft.login.models.DSSUserDetails;
 import com.bytmasoft.login.service.impl.LoginServiceImpl;
 import com.bytmasoft.login.util.TokenUtil;
 
@@ -46,7 +46,7 @@ public class LoginController {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final UmUserDetails userDetails = umUserdetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		final DSSUserDetails userDetails = umUserdetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = tokenUtil.generateToken(userDetails);
 

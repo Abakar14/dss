@@ -46,6 +46,12 @@ public interface AddressRepository extends UmBaseRepository<Address, Long> {
 	 * @return List of {@link Address}
 	 */
 	public List<Address> findByPostalCode(String postalCode);
+	
+	public List<Address> findByHauseNumber(String hauseNumber);
+	
+	
+	public Address findByCityAndPostalCodeAndStreetAndHauseNumber(String city, 
+		 String postalCode, String street, String hauseNumber);
 
 
 	/**

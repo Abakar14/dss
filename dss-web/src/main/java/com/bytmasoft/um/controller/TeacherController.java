@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
  * 
  * @author Mahamat Abakar Date 08.10.2019
  */
-@Api(value = "Usermanagement System", description = "Management all User operations")
+@Api(value = "Usermanagement System Management all User operations")
 @RequiredArgsConstructor
 @CrossOrigin
 @RestController
@@ -37,7 +37,7 @@ public class TeacherController {
 	// TODO Mahamat 04.04.2020 21:12:59
 	// integration Test
 	private final TeacherService<Teacher> service;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	/***************************** Get Sections ****************************/
 
@@ -214,13 +214,13 @@ public class TeacherController {
 //	/***************************** Post Sections ****************************/
 
 	
-	@PostMapping("/sign-up")
-	public void signUp(@RequestBody Teacher teacher) {
-
-		teacher.setPassword(this.bCryptPasswordEncoder.encode(teacher.getPassword()));
-		
-		this.service.create(teacher);
-	}
+//	@PostMapping("/sign-up")
+//	public void signUp(@RequestBody Teacher teacher) {
+//
+//		teacher.setPassword(this.bCryptPasswordEncoder.encode(teacher.getPassword()));
+//		
+//		this.service.create(teacher);
+//	}
 	
 	
 //	@ApiOperation(value = "Add a user")

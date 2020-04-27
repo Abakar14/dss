@@ -34,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+	//JWTAuthorizationFilter
 
 	@Autowired
 	LoginServiceImpl loginService;
@@ -94,7 +95,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			} catch (BadJOSEException e) {
 				log.error(e.getMessage());
 			} catch (JOSEException e) {
-				log.error(e.getMessage());
+				log.error(e.getMessage()); 
 			}
 		}
 

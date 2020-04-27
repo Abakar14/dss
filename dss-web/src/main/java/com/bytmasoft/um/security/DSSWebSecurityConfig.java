@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class DSSSecurityConfig extends WebSecurityConfigurerAdapter {
+public class DSSWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DSSAuthenticationEntryPoint authenticationEntryPoint;
@@ -44,6 +44,8 @@ public class DSSSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
+
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -63,12 +65,16 @@ public class DSSSecurityConfig extends WebSecurityConfigurerAdapter {
 		// @// @formatter:off
 		httpSecurity.csrf().disable()
 				// we do not need to authenticate login request
-				.authorizeRequests().antMatchers("/login")
+				.authorizeRequests().antMatchers("/login").permitAll()
 				// These OPTIONS call are made by Angular application to Spring Boot application
-				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				//.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// all other requests need to be authenticated
-				.antMatchers("/users/user").hasAnyAuthority("USER", "ADMIN").antMatchers("/users/*", "/roles/*")
-				.hasAnyAuthority("USER", "ADMIN", "STUDENT").anyRequest().authenticated().and().exceptionHandling()
+				.antMatchers(HttpMethod.GET, "/teachers/**").hasAnyAuthority("TEACHER")
+				.antMatchers(HttpMethod.GET, "/Managers/", "/roles/", "/privileges/", "/teachers/")
+				.hasAnyAuthority("ADMIN")
+				.antMatchers( HttpMethod.POST, "/Managers/", "/roles/", "/privileges/", "/teachers/")
+				.hasAnyAuthority("ADMIN")				
+				.anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
