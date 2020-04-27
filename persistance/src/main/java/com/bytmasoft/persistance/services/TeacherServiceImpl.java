@@ -96,7 +96,8 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	@Override
 	public Teacher create(Teacher teacher) {
 
-		if (isEmailExists(teacher.getEmail())) {
+		Teacher t = this.CreateIfNotExists(teacher);
+		if (t != null) {
 			throw new UserAlreadyExistException("There is an user with the same email : " + teacher.getEmail());
 		}
 
@@ -344,8 +345,6 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		if (!firstname.isEmpty() && !lastname.isEmpty() && !username.isEmpty()) {
 			return findByFirstNameAndLastNameAndLoginname(firstname, lastname, username);
-		} else if (!firstname.isEmpty() && !lastname.isEmpty() && !email.isEmpty()) {
-			return findByFirstNameAndLastNameAndEmail(firstname, lastname, email);
 		} else if (!firstname.isEmpty() && !lastname.isEmpty()) {
 			return findByFirstNameAndLastName(firstname, lastname);
 		} else if (!firstname.isEmpty()) {
@@ -363,8 +362,8 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	}
 
 	@Override
-	public List<Teacher> findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email) {
-		return repository.findByFirstNameAndLastNameAndEmail(firstname, lastname, email);
+	public Teacher findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email) {
+		return (Teacher) repository.findByFirstNameAndLastNameAndEmail(firstname, lastname, email);
 	}
 
 	@Override
@@ -613,6 +612,11 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		return this.mailServie.sendEmail(teacher.getEmail());
 
+	}
+
+	@Override
+	public Teacher CreateIfNotExists(Teacher t) {
+		return findByFirstNameAndLastNameAndEmail(t.getFirstName(), t.getLastName(), t.getEmail());
 	}
 	
 }

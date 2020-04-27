@@ -88,8 +88,14 @@ public class SchoolServiceImpl implements SchoolService {
 
 	@Override
 	public School create(School resource) {
-		resource.setInsertedProg(appName);
-		return repository.save(resource);
+		
+		School s = this.CreateIfNotExists(resource);
+		if(s == null) {
+			resource.setInsertedProg(appName);
+			return repository.save(resource);		
+		}else {
+			return s;
+		}
 
 	}
 
@@ -174,7 +180,7 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<School> findByName(String name) {
+	public School findByName(String name) {
 
 		return repository.findByName(name);
 
@@ -245,6 +251,12 @@ public class SchoolServiceImpl implements SchoolService {
 			this.update(c);
 		});
 				
+	}
+
+	@Override
+	public School CreateIfNotExists(School t) {
+	
+		return this.findByName(t.getName());
 	}
 
 }

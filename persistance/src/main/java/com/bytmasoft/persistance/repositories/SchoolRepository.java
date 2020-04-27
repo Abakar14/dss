@@ -25,7 +25,7 @@ public interface SchoolRepository extends UmBaseRepository<School, Long> {
 	 * @param name {@link String}
 	 * @return list of {@link School}
 	 */
-	List<School> findByName(String name);
+	School findByName(String name);
 
 	/**
 	 * 

@@ -3,12 +3,20 @@
  */
 package com.bytmasoft.login.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.domain.models.BaseUser;
-import com.bytmasoft.login.models.UmUserDetails;
+import com.bytmasoft.domain.models.Privilege;
+import com.bytmasoft.domain.models.Role;
+import com.bytmasoft.login.models.DSSUserDetails;
 import com.bytmasoft.login.repository.TeacherLoginRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,20 +32,31 @@ public class LoginServiceImpl implements UserDetailsService {
 	private final TeacherLoginRepository repository;
 
 	@Override
-	public UmUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public DSSUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		BaseUser user = null;
 //		User user = loginRepository.findByUsernameOrEmail(username, username);
 
-		 user = repository.findByUsernameOrEmail(username, username);
-				
+		user = repository.findByUsernameOrEmail(username, username);
+
 		if (user != null) {
 
-			return new UmUserDetails(user);
+			return new DSSUserDetails(user);
 		} else {
 
 			throw new UsernameNotFoundException("user not found with loginname " + username);
 		}
+	}
+
+	private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles){
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		roles.forEach(r -> {
+			r.getPrivileges().forEach(p -> {
+				
+				authorities.add(new SimpleGrantedAuthority(p.getName()));
+			});
+		});
+		return authorities;
 	}
 
 }

@@ -20,7 +20,7 @@ import com.bytmasoft.domain.models.BaseUser;
  * @author Mahamat Abakar Date 30.12.2019
  */
 
-public class UmUserDetails implements UserDetails {
+public class DSSUserDetails implements UserDetails {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class UmUserDetails implements UserDetails {
 	/**
 	 * @param user
 	 */
-	public UmUserDetails(BaseUser user) {
+	public DSSUserDetails(BaseUser user) {
 
 		this.user = user;
 
@@ -54,6 +54,17 @@ public class UmUserDetails implements UserDetails {
 		}
 		
 
+		return authorities;
+	}
+	
+	private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles){
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		roles.forEach(r -> {
+			r.getPrivileges().forEach(p -> {
+				
+				authorities.add(new SimpleGrantedAuthority(p.getName()));
+			});
+		});
 		return authorities;
 	}
 
@@ -79,7 +90,7 @@ public class UmUserDetails implements UserDetails {
 	@Override
 	public boolean isAccountNonExpired() {
 
-		return user.getStatus().equals("A") ? true : false;
+		return !user.getDeletestatus();
 	}
 
 	@Override
@@ -104,5 +115,7 @@ public class UmUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return user.getStatus().equals("A") ? true : false;
 	}
+	
+	
 
 }

@@ -15,7 +15,7 @@ public interface SchoolService extends IOperations<School> {
 	 * @param name
 	 * @return List of {@link School}
 	 */
-	public List<School> findByName(String name);
+	public School findByName(String name);
 
 	/**
 	 * 

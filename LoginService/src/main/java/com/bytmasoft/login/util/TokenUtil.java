@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.bytmasoft.login.models.UmUserDetails;
+import com.bytmasoft.login.models.DSSUserDetails;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
@@ -72,7 +72,7 @@ public class TokenUtil implements Serializable {
 
 	}
 
-	public String generateToken(UmUserDetails userDetail) throws JOSEException, UnsupportedEncodingException {
+	public String generateToken(DSSUserDetails userDetail) throws JOSEException, UnsupportedEncodingException {
 		now = new Date();
 		JWTClaimsSet claims = new JWTClaimsSet.Builder().claim("email", userDetail.getEmail())
 				.claim("username", userDetail.getUsername()).jwtID(UUID.randomUUID().toString())
@@ -156,7 +156,7 @@ public class TokenUtil implements Serializable {
 //		return new Date(milis.longValue());
 //	}
 
-	public String refreshToken(String token, UmUserDetails userDetail)
+	public String refreshToken(String token, DSSUserDetails userDetail)
 			throws ParseException, BadJOSEException, JOSEException, UnsupportedEncodingException {
 
 		if (validateToken(token, userDetail)) {

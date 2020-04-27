@@ -85,8 +85,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 	@Override
 	public Privilege create(Privilege privilege) {
-		privilege.setInsertedProg(appName);
-		return repository.save(privilege);
+		Privilege p = this.CreateIfNotExists(privilege);
+		if(p == null) {
+			privilege.setInsertedProg(appName);
+			return repository.save(privilege);		
+		}else {
+			return p;
+		}
 	}
 
 	@Override
@@ -213,6 +218,12 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		});
 		
 		
+	}
+
+	@Override
+	public Privilege CreateIfNotExists(Privilege t) {
+		
+		return findByName(t.getName());
 	}
 
 }

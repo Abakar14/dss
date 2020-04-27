@@ -74,9 +74,15 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role create(Role role) {
-		role.setInsertedProg(appName);
+		
+		Role r = this.CreateIfNotExists(role);
+		if(r == null) {
+			role.setInsertedProg(appName);
+			return repository.save(role);
+		}else {
+			return r;
+		}
 
-		return repository.save(role);
 	}
 
 	@Override
@@ -228,6 +234,16 @@ public class RoleServiceImpl implements RoleService {
 			c.setDeletestatus(true);
 			this.update(c);
 		});		
+	}
+
+	@Override
+	public Role CreateIfNotExists(Role r) {
+		Role role = findByName(r.getName());
+		if(role == null) {
+			return null;
+		}else {			
+			return role;
+		}
 	}
 
 }
