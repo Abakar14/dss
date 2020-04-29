@@ -39,7 +39,7 @@ public class Teacher extends BaseUser {
 	private static final long serialVersionUID = -2557847867716330648L;
 
 	
-//	@Fetch(FetchMode.JOIN)
+	@Fetch(FetchMode.JOIN)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "teacher_role", joinColumns = {
 			@JoinColumn(name = "teacher_id", referencedColumnName = "id") }, inverseJoinColumns = {
@@ -63,10 +63,8 @@ public class Teacher extends BaseUser {
 	private School school;
 	
 	
-	
-
 	public void addRole(Role role) {
-//		this.roles.add(role);
+		this.roles.add(role);
 		
 	}
 	
@@ -76,9 +74,8 @@ public class Teacher extends BaseUser {
 	}
 	
 	public void RemoveRole(Role role) {
-//
-//		roles.remove(role);
-//		role.getTeachers().remove(this);
+		roles.remove(role);
+		role.getTeachers().remove(this);
 
 	}
 

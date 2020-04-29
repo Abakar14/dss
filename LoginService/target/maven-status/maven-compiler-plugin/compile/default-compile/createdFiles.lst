@@ -1,4 +1,0 @@
-com\bytmasoft\login\repository\LoginRepository.class
-com\bytmasoft\login\service\impl\LoginServiceImpl.class
-com\bytmasoft\login\models\UmUserDetails.class
-com\bytmasoft\login\util\TokenUtil.class

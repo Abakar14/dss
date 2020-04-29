@@ -9,6 +9,7 @@ import com.bytmasoft.common.interfaces.IOperations;
 import com.bytmasoft.domain.enums.UserType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Role;
 
 
 public interface BaseUserService  <T extends BaseEntity> extends IOperations<T> {
@@ -205,6 +206,6 @@ public interface BaseUserService  <T extends BaseEntity> extends IOperations<T> 
 	T setUpdateParams(T t);
 
 	void update(T t);
-
+	
 	
 }

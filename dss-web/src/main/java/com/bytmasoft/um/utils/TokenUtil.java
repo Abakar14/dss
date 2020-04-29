@@ -1,13 +1,12 @@
 /**
  * 
  */
-package com.bytmasoft.login.util;
+package com.bytmasoft.um.utils;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.UUID;
 import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.bytmasoft.login.models.DSSUserDetails;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
@@ -72,14 +70,14 @@ public class TokenUtil implements Serializable {
 
 	}
 
-	public String generateToken(DSSUserDetails userDetail) throws JOSEException, UnsupportedEncodingException {
-		now = new Date();
-		JWTClaimsSet claims = new JWTClaimsSet.Builder().claim("email", userDetail.getEmail())
-				.claim("username", userDetail.getUsername()).jwtID(UUID.randomUUID().toString())
-				.expirationTime(new Date(now.getTime() + TOKEN_EXPIRATIONTIME_SECONDS)).issueTime(now).build();
-
-		return doGenerateToken(claims);
-	}
+//	public String generateToken(DSSUserDetails userDetail) throws JOSEException, UnsupportedEncodingException {
+//		now = new Date();
+//		JWTClaimsSet claims = new JWTClaimsSet.Builder().claim("email", userDetail.getEmail())
+//				.claim("username", userDetail.getUsername()).jwtID(UUID.randomUUID().toString())
+//				.expirationTime(new Date(now.getTime() + TOKEN_EXPIRATIONTIME_SECONDS)).issueTime(now).build();
+//
+//		return doGenerateToken(claims);
+//	}
 
 	/**
 	 * @param claims
@@ -88,19 +86,19 @@ public class TokenUtil implements Serializable {
 	 * @throws JOSEException
 	 * @throws UnsupportedEncodingException
 	 */
-	private String doGenerateToken(JWTClaimsSet claims) throws JOSEException, UnsupportedEncodingException {
-
-		Payload payload = new Payload(claims.toJSONObject());
-
-		JWEHeader header = new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128CBC_HS256);
-
-		JWEObject jweObject = new JWEObject(header, payload);
-
-		jweObject.encrypt(encrypter);
-
-		return jweObject.serialize();
-
-	}
+//	private String doGenerateToken(JWTClaimsSet claims) throws JOSEException, UnsupportedEncodingException {
+//
+//		Payload payload = new Payload(claims.toJSONObject());
+//
+//		JWEHeader header = new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128CBC_HS256);
+//
+//		JWEObject jweObject = new JWEObject(header, payload);
+//
+//		jweObject.encrypt(encrypter);
+//
+//		return jweObject.serialize();
+//
+//	}
 
 	public String getUsernameFormToken(String token) throws ParseException, BadJOSEException, JOSEException {
 
@@ -156,18 +154,18 @@ public class TokenUtil implements Serializable {
 //		return new Date(milis.longValue());
 //	}
 
-	public String refreshToken(String token, DSSUserDetails userDetail)
-			throws ParseException, BadJOSEException, JOSEException, UnsupportedEncodingException {
-
-		if (validateToken(token, userDetail)) {
-
-			return generateToken(userDetail);
-
-		}
-
-		return "token not valid ...";
-
-	}
+//	public String refreshToken(String token, DSSUserDetails userDetail)
+//			throws ParseException, BadJOSEException, JOSEException, UnsupportedEncodingException {
+//
+//		if (validateToken(token, userDetail)) {
+//
+//			return generateToken(userDetail);
+//
+//		}
+//
+//		return "token not valid ...";
+//
+//	}
 
 	public Boolean canTokenBeRefreshed(String token) throws ParseException, BadJOSEException, JOSEException {
 		return (!isTokenExpired(token) || ignoreTokenExpiration(token));

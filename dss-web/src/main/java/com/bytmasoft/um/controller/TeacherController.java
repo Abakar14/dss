@@ -3,18 +3,17 @@ package com.bytmasoft.um.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bytmasoft.domain.models.Privilege;
+import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
-import com.bytmasoft.persistance.interfaces.TeacherService;
+import com.bytmasoft.persistance.services.TeacherServiceImpl;
 import com.bytmasoft.um.utils.UmMapping;
 
 import io.swagger.annotations.Api;
@@ -36,50 +35,56 @@ import lombok.RequiredArgsConstructor;
 public class TeacherController {
 	// TODO Mahamat 04.04.2020 21:12:59
 	// integration Test
-	private final TeacherService<Teacher> service;
-//	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	private final TeacherServiceImpl service;
 
 	/***************************** Get Sections ****************************/
 
-	@ApiOperation(value = "view a user by Id", response = Teacher.class)
-	@GetMapping("/{id}")
-	Teacher findUserById(@PathVariable Long id) {
+	@ApiOperation(value = "view a list of teacher", response = List.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	@GetMapping("/[id]")
+	Teacher findTeacherById(@PathVariable Long id) {
+
 		return service.findOne(id);
 	}
+	
 
 	@ApiOperation(value = "view a list of users by age > {integer}", response = List.class)
 	@GetMapping("/agemorethan/{age}")
-	List<Teacher> findAllUsersByAgeMoreThan(@PathVariable Long age) {
+	List<Teacher> findAllTeachersByAgeMoreThan(@PathVariable Long age) {
 		return service.findUsersByAgeMoreThan(age);
 	}
 
 	@ApiOperation(value = "view a list of users by age < {integer}", response = List.class)
 	@GetMapping("/agelessthan/{age}")
-	List<Teacher> findAllUsersByAgeLessThan(@PathVariable Long age) {
+	List<Teacher> findAllTeachersByAgeLessThan(@PathVariable Long age) {
 		return service.findUsersByAgeLessThan(age);
 	}
 
 	@ApiOperation(value = "view a list of user by request params", response = List.class)
-	@GetMapping("/user")
+	@GetMapping("/teacher")
 	List<Teacher> findByRequestParams(@RequestParam Map<String, String> requestParams) {
 
 		return service.findByRequestParams(requestParams);
 	}
 
 	@GetMapping("/count")
-	Long countAllUsers() {
+	Long countAllTeachers() {
 
 		return service.count();
 	}
 
 	@GetMapping("/count/active")
-	Integer countActiveUsers() {
+	Integer countActiveTeachers() {
 
 		return service.countActiveResources();
 	}
 
 	@GetMapping("/count/inactive")
-	Integer countInActiveUsers() {
+	Integer countInActiveTeachers() {
 
 		return service.countInActiveResources();
 	}
@@ -95,123 +100,52 @@ public class TeacherController {
 		return service.findAllResources();
 	}
 
-//	@ApiOperation(value = "view a list of Students", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/students")
-//	List<User> getStudents() {
-//
-//		return service.findParents();
-//	}
-//
-//	@ApiOperation(value = "view a list of Students", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/students/[id]")
-//	User getStudentById(Long student_id) {
-//
-//		return service.findStudentById(student_id);
-//	}
-//
-//	@ApiOperation(value = "view a list of Teachers", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/teachers")
-//	List<User> getTeachers() {
-//
-//		return service.findTeachers();
-//	}
-//
-//	@ApiOperation(value = "view a Teacher", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/teachers/[id]")
-//	User getTeacherById(Long teacher_id) {
-//
-//		return service.findTeacherById(teacher_id);
-//	}
-//
-//	@ApiOperation(value = "view a list of Teachers", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/parents")
-//	List<User> getParents() {
-//
-//		return service.findParents();
-//	}
-//
-//	@ApiOperation(value = "view a Teacher", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/parents/[id]")
-//	User getParentById(Long parent_id) {
-//
-//		return service.findParentById(parent_id);
-//	}
-//
-//	@ApiOperation(value = "view a list of users pagingated and sorted", response = List.class)
-//	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-//	@GetMapping("/page")
-//	List<User> getUsersPagenatedAndSorted(@RequestParam(defaultValue = "0") int pageNo,
-//			@RequestParam(defaultValue = "5") int pageSize, @RequestParam(defaultValue = "lastName") String sortBy,
-//			@RequestParam(defaultValue = "ASC") String sortOrder) {
-//
-//		return service.findAllPaginatedAndSorted(pageNo, pageSize, sortBy, sortOrder);
-//	}
-//
-////	@PreAuthorize("hasRole('ADMIN')")
-//	@GetMapping("/active")
-//	List<User> getAllActiveUsers() {
-//
-//		return service.findAllActive();
-//	}
-//
-//	@GetMapping("/inactive")
-//	List<User> getAllInActiveUsers() {
-//
-//		return service.findAllActive();
-//	}
-//
-//	@GetMapping("{id}/schools")
-//	public List<School> getSchoolsByUserId(@PathVariable Long id) {
-//		return service.findSchoolsByUserId(id);
-//
-//	}
-//
-//	@GetMapping("{id}/roles")
-//	public List<Role> getAllRolesByUserId(@PathVariable Long id) {
-//		return service.findRolesByUserId(id);
-//
-//	}
-//
-//	@GetMapping("{user_id}/roles/{role_id}")
-//	public Role getRoleByUserIdAndRoleId(@PathVariable Long user_id, @PathVariable Long role_id) {
-//		return service.findRoleByUserIdAndRoleId(user_id, role_id);
-//
-//	}
-//
+
+	@ApiOperation(value = "view a list of teachers pagingated and sorted", response = List.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
+			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	@GetMapping("/page")
+	List<Teacher> getUsersPagenatedAndSorted(@RequestParam(defaultValue = "0") int pageNo,
+			@RequestParam(defaultValue = "5") int pageSize, @RequestParam(defaultValue = "lastName") String sortBy,
+			@RequestParam(defaultValue = "ASC") String sortOrder) {
+
+		return service.findAllPaginatedAndSorted(pageNo, pageSize, sortBy, sortOrder);
+	}
+
+//	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/active")
+	List<Teacher> getAllActiveTeachers() {
+
+		return service.findAllActive();
+	}
+
+	@GetMapping("/inactive")
+	List<Teacher> getAllInActiveUsers() {
+
+		return service.findAllInActive();
+	}
+
+	@GetMapping("{id}/roles")
+	public List<Role> getAllRolesByUserId(@PathVariable Long id) {
+		return service.findRolesByUserId(id);
+
+	}
+
+	@GetMapping("{user_id}/roles/{role_id}")
+	public Role getRoleByTeacherIdAndRoleId(@PathVariable Long user_id, @PathVariable Long role_id) {
+		return service.findRoleByUserIdAndRoleId(user_id, role_id);
+
+	}
+
 //	@GetMapping("{user_id}/privileges")
 //	public List<Privilege> getRoleByUserIdAndRoleId(@PathVariable Long user_id) {
 //		return this.service.findPrivilegesByUserId(user_id);
 //
 //	}
-//
-//	/***************************** Post Sections ****************************/
+
+	/***************************** Post Sections ****************************/
 
 	
 //	@PostMapping("/sign-up")

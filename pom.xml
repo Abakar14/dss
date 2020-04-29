@@ -28,10 +28,7 @@
 		<module>domain</module>
 		<module>persistance</module>
 		<module>dss-web</module>
-		<module>common</module>
-		<module>LoginService</module>
-		<module>dssCalender</module>
-		<module>dssTimetable</module>
+		<module>common</module>				
 	</modules>
 
 	<dependencies>

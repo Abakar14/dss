@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bytmasoft.login.models;
+package com.bytmasoft.um.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.bytmasoft.domain.models.Manager;
 import com.bytmasoft.domain.models.Role;
+import com.bytmasoft.domain.models.Student;
+import com.bytmasoft.domain.models.Teacher;
 import com.bytmasoft.domain.models.BaseUser;
 
 /**
@@ -45,26 +47,41 @@ public class DSSUserDetails implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
 		authorities = new ArrayList<>();
-
-		if(user instanceof Manager) {
+		
+		if(user instanceof Teacher) {
 			
-			for (Role role : ((Manager) user).getRoles()) {
-				authorities.add(new SimpleGrantedAuthority(role.getType().toString()));
-			}
+			this.authorities = prepareAuthorities(((Teacher) user).getRoles());
+	
+		}else if(user instanceof Manager) {
+		
+			this.authorities = prepareAuthorities(((Manager) user).getRoles());
+		}else if(user instanceof Student) {
+		
+			this.authorities = prepareAuthorities(((Student) user).getRoles());
 		}
 		
-
-		return authorities;
+		
+		return authorities;	
 	}
 	
-	private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles){
-		List<GrantedAuthority> authorities = new ArrayList<>();
+	/**
+	 * add a privileges and Roles to authorities
+	 * @param roles
+	 * @return
+	 */
+	private List<GrantedAuthority> prepareAuthorities(List<Role> roles){
+		List<GrantedAuthority> authorities = new ArrayList<>();		
+		
 		roles.forEach(r -> {
+			
+			authorities.add(new SimpleGrantedAuthority("ROLE_"+r.getType()));
+			
 			r.getPrivileges().forEach(p -> {
 				
 				authorities.add(new SimpleGrantedAuthority(p.getName()));
 			});
 		});
+		
 		return authorities;
 	}
 

@@ -11,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.enums.GenderType;
 import com.bytmasoft.domain.enums.UserType;
+import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
+import com.bytmasoft.persistance.interfaces.RoleService;
 import com.bytmasoft.persistance.interfaces.TeacherService;
 
 @SpringBootTest
@@ -19,6 +21,13 @@ class TeacherServiceTest {
 
 	@Autowired
 	TeacherService<Teacher> service;
+	
+	@Autowired
+	RoleService roleService;
+	
+	private String rolename = "Teacher";
+
+	private Long user_id = 2L;
 
 	@Test
 	void testService() {
@@ -225,12 +234,17 @@ class TeacherServiceTest {
 //	void testRemerkForDelete() {
 //		fail("Not yet implemented");
 //	}
-//
-//	@Test
-//	void testAssignRoleToUser() {
-//		fail("Not yet implemented");
-//	}
-//
+
+	@Test
+	void testAssignRoleToUser() {
+		
+		Role r = roleService.findByName(rolename); 
+		
+		assertThat(r).isNotNull();	
+		
+		service.assignRoleToUser(user_id, r.getId());
+	}
+
 //	@Test
 //	void testAssignRoleToUsersString() {
 //		fail("Not yet implemented");

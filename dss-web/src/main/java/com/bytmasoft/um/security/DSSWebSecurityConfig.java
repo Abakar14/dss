@@ -65,18 +65,33 @@ public class DSSWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// @// @formatter:off
 		httpSecurity.csrf().disable()
 				// we do not need to authenticate login request
-				.authorizeRequests().antMatchers("/login").permitAll()
+				.authorizeRequests()
+				//.antMatchers("/login").permitAll()
+				
 				// These OPTIONS call are made by Angular application to Spring Boot application
 				//.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// all other requests need to be authenticated
-				.antMatchers(HttpMethod.GET, "/teachers/**").hasAnyAuthority("TEACHER")
-				.antMatchers(HttpMethod.GET, "/Managers/", "/roles/", "/privileges/", "/teachers/")
-				.hasAnyAuthority("ADMIN")
-				.antMatchers( HttpMethod.POST, "/Managers/", "/roles/", "/privileges/", "/teachers/")
-				.hasAnyAuthority("ADMIN")				
-				.anyRequest().authenticated().and().exceptionHandling()
+				.antMatchers(HttpMethod.GET, "/teachers").hasAnyAuthority("ROLE_TEACHER")
+					
+//				.antMatchers(HttpMethod.GET, "/Managers/", "/roles/", "/privileges/", "/teachers/")
+//				.hasAnyAuthority("ADMIN")
+//				.antMatchers( HttpMethod.POST, "/Managers/", "/roles/", "/privileges/", "/teachers/")
+//				.hasAnyAuthority("DELETE_USERS", "ROLE_ADMIN")				
+//				.anyRequest().authenticated()
+				.and()
+		// this future will be activate late		
+//				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//				.logoutSuccessUrl("/login")
+//				.and()
+//				.rememberMe().tokenValiditySeconds(2592000).key("mysecuriteWord")
+//				.and()
+				.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
+//		.and()
+//		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//		.and()
 
 		// @formatter:on
 		// Add a filter to validate the tokens with every request

@@ -285,6 +285,12 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 		return this.repository.findByUsername(username);
 	}
 
+	public Teacher findByOneUsername1(String username) {
+
+			return repository.findByUsernameOrEmail(username);
+	}
+
+	
 	@Override
 	public List<Teacher> findByType(UserType type) {
 
@@ -606,6 +612,17 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 		});
 	}
 
+	
+	public List<Role> findRolesByUserId(Long id) {
+		
+		return this.findOne(id).getRoles();
+	}
+	
+	
+	public Role findRoleByUserIdAndRoleId(Long user_id, Long role_id){
+		return findOne(user_id).getRoles().stream().filter(r -> role_id.equals(r.getId())).findAny().orElse(null);
+	}
+	
 	@Override
 	public Boolean sendEmailForChangingPassword(String usernameOrEmail) {
 		Teacher teacher = repository.findByUsernameOrEmail(usernameOrEmail);

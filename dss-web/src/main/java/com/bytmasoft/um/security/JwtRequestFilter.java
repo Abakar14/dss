@@ -4,7 +4,6 @@
 package com.bytmasoft.um.security;
 
 import java.io.IOException;
-import java.text.ParseException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,8 +20,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.bytmasoft.login.service.impl.LoginServiceImpl;
-import com.bytmasoft.login.util.TokenUtil;
+import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Teacher;
+import com.bytmasoft.persistance.services.TeacherServiceImpl;
+import com.bytmasoft.um.models.DSSUserDetails;
+import com.bytmasoft.um.utils.TokenUtil;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
 
@@ -34,10 +37,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	//JWTAuthorizationFilter
+	
 
+//	@Autowired
+//	LoginServiceImpl loginService;
+	
 	@Autowired
-	LoginServiceImpl loginService;
+	TeacherServiceImpl teacherService;
 
 	@Autowired
 	TokenUtil tokenUtil;
@@ -62,7 +68,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 				loginname = tokenUtil.getUsernameFormToken(token);
 
-			} catch (IllegalArgumentException | ParseException | BadJOSEException | JOSEException e) {
+			} catch (IllegalArgumentException | ParseException | BadJOSEException | JOSEException | java.text.ParseException e) {
 
 				log.error(e.getMessage());
 			}
@@ -79,7 +85,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 //		if(loginname != null && SecurityContextHolder.getContext().getAuthentication() != null) {
 		if (loginname != null) {
-			UserDetails userDetail = this.loginService.loadUserByUsername(loginname);
+			
+			Teacher user = teacherService.findByOneUsername1(loginname);
+			
+			UserDetails userDetail = new DSSUserDetails(user);
+			
+//			UserDetails userDetail = this.loginService.loadUserByUsername(loginname);
+		
 			try {
 				if (tokenUtil.validateToken(token, userDetail)) {
 
@@ -95,6 +107,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			} catch (BadJOSEException e) {
 				log.error(e.getMessage());
 			} catch (JOSEException e) {
+				log.error(e.getMessage()); 
+			} catch (java.text.ParseException e) {
 				log.error(e.getMessage()); 
 			}
 		}
