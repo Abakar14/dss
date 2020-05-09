@@ -3,23 +3,18 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.bytmasoft.domain.enums.AddressType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
@@ -43,8 +38,8 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 @XmlRootElement
 @Entity
-public class Address extends BaseEntity implements Serializable {
-
+public class Address extends BaseEntity{
+	
 	/**
 	 * 
 	 */
@@ -59,13 +54,26 @@ public class Address extends BaseEntity implements Serializable {
 	private AddressType type;
 
 	@JsonProperty(value = "country")
-	@Fetch(FetchMode.JOIN)
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "country_id")
+//	@Fetch(FetchMode.JOIN)
+//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
+	@JoinColumn(name = "country_id_fk")
 	private Country country;
 
 	@ManyToMany(mappedBy = "addresses")
-	private List<User> users;
+	private Set<Student> students = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "addresses")
+	private Set<Manager> managers = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "addresses")
+	private Set<Teacher> teachers = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "addresses")
+	private Set<ContactPerson> contactPersons = new HashSet<>();;
+	
+	@ManyToMany(mappedBy = "addresses")
+	private Set<Employee> employees = new HashSet<>();
 
 	@JsonIgnore
 	@ApiModelProperty(hidden = true)

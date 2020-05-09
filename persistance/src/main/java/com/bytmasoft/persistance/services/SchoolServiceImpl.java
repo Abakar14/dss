@@ -15,13 +15,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.models.Address;
+import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.domain.models.School;
-import com.bytmasoft.domain.models.User;
-import com.bytmasoft.persistance.interfaces.SchoolService;
 import com.bytmasoft.persistance.repositories.SchoolRepository;
+import com.bytmasoft.persistance.service.interfaces.SchoolService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,14 +34,15 @@ import lombok.RequiredArgsConstructor;
 public class SchoolServiceImpl implements SchoolService {
 
 	private final SchoolRepository repository;
-
+	private final EntityUtils<School> entityUtils;
+	
 	@Value("${spring.application.name}")
 	private String appName;
 
 	@Override
 	public School findOne(long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no school with this id: " + id));
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no school with this id: " + id));
 
 	}
 
@@ -88,15 +90,21 @@ public class SchoolServiceImpl implements SchoolService {
 
 	@Override
 	public School create(School resource) {
-		resource.setInsertedProg(appName);
-		return repository.save(resource);
 
+		boolean isExists = repository.findByName(resource.getName()) != null ? true : false;
+		if(isExists) {
+			return resource;
+		}else {
+			resource.setInsertedProg(appName);
+			return repository.save(resource);
+			
+		}
 	}
 
 	@Override
 	public void update(School resource) {
 
-		repository.save(setUpdateParams(resource));
+		repository.save(entityUtils.setUpdateParams(resource, appName));
 	}
 
 	@Override
@@ -113,7 +121,12 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public void deleteAllInActiveResources() {
 
-//		schoolRepository.deleteInActiveSchool();
+		repository.findByStatus("I").forEach(s -> {
+
+			if (s.getDeletestatus().equals(true)) {
+				this.deleteById(s.getId());
+			}
+		});
 
 	}
 
@@ -124,14 +137,14 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
 		return repository.findByStatus("A").size();
 
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
 		return repository.findByStatus("I").size();
 
@@ -141,7 +154,7 @@ public class SchoolServiceImpl implements SchoolService {
 	public void activateById(long id) {
 		School school = findOne(id);
 		school.setStatus("A");
-		this.setUpdateParams(school);
+		this.entityUtils.setUpdateParams(school, appName);
 		repository.save(school);
 
 	}
@@ -152,7 +165,8 @@ public class SchoolServiceImpl implements SchoolService {
 		School school = findOne(id);
 		school.setStatus("I");
 
-		repository.save(this.setUpdateParams(school));
+		repository.save(this.entityUtils
+				.setUpdateParams(school, appName));
 
 	}
 
@@ -169,7 +183,7 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<School> findByName(String name) {
+	public School findByName(String name) {
 
 		return repository.findByName(name);
 
@@ -183,9 +197,10 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<User> findUsersBySchoolId(Long school_id) {
-		School school = findOne(school_id);
-		return school.getUsers();
+	public List<BaseUser> findUsersBySchoolId(Long school_id) {
+//		School school = findOne(school_id);
+//		return school.getUsers();
+		return null;
 
 	}
 
@@ -196,23 +211,40 @@ public class SchoolServiceImpl implements SchoolService {
 
 	}
 
-	/**
-	 * 
-	 * @param source
-	 * @return
-	 */
-	@Override
-	public School setUpdateParams(School source) {
-		source.setUpdatedProg(appName);
-		source.setUpdatedOn(LocalDateTime.now());
-
-		return source;
-	}
 
 	@Override
 	public List<School> findSchoolsByUserId(Long id) {
 
 		return repository.findSchoolsByUserId(id);
 	}
+
+	@Override
+	public void remerkForDelete(Long id) {
+
+		School s = this.findOne(id);
+		if (s != null) {
+			s.setDeletestatus(true);
+			this.entityUtils.setUpdateParams(s, appName);
+
+		}
+
+	}
+
+	@Override
+	public List<School> findByStatus(String status) {
+		return repository.findByStatus(status);
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		findByStatus(status).forEach(c -> {
+			c.setDeletestatus(true);
+			this.update(c);
+		});
+
+	}
+
+
+
 
 }

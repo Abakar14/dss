@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.persistance.interfaces.RoleService;
+import com.bytmasoft.persistance.service.interfaces.RoleService;
 import com.bytmasoft.um.utils.UmMapping;
 
 import io.swagger.annotations.Api;

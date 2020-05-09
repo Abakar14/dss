@@ -22,7 +22,7 @@ import com.bytmasoft.domain.models.School;
 import com.bytmasoft.persistance.repositories.SchoolRepository;
 import com.bytmasoft.persistance.services.AddressServiceImpl;
 import com.bytmasoft.persistance.services.SchoolServiceImpl;
-import com.bytmasoft.persistance.services.UserManagementServiceImpl;
+import com.bytmasoft.persistance.services.TeacherServiceImpl;
 
 /**
  * @author Mahamat Date 09.04.2020 : 21:24:30
@@ -38,7 +38,7 @@ class SchoolServiceTest {
 	AddressServiceImpl addressServie;
 
 	@Autowired
-	UserManagementServiceImpl userService;
+	TeacherServiceImpl userService;
 
 	private long address_id = 3L;
 
@@ -263,9 +263,9 @@ class SchoolServiceTest {
 		Address a = addressServie.findOne(address_id);
 		s1.setAddress(a);
 
-		userService.findAllResources().forEach(u -> {
-			s1.getUsers().add(u);
-		});
+////		userService.findAllResources().forEach(u -> {
+////			s1.getUsers().add(u);
+//		});
 
 		schools.add(s1);
 		return schools;

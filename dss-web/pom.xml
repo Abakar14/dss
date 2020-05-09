@@ -12,6 +12,7 @@
 
 	<properties>
 		<jupiter.version>5.4.0</jupiter.version>
+		<jose.version>8.4</jose.version>
 	</properties>
 
 	<dependencies>
@@ -40,6 +41,11 @@
 			<groupId>com.bytmasoft</groupId>
 			<artifactId>persistance</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>${jose.version}</version>
 		</dependency>
 		<!--################## Test section ########################### -->
 		<dependency>
@@ -86,13 +92,7 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.bytmasoft</groupId>
-			<artifactId>LoginService</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		
+	
 	</dependencies>
 
 	<build>

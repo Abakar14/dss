@@ -7,6 +7,9 @@ package com.bytmasoft.um.utils;
 public final class UmMapping {
 
 	public static final String USERS = "users";
+	public static final String TEACHERS = "teachers";
+	public static final String MANAGERS = "managers";
+	public static final String STUDENTS = "students";
 	public static final String countries = "countries";
 	public static final String ADDRESSES = "addresses";
 	public static final String LOGIN = "login";
@@ -21,6 +24,9 @@ public final class UmMapping {
 		public static final String country = "country";
 		public static final String ADDRESS = "address";
 		public static final String SCHOOL = "school";
+		public static final String TEACHER = "teacher";
+		public static final String MANAGER = "manager";
+		public static final String STUDENT = "student";
 
 	}
 

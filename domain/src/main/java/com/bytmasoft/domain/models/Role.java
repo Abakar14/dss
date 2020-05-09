@@ -3,9 +3,8 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +23,6 @@ import org.hibernate.annotations.FetchMode;
 import com.bytmasoft.domain.enums.RoleType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
@@ -41,7 +39,8 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
+
 
 	private static final long serialVersionUID = -8409570516606378132L;
 
@@ -56,17 +55,40 @@ public class Role extends BaseEntity implements Serializable {
 	@JoinTable(name = "role_privilege", joinColumns = {
 			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "privilege_id", referencedColumnName = "id") })
-	List<Privilege> privileges = new ArrayList<>();
+	Set<Privilege> privileges = new HashSet<>();
 
-	@JsonIgnore
+	
+//	@JsonIgnore
 //	@Fetch(FetchMode.JOIN)
 	@ManyToMany(mappedBy = "roles")
-	List<User> users = new ArrayList<>();
+	private Set<Student> students = new HashSet<>();
+
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Manager> managers = new HashSet<>();
+
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Teacher> teachers = new HashSet<>();
+
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Employee> employees = new HashSet<>();
 
 	public void addPrivilege(Privilege privilege) {
 
 		this.privileges.add(privilege);
 		privilege.getRoles().add(this);
+
+	}
+	
+	public void removePrivilege(Privilege privilege) {
+
+		this.privileges.remove(privilege);
+		privilege.getRoles().remove(this);
 
 	}
 

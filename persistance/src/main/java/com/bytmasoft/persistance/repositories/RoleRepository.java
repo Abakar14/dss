@@ -1,6 +1,7 @@
 package com.bytmasoft.persistance.repositories;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bytmasoft.domain.enums.RoleType;
 import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.persistance.interfaces.UmBaseRepository;
 
 /**
  * 
@@ -18,8 +18,7 @@ import com.bytmasoft.persistance.interfaces.UmBaseRepository;
  * @author Mahamat Abakar Date 10.11.2019
  */
 @Repository
-@Transactional(readOnly = true)
-public interface RoleRepository extends UmBaseRepository<Role, Long> {
+public interface RoleRepository extends DSSBaseRepository<Role, Long> {
 
 	/**
 	 * 
@@ -79,7 +78,7 @@ public interface RoleRepository extends UmBaseRepository<Role, Long> {
 	 * @return
 	 */
 	@Query(value = "select r.* from role r join user_role ur on r.id = ur.role_id where ur.user_id =:user_id", nativeQuery = true)
-	List<Role> findRoleByUserId(Long user_id);
+	Set<Role> findRoleByUserId(Long user_id);
 
 	/**
 	 * @param user_id

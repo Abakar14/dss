@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
+import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.CountryService;
 import com.bytmasoft.persistance.repositories.CountryRepository;
+import com.bytmasoft.persistance.service.interfaces.CountryService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,36 +26,37 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CountryServiceImpl implements CountryService {
 
-	private final CountryRepository countryRepository;
+	private final CountryRepository repository;
+	private final EntityUtils<Country> entityUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
 
 	@Override
 	public Country findOne(long id) {
-		return countryRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no country with this id : " + id));
+		return repository.findById(id)
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no country with this id : " + id));
 	}
 
 	@Override
 	public Country findByName(String name) {
-		return countryRepository.findByName(name)
+		return repository.findByName(name)
 				.orElseThrow(() -> new EntityNotFoundException("There is no country with this name : " + name));
 	}
 
 	@Override
 	public List<Country> findAllResources() {
-		return (List<Country>) countryRepository.findAll();
+		return (List<Country>) repository.findAll();
 	}
 
 	@Override
 	public List<Country> findAllInActive() {
-		return countryRepository.findAllInActiveCountries();
+		return repository.findByStatus("I");
 	}
 
 	@Override
 	public List<Country> findAllActive() {
-		return countryRepository.findAllActiveCountries();
+		return repository.findByStatus("A");
 
 	}
 
@@ -66,7 +71,7 @@ public class CountryServiceImpl implements CountryService {
 			pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
 
 		}
-		Page<Country> result = countryRepository.findAll(pageable);
+		Page<Country> result = repository.findAll(pageable);
 
 		if (result.hasContent()) {
 			return result.getContent();
@@ -77,47 +82,43 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country create(Country resource) {
-
-//		if(resource.getUsers() != null) {
-//			resource.getUsers().forEach(u -> u.setInsertedBy(appName));
-//		}
-
-		resource.setInsertedProg(appName);
-		return countryRepository.save(resource);
+			resource.setInsertedProg(appName);
+			return repository.save(resource);
+	
 	}
 
 	@Override
 	public void update(Country resource) {
 
-		countryRepository.save(setUpdateParams(resource));
+		repository.save(entityUtils.setUpdateParams(resource, appName));
 
 	}
 
 	@Override
 	public void deleteById(long id) {
-		countryRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		countryRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Override
 	public long count() {
-		return countryRepository.count();
+		return repository.count();
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
-		return countryRepository.countActiveResources();
+		return repository.findByStatus("A").size();
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
-		return countryRepository.countAllInActiveUsers();
+		return repository.findByStatus("I").size();
 	}
 
 	@Override
@@ -125,8 +126,8 @@ public class CountryServiceImpl implements CountryService {
 
 		Country country = findOne(id);
 		country.setStatus("A");
-		this.setUpdateParams(country);
-		countryRepository.save(country);
+		this.entityUtils.setUpdateParams(country, appName);
+		repository.save(country);
 
 	}
 
@@ -134,78 +135,63 @@ public class CountryServiceImpl implements CountryService {
 	public void deactivateById(long id) {
 		Country country = findOne(id);
 		country.setStatus("I");
-		this.setUpdateParams(country);
-		countryRepository.save(country);
+		this.entityUtils.setUpdateParams(country, appName);
+		repository.save(country);
 
 	}
 
 	@Override
 	public void activateAll() {
-		countryRepository.activateAll();
+		repository.activateAll();
 
 	}
 
 	@Override
 	public void deactivateAll() {
-		countryRepository.deactivateAll();
+		repository.deactivateAll();
 
 	}
 
 	@Override
 	public void deleteAllInActiveResources() {
-		countryRepository.deleteInActiveCountry();
+		repository.deleteInActiveCountry();
 
 	}
 
-//	@Override
-//	public Country findCountryByUserId(long user_id){
-//		return countryRepository.findCountryByUserId(user_id);
-//	}
 
-//	@Override
-//	public Country findCountryByUser(User user){
-//		return findCountryByUserId(user.getId());
-//	}
-
-	/**
-	 * @param resource
-	 */
-	@Override
-	public Country setUpdateParams(Country resource) {
-		resource.setUpdatedProg(appName);
-		resource.setUpdatedOn(LocalDateTime.now());
-		return resource;
-
-	}
-
-	/**
-	 * 
-	 * @param sortBy
-	 * @param sortOrder
-	 * @return
-	 */
-//	private Sort getSort(String sortBy, String sortOrder) {
-//
-//		Sort sort;
-//		if ("DESC".equals(sortOrder)) {
-//
-//			sort = new Sort(Direction.DESC, sortBy);
-//		} else {
-//			sort = new Sort(Direction.ASC, sortBy);
-//		}
-//
-//		return sort;
-//	}
 
 	@Override
 	public void assignAddressToCountry(Long country_id, Long address_id) {
-		countryRepository.assignAddressToCountry(country_id, address_id);
+		repository.assignAddressToCountry(country_id, address_id);
 
 	}
 
-//	@Override
-//	public Country findCountryByUser(User user) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public void remerkForDelete(Long id) {
+		
+		Country c = this.findOne(id);
+		if(c != null) {
+			c.setDeletestatus(true);
+			this.update(c);
+		}
+		
+	}
+
+	@Override
+	public List<Country> findByStatus(String status) {
+	
+		return repository.findByStatus(status);
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		findByStatus(status).forEach(c -> {
+			c.setDeletestatus(true);
+			this.update(c);
+		});
+		
+	}
+
+	
+
 }

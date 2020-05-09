@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.models.Privilege;
-import com.bytmasoft.persistance.interfaces.PrivilegeService;
+import com.bytmasoft.persistance.service.interfaces.PrivilegeService;
 
 /**
  * @author Mahamat Date 19.03.2020 : 19:28:00
@@ -126,7 +126,7 @@ class PrivilegeServiceTest {
 	 */
 	@Test
 	@Order(1)
-	@Tag("privilege")
+//	@Tag("privilege")
 	void testCreate() {
 
 		this.getPrivileges().forEach(p -> {

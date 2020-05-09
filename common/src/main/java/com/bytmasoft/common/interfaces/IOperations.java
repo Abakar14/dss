@@ -11,6 +11,14 @@ public interface IOperations<T extends Serializable> {
 	 * @return one element
 	 */
 	T findOne(final long id);
+	
+	/**
+	 * 
+	 * @param status
+	 * @return a list of T
+	 */
+	List<T> findByStatus(String status);
+
 
 	/**
 	 * 
@@ -23,6 +31,7 @@ public interface IOperations<T extends Serializable> {
 	 * @return a list of all active element
 	 */
 	List<T> findAllInActive();
+	
 
 	/**
 	 * 
@@ -47,6 +56,8 @@ public interface IOperations<T extends Serializable> {
 	 * @return
 	 */
 	T create(final T resource);
+	
+	
 
 	/**
 	 * 
@@ -77,13 +88,13 @@ public interface IOperations<T extends Serializable> {
 	 * 
 	 * @return number of elements
 	 */
-	long countActiveResources();
+	int countActiveResources();
 
 	/**
 	 * 
 	 * @return number of elements
 	 */
-	long countInActiveResources();
+	int countInActiveResources();
 
 	/**
 	 * 
@@ -107,11 +118,14 @@ public interface IOperations<T extends Serializable> {
 	 */
 	void deactivateAll();
 
+
 	/**
 	 * 
-	 * @param t
-	 * @return t
+	 * @param user_id
 	 */
-	T setUpdateParams(T t);
+	void remerkForDelete(Long id);
+	
+	void remerkByStatusForDelete(String status);
+	
 
 }

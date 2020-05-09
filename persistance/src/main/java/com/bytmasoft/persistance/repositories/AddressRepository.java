@@ -8,8 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bytmasoft.domain.models.Address;
-import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
+import com.bytmasoft.domain.models.Address;;
 
 /**
  * 
@@ -17,7 +16,7 @@ import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
  * @author Mahamat Abakar Date 01.12.2019
  */
 @Repository
-public interface AddressRepository extends UmBaseRepository<Address, Long> {
+public interface AddressRepository extends DSSBaseRepository<Address, Long> {
 
 	/**
 	 * 
@@ -25,6 +24,13 @@ public interface AddressRepository extends UmBaseRepository<Address, Long> {
 	 * @return List of {@link Address}
 	 */
 	public List<Address> findByStreet(String street);
+	
+	/**
+	 * 
+	 * @param street
+	 * @return List of {@link Address}
+	 */
+	public List<Address> findByStatus(String status);
 
 	/**
 	 * 
@@ -39,30 +45,13 @@ public interface AddressRepository extends UmBaseRepository<Address, Long> {
 	 * @return List of {@link Address}
 	 */
 	public List<Address> findByPostalCode(String postalCode);
+	
+	public List<Address> findByHauseNumber(String hauseNumber);
+	
+	
+	public Address findByCityAndPostalCodeAndStreetAndHauseNumber(String city, 
+		 String postalCode, String street, String hauseNumber);
 
-	/**
-	 * @return list of {@link Address}
-	 */
-	@Query(value = "FROM Address a WHERE a.status ='I'")
-	List<Address> findInActiveAddresses();
-
-	/**
-	 * @return list of {@link Address}
-	 */
-	@Query(value = "FROM Address a WHERE a.status ='A'")
-	List<Address> findActiveAddresses();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(a) FROM Address a WHERE a.status ='A'")
-	long countActiveResources();
-
-	/**
-	 * @return
-	 */
-	@Query(value = "SELECT COUNT(a) FROM Address a WHERE a.status ='I'")
-	long countInActiveAddresses();
 
 	/**
 	 * 

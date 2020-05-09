@@ -15,15 +15,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bytmasoft.domain.enums.RoleType;
+import com.bytmasoft.domain.models.Privilege;
 import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.persistance.interfaces.PrivilegeService;
-import com.bytmasoft.persistance.interfaces.RoleService;
+import com.bytmasoft.persistance.service.interfaces.PrivilegeService;
+import com.bytmasoft.persistance.service.interfaces.RoleService;
 
 /**
  * @author Mahamat Date 19.03.2020 : 19:28:53
  */
+//@Transactional
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RoleServiceTest {
@@ -139,10 +142,27 @@ class RoleServiceTest {
 //	/**
 //	 * Test method for {@link com.bytmasoft.persistance.services.RoleServiceImpl#create(com.bytmasoft.api.models.Role)}.
 //	 */
-	@Test
-	@Order(1)
+//	@Test
+//	@Order(1)
 	void testCreate() {
+		
 		getRoles().forEach(r -> {
+			System.out.println("Role name : " + r.getName());
+//			pService.findAllResources().forEach(p -> {
+//				System.out.println("Privilege name : " + p.getName());
+//				if ("Delete".equals(p.getName())) {
+//					if ("Admin".equals(r.getName())) {
+//						r.addPrivilege(p);
+//
+//					}
+//
+//				} else {
+//					r.addPrivilege(p);
+//
+//				}
+//
+//			});
+
 			assertThat(this.service.create(r)).isNotNull();
 		});
 
@@ -156,7 +176,7 @@ class RoleServiceTest {
 	void testAddPrivilegeToRole() {
 
 		service.findAllResources().forEach(r -> {
-			if (r.getType().equals(RoleType.GUEST)) {
+			if (!r.getType().equals(RoleType.ADMIN)) {
 
 				pService.findAllResources().forEach(p -> {
 					if (!p.getName().equals("Delete")) {
@@ -165,13 +185,14 @@ class RoleServiceTest {
 					}
 				});
 
-			} else {
-				pService.findAllResources().forEach(p -> {
-
-					service.addPrivilegeToRole(r.getId(), p.getId());
-
-				});
-			}
+			} 
+//			else {
+//				pService.findAllResources().forEach(p -> {
+//
+//					service.addPrivilegeToRole(r.getId(), p.getId());
+//
+//				});
+//			}
 		});
 
 	}
@@ -183,8 +204,11 @@ class RoleServiceTest {
 	@Test
 	@Order(7)
 	void testUpdate() {
-		Role role = service.findOne(role_id);
+		Role role = service.findOne(2L);
 		role.setUpdatedBy(updatedBy);
+		role.addPrivilege(pService.findOne(1L));
+		role.addPrivilege(pService.findOne(2L));
+		role.addPrivilege(pService.findOne(3L));
 		service.update(role);
 
 		Role role1 = service.findOne(role_id);
@@ -374,31 +398,34 @@ class RoleServiceTest {
 	private List<Role> getRoles() {
 
 		List<Role> roles = new ArrayList<>();
-
-		Role role1 = new Role();
+		
+			Role role1 = new Role();
 		role1.setName("Student");
 		role1.setStatus("A");
 		role1.setType(RoleType.STUDENT);
-
-		Role role2 = new Role();
-		role2.setName("Admin");
-		role2.setStatus("A");
-		role2.setType(RoleType.ADMIN);
-
+				
 		Role role3 = new Role();
 		role3.setName("Teacher");
 		role3.setStatus("A");
 		role3.setType(RoleType.TEACHER);
+		
 
 		Role role4 = new Role();
 		role4.setName("Guest");
 		role4.setStatus("A");
 		role4.setType(RoleType.GUEST);
-
+		
+		Role role2 = new Role();
+		role2.setName("Admin");
+		role2.setStatus("A");
+		role2.setType(RoleType.ADMIN);
+		
+		
 		roles.add(role1);
-		// roles.add(role2);
+		roles.add(role2);
 		roles.add(role3);
 		roles.add(role4);
+
 		return roles;
 	}
 

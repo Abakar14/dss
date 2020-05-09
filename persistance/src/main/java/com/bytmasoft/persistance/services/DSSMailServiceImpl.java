@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.persistance.interfaces.DSSMailService;
+import com.bytmasoft.persistance.service.interfaces.DSSMailService;
 
 import lombok.RequiredArgsConstructor;
 

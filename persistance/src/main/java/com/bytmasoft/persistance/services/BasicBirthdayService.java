@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.persistance.interfaces.BirthdayService;
+import com.bytmasoft.persistance.service.interfaces.BirthdayService;
 
 /**
  * @author Mahamat Date 19.03.2020 : 21:29:47

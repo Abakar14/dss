@@ -1,6 +1,5 @@
 package com.bytmasoft.persistance.services;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.domain.models.Address;
-import com.bytmasoft.persistance.interfaces.AddressService;
 import com.bytmasoft.persistance.repositories.AddressRepository;
+import com.bytmasoft.persistance.service.interfaces.AddressService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,49 +23,50 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-	private final AddressRepository addressRepository;
-
+	private final AddressRepository repository;
+	private final EntityUtils<Address> entityUtils;
+	
 	@Value("${spring.application.name}")
 	private String appName;
 
 	@Override
 	public Address findOne(long id) {
-		return addressRepository.findById(id)
+		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("There is no user with this id: " + id));
 	}
 
 	@Override
 	public List<Address> findAllActive() {
-		return addressRepository.findActiveAddresses();
+		return repository.findByStatus("A");
 	}
 
 	@Override
 	public List<Address> findAllInActive() {
 
-		return addressRepository.findInActiveAddresses();
+		return repository.findByStatus("I");
 	}
 
 	@Override
 	public List<Address> findByCity(String city) {
 
-		return addressRepository.findByCity(city);
+		return repository.findByCity(city);
 	}
 
 	@Override
 	public List<Address> findByStreet(String street) {
 
-		return addressRepository.findByStreet(street);
+		return repository.findByStreet(street);
 	}
 
 	@Override
 	public List<Address> findByPostalCode(String postalCode) {
 
-		return addressRepository.findByPostalCode(postalCode);
+		return repository.findByPostalCode(postalCode);
 	}
 
 	@Override
 	public List<Address> findAllResources() {
-		return (List<Address>) addressRepository.findAll();
+		return (List<Address>) repository.findAll();
 	}
 
 	@Override
@@ -81,7 +82,7 @@ public class AddressServiceImpl implements AddressService {
 
 		}
 
-		Page<Address> result = addressRepository.findAll(pageable);
+		Page<Address> result = repository.findAll(pageable);
 
 		if (result.hasContent()) {
 
@@ -92,97 +93,126 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address create(Address resource) {
+	public Address create(Address address) {
+		
+	boolean isExists = repository.findByCityAndPostalCodeAndStreetAndHauseNumber(address.getCity(), address.getPostalCode(),
+				address.getStreet(), address.getHauseNumber()) != null ? true : false;
 
-		resource.setInsertedProg(appName);
-		return addressRepository.save(resource);
+		if(isExists) {
+			return address;
+		}else {
+			address.setInsertedProg(appName);
+			return repository.save(address);
+			
+		}
 	}
 
 	@Override
 	public void update(Address resource) {
-		setUpdateParams(resource);
-		addressRepository.save(resource);
+		entityUtils.setUpdateParams(resource, appName);
+		repository.save(resource);
 
 	}
 
 	@Override
 	public void deleteById(long id) {
-		addressRepository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	@Override
 	public void deleteAll() {
-		addressRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@Override
 	public long count() {
-		return addressRepository.count();
+		return repository.count();
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
-		return addressRepository.countActiveResources();
+		return repository.findByStatus("A").size();
+
 	}
 
 	@Override
-	public long countInActiveResources() {
+	public int countInActiveResources() {
 
-		return addressRepository.countInActiveAddresses();
+		return repository.findByStatus("I").size();
 	}
 
 	@Override
 	public void activateById(long id) {
 
-		Address country = findOne(id);
-		country.setStatus("A");
-		this.setUpdateParams(country);
-		addressRepository.save(country);
+		Address address = findOne(id);
+		address.setStatus("A");
+		this.entityUtils.setUpdateParams(address, appName);
+		repository.save(address);
 
 	}
 
 	@Override
 	public void deactivateById(long id) {
-		Address country = findOne(id);
-		country.setStatus("I");
-		this.setUpdateParams(country);
-		addressRepository.save(country);
+		Address address = findOne(id);
+		address.setStatus("I");
+		this.entityUtils.setUpdateParams(address, appName);
+		repository.save(address);
 
 	}
 
 	@Override
 	public void activateAll() {
-		addressRepository.activateAll();
+		repository.activateAll();
 
 	}
 
 	@Override
 	public void deactivateAll() {
-		addressRepository.deactivateAll();
+		repository.deactivateAll();
 
 	}
 
 	@Override
 	public void deleteAllInActiveResources() {
-		addressRepository.deleteInActiveAddress();
+		repository.deleteInActiveAddress();
 
 	}
 
 	@Override
 	public Address findAddressByUserId(Long user_id) {
-		return addressRepository.findAddressByUserId(user_id);
+		return repository.findAddressByUserId(user_id);
 	}
 
-	/**
-	 * @param resource
-	 */
+	
+
 	@Override
-	public Address setUpdateParams(Address resource) {
-		resource.setUpdatedProg(appName);
-		resource.setUpdatedOn(LocalDateTime.now());
-		return resource;
+	public void remerkForDelete(Long id) {
+
+		Address a = this.findOne(id);
+		if (a != null) {
+			a.setDeletestatus(true);
+			this.update(a);
+		}
 
 	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+
+		this.findByStatus(status).forEach(a -> {
+			a.setDeletestatus(true);
+			update(a);
+		});
+
+	}
+
+	@Override
+	public List<Address> findByStatus(String status) {
+
+		return repository.findByStatus(status);
+	}
+
+	
 
 }

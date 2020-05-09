@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -12,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
+import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Privilege;
-import com.bytmasoft.persistance.interfaces.PrivilegeService;
 import com.bytmasoft.persistance.repositories.PrivilegeRepository;
+import com.bytmasoft.persistance.service.interfaces.PrivilegeService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,53 +26,44 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class PrivilegeServiceImpl implements PrivilegeService {
 
-	private final PrivilegeRepository privilegeRepository;
+	private final PrivilegeRepository repository;
+	private final EntityUtils<Privilege> entityUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
 
-	/**
-	 * @param userRepository2
-	 * @param rightsRepository2
-	 */
-//	public PrivilegeServiceImpl(UserRepository userRepository, RoleRepository rightsRepository, PrivilegeRepository privilegeRepository) {
-//		this.userRepository = userRepository;
-//		this.rightsRepository = rightsRepository;
-//		this.privilegeRepository = privilegeRepository;
-//	}
-
 	@Override
 	public Privilege findOne(long id) {
-		return privilegeRepository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no privilege with this id: " + id));
+		return repository.findById(id)
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no privilege with this id: " + id));
 
 	}
 
 	@Override
 	public Privilege findByName(String name) {
-		return privilegeRepository.findByName(name);
+		return repository.findByName(name);
 	}
 
 	@Override
 	public List<Privilege> findAllResources() {
-		return (List<Privilege>) privilegeRepository.findAll();
+		return (List<Privilege>) repository.findAll();
 	}
 
 	@Override
 	public List<Privilege> findAllActive() {
-		return privilegeRepository.findActivePrivileges();
+		return repository.findActivePrivileges();
 	}
 
 	@Override
-	public List<Privilege> findPrivilegesByRoleId(Long role_id) {
+	public Set<Privilege> findPrivilegesByRoleId(Long role_id) {
 
-		return privilegeRepository.findPrivilegeByRoleId(role_id);
+		return repository.findPrivilegeByRoleId(role_id);
 	}
 
 	@Override
 	public List<Privilege> findAllInActive() {
 
-		return privilegeRepository.findInActivePrivileges();
+		return repository.findInActivePrivileges();
 	}
 
 	@Override
@@ -84,7 +78,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 		}
 
-		Page<Privilege> result = privilegeRepository.findAll(pageable);
+		Page<Privilege> result = repository.findAll(pageable);
 
 		if (result.hasContent()) {
 			return result.getContent();
@@ -94,165 +88,86 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	}
 
 	@Override
-	public Privilege create(Privilege group) {
+	public Privilege create(Privilege privilege) {
 
-//		if(group.getUsers() != null) {
-//			
-//			group.getUsers().forEach(u -> u.setInsertedBy(appName));
-//		}
-//		
-//		if(group.getRights() !=null) {
-//			group.getRights().forEach(r -> r.setInsertedProg(appName));
-//		}
+			privilege.setInsertedProg(appName);
+			return repository.save(privilege);		
 
-		group.setInsertedProg(appName);
-		return privilegeRepository.save(group);
 	}
 
 	@Override
 	public void update(Privilege privilege) {
 
-		privilegeRepository.save(setUpdateParams(privilege));
+		repository.save(entityUtils.setUpdateParams(privilege, appName));
 
 	}
 
 	@Override
 	public void deleteById(long id) {
 
-		privilegeRepository.deleteById(id);
+		repository.deleteById(id);
 
 	}
 
 	@Override
 	public void deleteAll() {
-		privilegeRepository.deleteAll();
+		repository.deleteAll();
 
 	}
 
 	@Override
 	public long count() {
-		return privilegeRepository.count();
+		return repository.count();
 	}
 
 	@Override
-	public long countActiveResources() {
+	public int countActiveResources() {
 
-		return privilegeRepository.countActivePrivileges();
+		return repository.findByStatus("A").size();
 	}
 
 	@Override
-	public long countInActiveResources() {
-		return privilegeRepository.countInActivePrivilege();
+	public int countInActiveResources() {
+		return repository.findByStatus("I").size();
 	}
 
 	@Override
 	public void activateById(long id) {
 
-		Privilege group = findOne(id);
-		group.setStatus("A");
-		this.setUpdateParams(group);
-		privilegeRepository.save(group);
+		Privilege p = findOne(id);
+		p.setStatus("A");
+		this.entityUtils.setUpdateParams(p, appName);
+		repository.save(p);
 
 	}
 
 	@Override
 	public void deactivateById(long id) {
-		Privilege group = findOne(id);
-		group.setStatus("I");
-		this.setUpdateParams(group);
-		privilegeRepository.save(group);
+		Privilege p = findOne(id);
+		p.setStatus("I");
+		this.entityUtils.setUpdateParams(p, appName);
+		repository.save(p);
 
 	}
 
 	@Override
 	public void activateAll() {
-		privilegeRepository.activateAll();
+		repository.activateAll();
 
 	}
 
 	@Override
 	public void deactivateAll() {
-		privilegeRepository.deactivateAll();
+		repository.deactivateAll();
 
 	}
 
 	@Override
 	public void deleteAllInActiveResources() {
-		privilegeRepository.deleteInActiveUsers();
+		repository.deleteInActiveUsers();
 
 	}
-
-//	@Override
-//	public void assignUserToGroup(Long user_id, String groupName) {
-//
-//		Privilege group = groupRepository.findByName(groupName);
-//
-//		User user = userRepository.findById(user_id)
-//				.orElseThrow(() -> new EntityNotFoundException("User by Id : " + user_id + " not found"));
-//			
-////			group.addUser(user);
-//			groupRepository.save(group);
-//			
-//	}
-//
-//	@Override
-//	public void assignRightToGroup(Long group_id, Long rights_id) {
-//		groupRepository.assignRightsToGroup(group_id, rights_id);
-//
-//	}
-//
-//	@Override
-//	public void assignRightToGroup(String groupName, String rightName) {
-//		
-//		Privilege	group = groupRepository.findByName(groupName);
-//		
-//		
-//		
-//			Long rights_id = rightsRepository.findByName(rightName).getId();
-//			
-//			groupRepository.assignRightsToGroup(group.getId(), rights_id);
-//			
-//		
-//	}
-//
-//
-//
-//	@Override
-//	public Privilege findGroupByUserIdAndGroupId(Long user_id, Long group_id) {
-//		return groupRepository.findGroupByUserIdAndGroupId(user_id, group_id);
-//	}
-//
-//	@Override
-//	public List<Privilege> findAllGroupsByUserId(Long user_id) {
-//		return groupRepository.findAllGroupsByUserId(user_id);
-//	}
-
-	@Override
-	public Privilege setUpdateParams(Privilege source) {
-		source.setUpdatedProg(appName);
-		source.setUpdatedOn(LocalDateTime.now());
-		return source;
-	}
-
-	/**
-	 * 
-	 * @param sortBy
-	 * @param sortOrder
-	 * @return
-	 */
-//	private Sort getSort(String sortBy, String sortOrder) {
-//
-//		Sort sort;
-//		if ("DESC".equals(sortOrder)) {
-//
-//			sort = new Sort(Direction.DESC, sortBy);
-//		} else {
-//			sort = new Sort(Direction.ASC, sortBy);
-//		}
-//
-//		return sort;
-//	}
-
+	
 	@Override
 	public Privilege findByRequestParams(Map<String, String> requestParams) {
 
@@ -271,5 +186,40 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		return null;
 
 	}
+
+	@Override
+	public void remerkForDelete(Long id) {
+	
+		Privilege p = this.findOne(id);
+		
+		if(p != null) {
+			p.setDeletestatus(true);
+			this.update(p);
+		}
+	}
+
+	@Override
+	public List<Privilege> findByStatus(String status) {
+		return repository.findByStatus(status);
+	}
+
+	@Override
+	public void remerkByStatusForDelete(String status) {
+		findByStatus(status).forEach(p -> {
+			p.setDeletestatus(true);
+			this.update(p);
+		});
+		
+		
+	}
+
+	
+	@Override
+	public Set<Privilege> findPrivilegesByUserId(Long id) {
+		
+		return repository.findPrivilegesByUserId(id);
+	}
+
+	
 
 }

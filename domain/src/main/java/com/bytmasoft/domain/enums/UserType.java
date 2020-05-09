@@ -7,6 +7,23 @@ package com.bytmasoft.domain.enums;
 
 public enum UserType {
 
-	STUDENT, EMPLOYEE, TEACHER, MANAGER, PARENT, MACHINE;
+	HUMAN("Some application"),
+	MACHINE("Some application");
+	
+	private String description;
+
+	/**
+	 * 
+	 */
+	private UserType(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
 
 }
