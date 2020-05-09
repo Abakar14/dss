@@ -9,8 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -21,8 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.enums.AddressType;
 import com.bytmasoft.domain.models.Address;
-import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.AddressService;
+import com.bytmasoft.persistance.service.interfaces.AddressService;
+import com.bytmasoft.persistance.service.interfaces.CountryService;
 
 /**
  * @author Mahamat Date 19.03.2020 : 19:23:01
@@ -33,6 +34,10 @@ class AddressServiceTest {
 
 	@Autowired
 	AddressService service;
+	
+	@Autowired
+	CountryService cService;
+	
 	private String street = "Konrad-Adenauerstr";
 
 	private Long addressId = 12L;
@@ -148,6 +153,8 @@ class AddressServiceTest {
 	void testCreate() {
 
 		getAddresses().forEach(a -> {
+//			assertThat(cService.create(a.getCountry())).isNotNull();
+			
 			assertThat(service.create(a)).isNotNull();
 		});
 
@@ -298,48 +305,52 @@ class AddressServiceTest {
 		assertThat(service.findAddressByUserId(userId)).isNotNull();
 	}
 
-	private List<Address> getAddresses() {
+	private Set<Address> getAddresses() {
 
-		List<Address> addresses = new ArrayList<>();
+		Set<Address> addresses = new HashSet<>();
 
-		Country c1 = new Country();
-		c1.setName("Deutschland");
-		c1.setStatus("A");
-
-		Country c2 = new Country();
-		c2.setName("France");
-		c2.setStatus("A");
-
-		Country c3 = new Country();
-		c3.setName("Sudan");
-		c3.setStatus("A");
+//		Country c1 = new Country();
+//		c1.setName("Deutschland");
+//		c1.setStatus("A");
+//
+//		Country c2 = new Country();
+//		c2.setName("France");
+//		c2.setStatus("A");
+//
+//		Country c3 = new Country();
+//		c3.setName("Sudan");
+//		c3.setStatus("A");
 
 		Address ad1 = new Address();
 		ad1.setCity("Weinheim");
-		ad1.setCountry(c1);
+		ad1.setCountry(cService.findOne(4L));
 		ad1.setHauseNumber("9");
 		ad1.setPostalCode("69469");
 		ad1.setStatus("A");
 		ad1.setStreet("Konrad-Adenauerstr");
 		ad1.setType(AddressType.HOME);
+//		c1.addAddress(ad1);
 
 		Address ad2 = new Address();
 		ad2.setCity("Paris");
-		ad2.setCountry(c2);
+		ad2.setCountry(cService.findOne(5L));
 		ad2.setHauseNumber("9");
 		ad2.setPostalCode("69469");
 		ad2.setStatus("A");
 		ad2.setStreet("Chare de Gole");
 		ad2.setType(AddressType.BUSINESS);
+//		c2.addAddress(ad2);
 
 		Address ad3 = new Address();
 		ad3.setCity("Oumdurman");
-		ad3.setCountry(c3);
+		ad3.setCountry(cService
+				.findOne(6L));
 		ad3.setHauseNumber("9");
 		ad3.setPostalCode("69469");
 		ad3.setStatus("A");
 		ad3.setStreet("Ali Dinnar");
 		ad3.setType(AddressType.CONTRACT);
+//		c3.addAddress(ad3);
 
 		addresses.add(ad1);
 		addresses.add(ad2);

@@ -1,12 +1,20 @@
 package com.bytmasoft.domain.models;
 
-import java.util.Date;
-
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Password extends BaseEntity {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8187952419153752529L;
+
 	private String password;
 	
 	//lifetime muss bee configurable (3 month)
@@ -15,12 +23,6 @@ public class Password extends BaseEntity {
 	private String secondOldPassword;
 	
 	
-	private boolean isValid() {
-		boolean isValid = false;
-		
-		
-		return isValid;
-		
-	}
+
 
 }

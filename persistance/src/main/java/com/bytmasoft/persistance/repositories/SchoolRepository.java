@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bytmasoft.domain.enums.SchoolType;
-import com.bytmasoft.domain.models.School;
-import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
+import com.bytmasoft.domain.models.School;;
 
 /**
  * 
@@ -19,7 +18,7 @@ import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface SchoolRepository extends UmBaseRepository<School, Long> {
+public interface SchoolRepository extends DSSBaseRepository<School, Long> {
 
 	/**
 	 * @param name {@link String}

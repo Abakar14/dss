@@ -9,8 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
+import com.bytmasoft.domain.models.Country;;
 
 /**
  * 
@@ -18,7 +17,7 @@ import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
  * @author Mahamat Abakar Date 01.12.2019
  */
 @Repository
-public interface CountryRepository extends UmBaseRepository<Country, Long> {
+public interface CountryRepository extends DSSBaseRepository<Country, Long> {
 
 	/**
 	 * @param name

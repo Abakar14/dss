@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import java.time.Period;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.utility.RandomString;
 
 /**
  * 
@@ -71,15 +72,22 @@ public abstract class BaseUser extends BaseEntity  {
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
-	@JsonProperty(value = "email")
-	@Email
-	@Column(nullable = false, unique = true)
-	private String email;
+//	@JsonProperty(value = "email")
+//	@Email
+//	@Column(nullable = false, unique = true)
+//	private String email;
+	@Embedded
+	@Column(unique = true, nullable = false)
+	private EmailAddress emailAddress;
 
 //	@JsonIgnore
 	@NotNull(message = "is required")
 	@Size(min = 8, message = "is required")
 	private String password;
+	
+	@NotNull(message = "is required")
+	@Size(min = 9, max = 9, message = "is required")
+	private String salt;
 
 	@JsonProperty(value = "birthday")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
@@ -92,6 +100,7 @@ public abstract class BaseUser extends BaseEntity  {
 
 	@ApiModelProperty(notes = "The api will generate the username")
 	@JsonProperty(value = "username")
+	@Column(unique = true, nullable = false)
 	private String username;
 
 	@JsonProperty(value = "type")
@@ -106,28 +115,19 @@ public abstract class BaseUser extends BaseEntity  {
 	@JsonProperty(value = "foto")
 	private Blob foto;
 
-//	@JsonProperty(value = "school")
-//	@Fetch(FetchMode.JOIN)
-//	@ManyToOne
-//	@JoinColumn(name = "school_id")
-//	private School school;
+	
+	public void setPassword(String password) {
+		
+		this.password = password;
+	}
 
-//	public void addAddress(Addresse address) {
-//		this.addresses.add(address);
-//		address.getUsers().add(this);
-//	}
 
-//	public void addRole(Role role) {
-//		this.roles.add(role);
-//	}
-
-//	public void RemoveRole(Role role) {
-//
-//		roles.remove(role);
-//		role.getUsers().remove(this);
-//
-//	}
-
+	
+	public String generateSalt() {
+		
+		return	RandomString.make(9);
+	}
+	
 	public int getAge() {
 
 		if (birthday != null) {
@@ -145,10 +145,7 @@ public abstract class BaseUser extends BaseEntity  {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("User [id=").append(this.getId()).append(", firstname=").append(this.getFirstName())
 				.append(", lastname=").append(this.getLastName()).append(", status=").append(this.getStatus())
-				.append(", email=").append(this.getEmail()).append(", password=").append(this.getPassword())
-				
-//				.append(", age").append(this.getAge()).append(", addresses=").append(this.getAddresses())
-//				.append(", roles=").append(this.getRoles())
+				.append(", email=").append(this.emailAddress.toString()).append(", password=").append(this.getPassword())
 				.append("]"
 						);
 
@@ -160,7 +157,7 @@ public abstract class BaseUser extends BaseEntity  {
 
 		final int primeNumber = 31;
 		int resutl = 1;
-		resutl = (primeNumber * resutl) + ((email == null) ? 0 : email.hashCode());
+		resutl = (primeNumber * resutl) + ((this.emailAddress.toString() == null) ? 0 : this.emailAddress.toString().hashCode());
 		return resutl;
 
 	}
@@ -182,7 +179,7 @@ public abstract class BaseUser extends BaseEntity  {
 		}
 
 		final BaseUser user = (BaseUser) obj;
-		if (!email.equals(user.getEmail())) {
+		if (!this.emailAddress.toString().equals(user.emailAddress.toString())) {
 			return false;
 		}
 

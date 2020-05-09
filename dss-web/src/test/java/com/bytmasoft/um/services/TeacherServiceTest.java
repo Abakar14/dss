@@ -11,16 +11,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.enums.GenderType;
 import com.bytmasoft.domain.enums.UserType;
+import com.bytmasoft.domain.models.EmailAddress;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
-import com.bytmasoft.persistance.interfaces.RoleService;
-import com.bytmasoft.persistance.interfaces.TeacherService;
+import com.bytmasoft.persistance.service.interfaces.RoleService;
+import com.bytmasoft.persistance.service.interfaces.TeacherService;
 
 @SpringBootTest
 class TeacherServiceTest {
 
 	@Autowired
-	TeacherService<Teacher> service;
+	TeacherService service;
 	
 	@Autowired
 	RoleService roleService;
@@ -354,7 +355,7 @@ class TeacherServiceTest {
 		Teacher t = new Teacher();
 		t.setFirstName(firstname);
 		t.setLastName(lastname);
-		t.setEmail(email);
+		t.setEmailAddress(new EmailAddress(email));
 		t.setMiddelName(middelname);
 		t.setPassword(password);
 		t.setStatus(status);

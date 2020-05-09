@@ -1,7 +1,9 @@
 package com.bytmasoft.um.controller;
 
+
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bytmasoft.domain.models.Privilege;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
+import com.bytmasoft.persistance.services.RoleServiceImpl;
 import com.bytmasoft.persistance.services.TeacherServiceImpl;
 import com.bytmasoft.um.utils.UmMapping;
 
@@ -37,6 +39,7 @@ public class TeacherController {
 	// integration Test
 	
 	private final TeacherServiceImpl service;
+	private final RoleServiceImpl roleService;
 
 	/***************************** Get Sections ****************************/
 
@@ -54,17 +57,17 @@ public class TeacherController {
 
 	@ApiOperation(value = "view a list of users by age > {integer}", response = List.class)
 	@GetMapping("/agemorethan/{age}")
-	List<Teacher> findAllTeachersByAgeMoreThan(@PathVariable Long age) {
+	List<Teacher> findAllTeachersByAgeMoreThan(@PathVariable int age) {
 		return service.findUsersByAgeMoreThan(age);
 	}
 
 	@ApiOperation(value = "view a list of users by age < {integer}", response = List.class)
 	@GetMapping("/agelessthan/{age}")
-	List<Teacher> findAllTeachersByAgeLessThan(@PathVariable Long age) {
+	List<Teacher> findAllTeachersByAgeLessThan(@PathVariable int age) {
 		return service.findUsersByAgeLessThan(age);
 	}
 
-	@ApiOperation(value = "view a list of user by request params", response = List.class)
+	@ApiOperation(value = "view a list of teacher by request params", response = List.class)
 	@GetMapping("/teacher")
 	List<Teacher> findByRequestParams(@RequestParam Map<String, String> requestParams) {
 
@@ -128,7 +131,7 @@ public class TeacherController {
 	}
 
 	@GetMapping("{id}/roles")
-	public List<Role> getAllRolesByUserId(@PathVariable Long id) {
+	public Set<Role> getAllRolesByUserId(@PathVariable Long id) {
 		return service.findRolesByUserId(id);
 
 	}
@@ -139,12 +142,7 @@ public class TeacherController {
 
 	}
 
-//	@GetMapping("{user_id}/privileges")
-//	public List<Privilege> getRoleByUserIdAndRoleId(@PathVariable Long user_id) {
-//		return this.service.findPrivilegesByUserId(user_id);
-//
-//	}
-
+	
 	/***************************** Post Sections ****************************/
 
 	
@@ -157,16 +155,16 @@ public class TeacherController {
 //	}
 	
 	
-//	@ApiOperation(value = "Add a user")
+//	@ApiOperation(value = "Add a teacher")
 //	@PostMapping
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public User register(@ApiParam(value = "User object to store", required = true) @Valid @RequestBody User user) {
+//	@ResponseBody(HttpStatus.CREATED)
+//	public Teacher register(@ApiParam(value = "User object to store", required = true) @Valid @RequestBody User teacher) {
 //
-//		return service.create(user);
+//		return service.create(teacher);
 //	}
 //
 //	/**
-//	 * First ask user for changing his Password We need here a username or Email
+//	 * First ask teacher for changing his Password We need here a username or Email
 //	 * then we generate a mail with link und send it to User
 //	 * 
 //	 * @param emailOrUsername
@@ -187,7 +185,7 @@ public class TeacherController {
 //	/***************************** Put Sections ****************************/
 //
 //	/**
-//	 * after user recieved a mail with link and filled all fields
+//	 * after teacher recieved a mail with link and filled all fields
 //	 * 
 //	 * @param emailOrUsername
 //	 * @return
@@ -209,12 +207,12 @@ public class TeacherController {
 //	}
 //
 //	@PutMapping("/{id}")
-//	public ResponseEntity<User> updateUser(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody User user)
+//	public ResponseEntity<User> updateUser(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody User teacher)
 //			throws EntityNotFoundException {
 //		service.findOne(id);
-//		user.setId(id);
-//		service.update(user);
-//		return ResponseEntity.ok(user);
+//		teacher.setId(id);
+//		service.update(teacher);
+//		return ResponseEntity.ok(teacher);
 //	}
 //
 //	@PutMapping("/activate")

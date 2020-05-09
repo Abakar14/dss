@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +19,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.domain.models.Teacher;
 import com.bytmasoft.persistance.services.TeacherServiceImpl;
 import com.bytmasoft.um.models.DSSUserDetails;
@@ -28,6 +26,7 @@ import com.bytmasoft.um.utils.TokenUtil;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,18 +34,14 @@ import lombok.extern.slf4j.Slf4j;
  * @author Mahamat Abakar Date 19.12.2019
  */
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	
-
-//	@Autowired
-//	LoginServiceImpl loginService;
 	
-	@Autowired
-	TeacherServiceImpl teacherService;
+	private final TeacherServiceImpl teacherService;
 
-	@Autowired
-	TokenUtil tokenUtil;
+	private final TokenUtil tokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

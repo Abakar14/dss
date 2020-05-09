@@ -3,8 +3,8 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,13 +39,13 @@ public class Privilege extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -5443678816175025435L;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String name;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "privileges")
-	List<Role> roles = new ArrayList<>();
-
+	Set<Role> roles = new HashSet<>();
+	
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();

@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.CountryService;
+import com.bytmasoft.persistance.service.interfaces.CountryService;
 
 /**
  * @author Mahamat Date 19.03.2020 : 19:26:34
@@ -34,7 +34,7 @@ class CountryServiceTest {
 	private int pageNo = 0;
 	private String sortBy = "Name";
 	private String sortOrder = "desc";
-	private String updatedBy = "Abakar";
+//	private String updatedBy = "Abakar";
 	private Long address_id = 14L;
 
 	@Test
@@ -129,8 +129,8 @@ class CountryServiceTest {
 		Country c = service.findOne(country_id);
 //		c.setUpdatedBy(updatedBy);
 		service.update(c);
-		Country c1 = service.findOne(country_id);
-
+//		Country c1 = service.findOne(country_id);
+//
 //		assertThat(c1.getUpdatedBy()).isEqualTo(updatedBy);
 
 	}

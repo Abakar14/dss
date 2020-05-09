@@ -3,8 +3,8 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -55,17 +55,40 @@ public class Role extends BaseEntity {
 	@JoinTable(name = "role_privilege", joinColumns = {
 			@JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "privilege_id", referencedColumnName = "id") })
-	List<Privilege> privileges = new ArrayList<>();
+	Set<Privilege> privileges = new HashSet<>();
+
+	
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Student> students = new HashSet<>();
 
 //	@JsonIgnore
 //	@Fetch(FetchMode.JOIN)
 	@ManyToMany(mappedBy = "roles")
-	private List<Teacher> teachers = new ArrayList<>();
+	private Set<Manager> managers = new HashSet<>();
+
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Teacher> teachers = new HashSet<>();
+
+//	@JsonIgnore
+//	@Fetch(FetchMode.JOIN)
+	@ManyToMany(mappedBy = "roles")
+	private Set<Employee> employees = new HashSet<>();
 
 	public void addPrivilege(Privilege privilege) {
 
 		this.privileges.add(privilege);
 		privilege.getRoles().add(this);
+
+	}
+	
+	public void removePrivilege(Privilege privilege) {
+
+		this.privileges.remove(privilege);
+		privilege.getRoles().remove(this);
 
 	}
 

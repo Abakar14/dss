@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,11 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
 import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.CountryService;
 import com.bytmasoft.persistance.repositories.CountryRepository;
+import com.bytmasoft.persistance.service.interfaces.CountryService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class CountryServiceImpl implements CountryService {
 
 	private final CountryRepository repository;
+	private final EntityUtils<Country> entityUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
@@ -31,7 +35,7 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public Country findOne(long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no country with this id : " + id));
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no country with this id : " + id));
 	}
 
 	@Override
@@ -78,21 +82,15 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country create(Country resource) {
-
-	  Country c = this.CreateIfNotExists(resource);
-	  if(c == null) {
-		  resource.setInsertedProg(appName);
-		  return repository.save(resource);
-		  
-	  }else {
-		  return c;
-	  }
+			resource.setInsertedProg(appName);
+			return repository.save(resource);
+	
 	}
 
 	@Override
 	public void update(Country resource) {
 
-		repository.save(setUpdateParams(resource));
+		repository.save(entityUtils.setUpdateParams(resource, appName));
 
 	}
 
@@ -128,7 +126,7 @@ public class CountryServiceImpl implements CountryService {
 
 		Country country = findOne(id);
 		country.setStatus("A");
-		this.setUpdateParams(country);
+		this.entityUtils.setUpdateParams(country, appName);
 		repository.save(country);
 
 	}
@@ -137,7 +135,7 @@ public class CountryServiceImpl implements CountryService {
 	public void deactivateById(long id) {
 		Country country = findOne(id);
 		country.setStatus("I");
-		this.setUpdateParams(country);
+		this.entityUtils.setUpdateParams(country, appName);
 		repository.save(country);
 
 	}
@@ -157,17 +155,6 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public void deleteAllInActiveResources() {
 		repository.deleteInActiveCountry();
-
-	}
-
-	/**
-	 * @param resource
-	 */
-	@Override
-	public Country setUpdateParams(Country resource) {
-		resource.setUpdatedProg(appName);
-		resource.setUpdatedOn(LocalDateTime.now());
-		return resource;
 
 	}
 
@@ -205,10 +192,6 @@ public class CountryServiceImpl implements CountryService {
 		
 	}
 
-	@Override
-	public Country CreateIfNotExists(Country country) {
-		return findByName(country.getName());		
-	}
-
+	
 
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bytmasoft.domain.models.Privilege;
-import com.bytmasoft.persistance.interfaces.PrivilegeService;
+import com.bytmasoft.persistance.service.interfaces.PrivilegeService;
 import com.bytmasoft.um.utils.UmMapping;
 
 import io.swagger.annotations.Api;

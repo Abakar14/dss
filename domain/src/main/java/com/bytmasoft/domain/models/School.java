@@ -4,20 +4,26 @@
  */
 package com.bytmasoft.domain.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
@@ -72,11 +78,14 @@ public class School extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private SchoolType type;
 
-	@JsonIgnore
-	@ApiModelProperty(hidden = true)
-	@XmlElement
-	@OneToMany(mappedBy = "school")
-	private List<Teacher> teachers = new ArrayList<>();
+	
+//	@JsonIgnore
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany
+	@JoinTable(name = "teacher_school", joinColumns = {
+			@JoinColumn(name = "teacher_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "school_id", referencedColumnName = "id") })
+	private Set<Teacher> teachers = new HashSet<>();
 
 	@JsonIgnore
 	@ApiModelProperty(hidden = true)
@@ -84,12 +93,26 @@ public class School extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
+	
+	
+	@JsonProperty(value = "manager")
+	@Fetch(FetchMode.JOIN)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "manager_id")
+	private Manager manager;
+	
 
-//	public void addUser(User user) {
-//		this.users.add(user);
-//		user.setSchool(this);
-//	}
-
+	public void addTeacher(Teacher teacher) {
+		this.teachers.add(teacher);
+		teacher.getSchools().add(this);
+	}
+	
+	public void removeTeacher(Teacher teacher) {
+		this.teachers.remove(teacher);
+		teacher.getSchools().remove(this);
+	}
+	
+	
 	@Override
 	public int hashCode() {
 

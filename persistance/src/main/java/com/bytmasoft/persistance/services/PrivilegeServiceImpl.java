@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -12,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
+import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Privilege;
-import com.bytmasoft.persistance.interfaces.PrivilegeService;
 import com.bytmasoft.persistance.repositories.PrivilegeRepository;
+import com.bytmasoft.persistance.service.interfaces.PrivilegeService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class PrivilegeServiceImpl implements PrivilegeService {
 
 	private final PrivilegeRepository repository;
+	private final EntityUtils<Privilege> entityUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
@@ -31,7 +35,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	@Override
 	public Privilege findOne(long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no privilege with this id: " + id));
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no privilege with this id: " + id));
 
 	}
 
@@ -51,7 +55,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	}
 
 	@Override
-	public List<Privilege> findPrivilegesByRoleId(Long role_id) {
+	public Set<Privilege> findPrivilegesByRoleId(Long role_id) {
 
 		return repository.findPrivilegeByRoleId(role_id);
 	}
@@ -85,19 +89,16 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 	@Override
 	public Privilege create(Privilege privilege) {
-		Privilege p = this.CreateIfNotExists(privilege);
-		if(p == null) {
+
 			privilege.setInsertedProg(appName);
 			return repository.save(privilege);		
-		}else {
-			return p;
-		}
+
 	}
 
 	@Override
 	public void update(Privilege privilege) {
 
-		repository.save(setUpdateParams(privilege));
+		repository.save(entityUtils.setUpdateParams(privilege, appName));
 
 	}
 
@@ -133,19 +134,19 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	@Override
 	public void activateById(long id) {
 
-		Privilege group = findOne(id);
-		group.setStatus("A");
-		this.setUpdateParams(group);
-		repository.save(group);
+		Privilege p = findOne(id);
+		p.setStatus("A");
+		this.entityUtils.setUpdateParams(p, appName);
+		repository.save(p);
 
 	}
 
 	@Override
 	public void deactivateById(long id) {
-		Privilege group = findOne(id);
-		group.setStatus("I");
-		this.setUpdateParams(group);
-		repository.save(group);
+		Privilege p = findOne(id);
+		p.setStatus("I");
+		this.entityUtils.setUpdateParams(p, appName);
+		repository.save(p);
 
 	}
 
@@ -166,14 +167,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		repository.deleteInActiveUsers();
 
 	}
-
-	@Override
-	public Privilege setUpdateParams(Privilege source) {
-		source.setUpdatedProg(appName);
-		source.setUpdatedOn(LocalDateTime.now());
-		return source;
-	}
-
 	
 	@Override
 	public Privilege findByRequestParams(Map<String, String> requestParams) {
@@ -220,10 +213,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 		
 	}
 
+	
 	@Override
-	public Privilege CreateIfNotExists(Privilege t) {
+	public Set<Privilege> findPrivilegesByUserId(Long id) {
 		
-		return findByName(t.getName());
+		return repository.findPrivilegesByUserId(id);
 	}
+
+	
 
 }

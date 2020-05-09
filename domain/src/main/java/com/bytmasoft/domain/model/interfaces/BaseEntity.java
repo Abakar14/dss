@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
-import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -63,11 +62,8 @@ public abstract class BaseEntity implements IEntity {
 	@ApiModelProperty(notes = "The database will generate the id", hidden = true)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Column(name = "id", updatable = false, nullable = false)	
 	private Long id;
-
-	
-	
 	
 	@PrePersist
 	public void init() {

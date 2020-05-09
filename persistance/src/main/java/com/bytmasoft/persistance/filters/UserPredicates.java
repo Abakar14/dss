@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import com.bytmasoft.domain.enums.UserType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.bytmasoft.domain.models.BaseUser;
-import com.bytmasoft.domain.models.Teacher;
 
 /**
  * @author Mahamat Date 13.04.2020 : 23:05:44
@@ -41,9 +40,9 @@ public class UserPredicates {
 		return users.stream().filter(predicate).collect(Collectors.toList());
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T> Page<T> filterPages(Page<T> users, Predicate<T> predicate) {
 
-		return (Page<T>) users.stream().filter(predicate).collect(Collectors.toList());
+	public static <T> List<T> filterPages(Page<T> users, Predicate<T> predicate) {
+
+		return users.stream().filter(predicate).collect(Collectors.toList());
 	}
 }

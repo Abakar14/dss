@@ -31,6 +31,7 @@ public interface IOperations<T extends Serializable> {
 	 * @return a list of all active element
 	 */
 	List<T> findAllInActive();
+	
 
 	/**
 	 * 
@@ -56,12 +57,7 @@ public interface IOperations<T extends Serializable> {
 	 */
 	T create(final T resource);
 	
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	T CreateIfNotExists(final T t);
+	
 
 	/**
 	 * 
@@ -122,13 +118,7 @@ public interface IOperations<T extends Serializable> {
 	 */
 	void deactivateAll();
 
-	/**
-	 * 
-	 * @param t
-	 * @return t
-	 */
-	T setUpdateParams(T t);
-	
+
 	/**
 	 * 
 	 * @param user_id

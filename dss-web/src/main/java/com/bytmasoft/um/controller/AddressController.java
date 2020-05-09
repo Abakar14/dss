@@ -2,6 +2,8 @@ package com.bytmasoft.um.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
 import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Country;
-import com.bytmasoft.persistance.interfaces.AddressService;
-import com.bytmasoft.persistance.interfaces.CountryService;
+import com.bytmasoft.persistance.service.interfaces.AddressService;
+import com.bytmasoft.persistance.service.interfaces.CountryService;
 import com.bytmasoft.um.utils.UmMapping;
 
 import io.swagger.annotations.Api;

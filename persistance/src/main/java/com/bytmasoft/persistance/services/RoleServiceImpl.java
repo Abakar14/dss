@@ -3,6 +3,9 @@ package com.bytmasoft.persistance.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -11,12 +14,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.EntityNotFoundException;
+import com.bytmasoft.common.exception.MyEntityNotFoundException;
+import com.bytmasoft.common.utils.Messages;
 import com.bytmasoft.domain.enums.RoleType;
+import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.messages.Messages;
-import com.bytmasoft.persistance.interfaces.RoleService;
 import com.bytmasoft.persistance.repositories.RoleRepository;
+import com.bytmasoft.persistance.service.interfaces.RoleService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class RoleServiceImpl implements RoleService {
 
 	private final RoleRepository repository;
+	private final EntityUtils<Role> entityUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
@@ -32,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Role findOne(long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("There is no role with this id: " + id));
+				.orElseThrow(() -> new MyEntityNotFoundException("There is no role with this id: " + id));
 
 	}
 
@@ -68,21 +74,23 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role findRoleByUserIdAndRoleId(Long user_id, Long role_id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return repository.findRoleByUserIdAndRoleId(user_id, role_id);
 	}
 
 	@Override
 	public Role create(Role role) {
 		
-		Role r = this.CreateIfNotExists(role);
-		if(r == null) {
+//		boolean isExists = repository.findByName(role.getName()) != null ? true : false;
+		
+//		if(isExists) {
+//			return role;
+//		}else {
 			role.setInsertedProg(appName);
 			return repository.save(role);
-		}else {
-			return r;
-		}
-
+			
+//		}
+	
 	}
 
 	@Override
@@ -94,7 +102,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void update(Role role) {
-		repository.save(setUpdateParams(role));
+		repository.save(entityUtils.setUpdateParams(role, appName));
 	}
 
 	@Override
@@ -130,7 +138,8 @@ public class RoleServiceImpl implements RoleService {
 
 		Role role = findOne(id);
 		role.setStatus("I");
-		this.setUpdateParams(role);
+		this.entityUtils
+		.setUpdateParams(role, appName);
 		repository.save(role);
 
 	}
@@ -140,7 +149,7 @@ public class RoleServiceImpl implements RoleService {
 		Role role = findOne(id);
 		role.setStatus("A");
 
-		this.setUpdateParams(role);
+		this.entityUtils.setUpdateParams(role, appName);
 
 		repository.save(role);
 
@@ -162,19 +171,6 @@ public class RoleServiceImpl implements RoleService {
 
 		repository.deleteAllInActiveResources();
 
-	}
-
-	/**
-	 * 
-	 * @param source
-	 * @return
-	 */
-	@Override
-	public Role setUpdateParams(Role source) {
-		source.setUpdatedProg(appName);
-		source.setUpdatedOn(LocalDateTime.now());
-
-		return source;
 	}
 
 	
@@ -203,7 +199,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<Role> findRolesByUserId(Long user_id) {
+	public Set<Role> findRolesByUserId(Long user_id) {
 
 		return repository.findRoleByUserId(user_id);
 	}
@@ -236,14 +232,6 @@ public class RoleServiceImpl implements RoleService {
 		});		
 	}
 
-	@Override
-	public Role CreateIfNotExists(Role r) {
-		Role role = findByName(r.getName());
-		if(role == null) {
-			return null;
-		}else {			
-			return role;
-		}
-	}
-
+	
+	
 }

@@ -3,19 +3,20 @@
  */
 package com.bytmasoft.um.models;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Employee;
 import com.bytmasoft.domain.models.Manager;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Student;
 import com.bytmasoft.domain.models.Teacher;
-import com.bytmasoft.domain.models.BaseUser;
 
 /**
  * 
@@ -31,7 +32,7 @@ public class DSSUserDetails implements UserDetails {
 
 	private BaseUser user;
 
-	private List<GrantedAuthority> authorities;
+	private Set<GrantedAuthority> authorities;
 
 	/**
 	 * @param user
@@ -46,31 +47,41 @@ public class DSSUserDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		authorities = new ArrayList<>();
+		authorities = new HashSet<GrantedAuthority>();
 		
 		if(user instanceof Teacher) {
 			
 			this.authorities = prepareAuthorities(((Teacher) user).getRoles());
+			
+		
 	
 		}else if(user instanceof Manager) {
 		
 			this.authorities = prepareAuthorities(((Manager) user).getRoles());
+		
 		}else if(user instanceof Student) {
 		
 			this.authorities = prepareAuthorities(((Student) user).getRoles());
+	
+		}else if(user instanceof Employee) {
+		
+			this.authorities = prepareAuthorities(((Employee) user).getRoles());
+			
 		}
 		
 		
 		return authorities;	
 	}
 	
+	
+
 	/**
 	 * add a privileges and Roles to authorities
 	 * @param roles
 	 * @return
 	 */
-	private List<GrantedAuthority> prepareAuthorities(List<Role> roles){
-		List<GrantedAuthority> authorities = new ArrayList<>();		
+	private Set<GrantedAuthority> prepareAuthorities(Set<Role> roles){
+		Set<GrantedAuthority> authorities = new HashSet<>();		
 		
 		roles.forEach(r -> {
 			
@@ -99,7 +110,7 @@ public class DSSUserDetails implements UserDetails {
 
 	public String getEmail() {
 
-		return user.getEmail();
+		return user.getEmailAddress().toString();
 	}
 
 	// TODO Mahamat 21.03.2020 23:20:38 ich muss anschauen wie implementiere es am

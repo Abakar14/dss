@@ -1,25 +1,24 @@
 package com.bytmasoft.persistance.repositories;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.bytmasoft.domain.models.Privilege;
-import com.bytmasoft.persistance.interfaces.UmBaseRepository;;
+import com.bytmasoft.domain.models.Privilege;;
 
 /**
  * 
  * 
  * @author Mahamat Abakar Date 11.11.2019
  */
-@Transactional
+@Transactional(readOnly = true)
 @Repository
-public interface PrivilegeRepository extends UmBaseRepository<Privilege, Long> {
+public interface PrivilegeRepository extends DSSBaseRepository<Privilege, Long> {
 
 	/**
 	 * 
@@ -49,7 +48,7 @@ public interface PrivilegeRepository extends UmBaseRepository<Privilege, Long> {
 	List<Privilege> findInActivePrivileges();
 
 	@Query(value = "select p.* from privilege p join role_privilege rp on p.id = rp.privilege_id where rp.role_id=:role_id", nativeQuery = true)
-	List<Privilege> findPrivilegeByRoleId(@Param("role_id") long role_id);
+	Set<Privilege> findPrivilegeByRoleId(@Param("role_id") long role_id);
 
 //	@Query(value = "select p.* from privilege p join role_privilege rp on p.id = rp.privilege_id where rp.role_id=:role_id",	nativeQuery = true)
 //	List<Privilege> findPrivilegeByPrivilegeIdAndRoleId(@Param("privilege_id") long privilege_id, @Param("role_id") long role_id);
@@ -80,5 +79,8 @@ public interface PrivilegeRepository extends UmBaseRepository<Privilege, Long> {
 	@Transactional
 	@Query(value = "delete from privilege p where p.status = 'I'", nativeQuery = true)
 	void deleteInActiveUsers();
+
+	@Query(value = "select p.* from privilege p join role_privilege rp on p.id = rp.privilege_id join student_role sr on rp.role_id = sr.role_id  where sr.student_id=:student_id", nativeQuery = true)
+	Set<Privilege> findPrivilegesByUserId(@Param("student_id") Long student_id);
 
 }

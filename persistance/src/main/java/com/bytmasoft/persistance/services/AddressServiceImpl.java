@@ -1,13 +1,10 @@
 package com.bytmasoft.persistance.services;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.ReportAsSingleViolation;
 
-import org.aspectj.apache.bcel.Repository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.domain.models.Address;
-import com.bytmasoft.domain.models.Role;
-import com.bytmasoft.persistance.interfaces.AddressService;
 import com.bytmasoft.persistance.repositories.AddressRepository;
+import com.bytmasoft.persistance.service.interfaces.AddressService;
+import com.bytmasoft.persistance.utils.EntityUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class AddressServiceImpl implements AddressService {
 
 	private final AddressRepository repository;
-
+	private final EntityUtils<Address> entityUtils;
+	
 	@Value("${spring.application.name}")
 	private String appName;
 
@@ -95,20 +93,23 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public Address create(Address resource) {
+	public Address create(Address address) {
+		
+	boolean isExists = repository.findByCityAndPostalCodeAndStreetAndHauseNumber(address.getCity(), address.getPostalCode(),
+				address.getStreet(), address.getHauseNumber()) != null ? true : false;
 
-		Address a = this.CreateIfNotExists(resource);
-		if(a == null) {
-		resource.setInsertedProg(appName);
-		return repository.save(resource);
+		if(isExists) {
+			return address;
 		}else {
-			return a;
+			address.setInsertedProg(appName);
+			return repository.save(address);
+			
 		}
 	}
 
 	@Override
 	public void update(Address resource) {
-		setUpdateParams(resource);
+		entityUtils.setUpdateParams(resource, appName);
 		repository.save(resource);
 
 	}
@@ -132,7 +133,7 @@ public class AddressServiceImpl implements AddressService {
 	public int countActiveResources() {
 
 		return repository.findByStatus("A").size();
-		
+
 	}
 
 	@Override
@@ -144,19 +145,19 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public void activateById(long id) {
 
-		Address country = findOne(id);
-		country.setStatus("A");
-		this.setUpdateParams(country);
-		repository.save(country);
+		Address address = findOne(id);
+		address.setStatus("A");
+		this.entityUtils.setUpdateParams(address, appName);
+		repository.save(address);
 
 	}
 
 	@Override
 	public void deactivateById(long id) {
-		Address country = findOne(id);
-		country.setStatus("I");
-		this.setUpdateParams(country);
-		repository.save(country);
+		Address address = findOne(id);
+		address.setStatus("I");
+		this.entityUtils.setUpdateParams(address, appName);
+		repository.save(address);
 
 	}
 
@@ -183,48 +184,35 @@ public class AddressServiceImpl implements AddressService {
 		return repository.findAddressByUserId(user_id);
 	}
 
-	/**
-	 * @param resource
-	 */
-	@Override
-	public Address setUpdateParams(Address resource) {
-		resource.setUpdatedProg(appName);
-		resource.setUpdatedOn(LocalDateTime.now());
-		return resource;
-
-	}
+	
 
 	@Override
 	public void remerkForDelete(Long id) {
-		
+
 		Address a = this.findOne(id);
-		if(a != null) {
+		if (a != null) {
 			a.setDeletestatus(true);
 			this.update(a);
 		}
-		
+
 	}
 
 	@Override
 	public void remerkByStatusForDelete(String status) {
-		
+
 		this.findByStatus(status).forEach(a -> {
 			a.setDeletestatus(true);
 			update(a);
 		});
-		
+
 	}
 
 	@Override
 	public List<Address> findByStatus(String status) {
-		
+
 		return repository.findByStatus(status);
 	}
 
-	@Override
-	public Address CreateIfNotExists(Address address) {
-		return repository.findByCityAndPostalCodeAndStreetAndHauseNumber(address.getCity(), address.getPostalCode(), address.getStreet(), address.getHauseNumber());
-
-	}
+	
 
 }

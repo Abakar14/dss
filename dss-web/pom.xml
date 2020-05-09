@@ -92,13 +92,7 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency>
-			<groupId>com.bytmasoft</groupId>
-			<artifactId>LoginService</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency> -->
-
-		
+	
 	</dependencies>
 
 	<build>

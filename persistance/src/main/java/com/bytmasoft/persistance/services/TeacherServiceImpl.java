@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -21,23 +22,25 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.UserAlreadyExistException;
 import com.bytmasoft.domain.enums.UserType;
+import com.bytmasoft.domain.models.EmailAddress;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
-import com.bytmasoft.persistance.interfaces.DSSMailService;
-import com.bytmasoft.persistance.interfaces.RoleService;
-import com.bytmasoft.persistance.interfaces.TeacherService;
 import com.bytmasoft.persistance.repositories.TeacherRepository;
+import com.bytmasoft.persistance.service.interfaces.DSSMailService;
+import com.bytmasoft.persistance.service.interfaces.RoleService;
+import com.bytmasoft.persistance.service.interfaces.TeacherService;
+import com.bytmasoft.persistance.utils.UserUtils;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class TeacherServiceImpl implements TeacherService<Teacher> {
+public class TeacherServiceImpl implements TeacherService {
 
 	private final TeacherRepository repository;
 	private final RoleService roleService;
+	private final UserUtils<Teacher> userUtils;
 
 	@Value("${spring.application.name}")
 	private String appName;
@@ -48,6 +51,12 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		return repository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("There is no Teacher with this id: " + id));
+	}
+	
+	@Override
+	public Teacher findByEmailAddress(String email) {
+	
+		return repository.findByEmailAddress(new EmailAddress(email));
 	}
 
 	@Override
@@ -82,50 +91,32 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 		}
 
 	
-		Page<Teacher> result = (Page<Teacher>) filterPages(repository.findAll(pageable), isNotRemerkedForDelete());
+		List<Teacher> result = filterPages(repository.findAll(pageable), isNotRemerkedForDelete());
 
-		if (result.hasContent()) {
-
-			return (List<Teacher>) result.getContent();
-		} else {
-			return new ArrayList<>();
-		}
+		return result;
 
 	}
 
 	@Override
-	public Teacher create(Teacher teacher) {
+	public Teacher create(Teacher t) {
+		
+		boolean isExists =  findByFirstNameAndLastNameAndEmailAddress(t.getFirstName(), t.getLastName(), t.getEmailAddress()) !=null ? true : false;
 
-		Teacher t = this.CreateIfNotExists(teacher);
-		if (t != null) {
-			throw new UserAlreadyExistException("There is an user with the same email : " + teacher.getEmail());
+		if(isExists) {
+			return t;
+		}else {
+			
+			addLoginname(t);
+			t.setInsertedProg(appName);
+			t.setPassword(passwordEncoder().encode(t.getPassword()));
+			return repository.save(t);
 		}
 
-		teacher.setPassword(passwordEncoder().encode(teacher.getPassword()));
-
-//		if (teacher.getRoles() != null) {
-//
-//		  teacher.getRoles().forEach(r -> r.setInsertedProg(appName));
-//		}
-
-		teacher.setInsertedProg(appName);
-		addLoginname(teacher);
+	}
 	
-		return repository.save(teacher);
 
-	}
 
-	private boolean isEmailExists(String email) {
-
-		if (repository.findByEmail(email) == null) {
-			return true;
-		} else {
-
-			return false;
-		}
-
-	}
-
+	
 	@Override
 	public void update(Teacher resource) {
 		this.repository.save(resource);
@@ -178,7 +169,7 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	public void activateById(long id) {
 		Teacher teacher = findOne(id);
 		teacher.setStatus("A");
-		repository.save(this.setUpdateParams(teacher));
+		repository.save(userUtils.setUpdateParams(teacher, appName));
 
 	}
 
@@ -204,38 +195,12 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 	}
 
-	@Override
-	public Teacher setUpdateParams(Teacher t) {
-		t.setUpdatedProg(appName);
-		t.setUpdatedOn(LocalDateTime.now());
-		t.setUpdatedBy(t.getUsername());
-		return t;
-	}
-
+	
 	private void addLoginname(Teacher teacher) {
-		teacher.setUsername(generateLoginname(teacher));
+		teacher.setUsername(userUtils.generateLoginname(teacher));
 
 	}
 
-	@Override
-	public String generateLoginname(Teacher teacher) {
-		String toconcat = "";
-		int day = LocalDateTime.now().getDayOfMonth();
-		if (day < 10) {
-			toconcat = "0" + day;
-		} else {
-			toconcat = "" + day;
-		}
-		return teacher.getLastName().substring(0, teacher.getLastName().length() - 1)
-				.concat(teacher.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
-
-	}
-
-	@Override
-	public List<Teacher> findByEmail(String email) {
-
-		return this.repository.findByEmail(email);
-	}
 
 	@Override
 	public List<Teacher> findByLastName(String lastName) {
@@ -280,9 +245,9 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	}
 
 	@Override
-	public List<Teacher> findByUsername(String username) {
+	public Teacher findByUsername(String username) {
 
-		return this.repository.findByUsername(username);
+		return (Teacher) this.repository.findByUsername(username);
 	}
 
 	public Teacher findByOneUsername1(String username) {
@@ -320,7 +285,7 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		String lastname = "";
 
-		String email = "";
+		
 
 		String username = "";
 
@@ -333,11 +298,7 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		if (requestParams.containsKey("lastname")) {
 			lastname = requestParams.get("lastname");
-		}
-
-		if (requestParams.containsKey("email")) {
-			email = requestParams.get("email");
-		}
+		}	
 
 		if (requestParams.containsKey("loginname")) {
 			username = requestParams.get("loginname");
@@ -349,31 +310,25 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 
 		}
 
-		if (!firstname.isEmpty() && !lastname.isEmpty() && !username.isEmpty()) {
-			return findByFirstNameAndLastNameAndLoginname(firstname, lastname, username);
-		} else if (!firstname.isEmpty() && !lastname.isEmpty()) {
+	if (!firstname.isEmpty() && !lastname.isEmpty()) {
 			return findByFirstNameAndLastName(firstname, lastname);
 		} else if (!firstname.isEmpty()) {
 			return findByFirstName(firstname);
 		} else if (!lastname.isEmpty()) {
 			return findByLastName(lastname);
-		} else if (!email.isEmpty()) {
-			return findByEmail(email);
-		} else if (!username.isEmpty()) {
-			return findByUsername(username);
-		} else if (!type.isEmpty()) {
+		}  else if (!type.isEmpty()) {
 			return findByType(UserType.valueOf(type));
 		}
 		return null;
 	}
 
-	@Override
-	public Teacher findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email) {
-		return (Teacher) repository.findByFirstNameAndLastNameAndEmail(firstname, lastname, email);
-	}
+//	@Override
+//	public Teacher findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, String email) {
+//		return (Teacher) repository.findByFirstNameAndLastNameAndEmail(firstname, lastname, email);
+//	}
 
 	@Override
-	public List<Teacher> findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname) {
+	public Teacher findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname) {
 		return repository.findByFirstNameAndLastNameAndUsername(firstname, lastname, loginname);
 	}
 
@@ -419,13 +374,13 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 		Teacher teacher = findOne(teacher_id);
 		boolean hasRole = false;
 
-//		for (Role role : teacher.getRoles()) {
-//
-//			if (role.getId().equals(role_id)) {
-//				hasRole = true;
-//				return hasRole;
-//			}
-//		}
+		for (Role role : teacher.getRoles()) {
+
+			if (role.getId().equals(role_id)) {
+				hasRole = true;
+				return hasRole;
+			}
+		}
 		return hasRole;
 	}
 
@@ -486,7 +441,7 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	}
 
 	@Override
-	public List<Teacher> findUsersByAgeMoreThan(Long age) {
+	public List<Teacher> findUsersByAgeMoreThan(int age) {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 		
 				for (Teacher teacher : findAllResources()) {
@@ -502,7 +457,7 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	}
 
 	@Override
-	public List<Teacher> findUsersByAgeLessThan(Long age) {
+	public List<Teacher> findUsersByAgeLessThan(int age) {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 
 		for (Teacher teacher : findAllResources()) {
@@ -552,13 +507,13 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 		Teacher	teacher = findOne(teacher_id);
 		Role role = roleService.findOne(role_id);
 		
-//		if(teacher.getRoles().contains(role)) {
-//			return teacher;
-//		}else {
-//			
-//			return null;
-//		}
-		return null;
+		if(teacher.getRoles().contains(role)) {
+			return teacher;
+		}else {
+			
+			return null;
+		}
+		
 		
 	}
 
@@ -605,15 +560,20 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	public void remerkUsersWithSchoolIdForDelete(Long school_Id) {
 
 			this.findAllResources().forEach(t -> {
-			if(t.getSchool().getId().equals(school_Id)) {
-				t.setDeletestatus(true);
-				this.update(t);
-			}
+				
+				t.getSchools().forEach( s -> {
+					if(s.getId().equals(school_Id)) {
+						t.setDeletestatus(true);
+						this.update(t);
+					}
+				});
+				
+		
 		});
 	}
 
 	
-	public List<Role> findRolesByUserId(Long id) {
+	public Set<Role> findRolesByUserId(Long id) {
 		
 		return this.findOne(id).getRoles();
 	}
@@ -627,13 +587,33 @@ public class TeacherServiceImpl implements TeacherService<Teacher> {
 	public Boolean sendEmailForChangingPassword(String usernameOrEmail) {
 		Teacher teacher = repository.findByUsernameOrEmail(usernameOrEmail);
 
-		return this.mailServie.sendEmail(teacher.getEmail());
+		return this.mailServie.sendEmail(teacher.getEmailAddress().toString());
 
 	}
 
 	@Override
-	public Teacher CreateIfNotExists(Teacher t) {
-		return findByFirstNameAndLastNameAndEmail(t.getFirstName(), t.getLastName(), t.getEmail());
+	public Teacher findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, EmailAddress email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public void remerkUserForDelete(Long id) {
+		Teacher t = findOne(id);
+		t.setDeletestatus(true);
+		t.setStatus("I");
+		this.update(t);
+		
+	}
+
+	@Override
+	public Teacher findByUsernameOrEmail(String usernameOrEmail) {
+		
+		return repository.findByUsernameOrEmail(usernameOrEmail);
+	}
+
+	
+
+
 	
 }

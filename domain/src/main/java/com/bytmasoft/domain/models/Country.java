@@ -1,12 +1,12 @@
 package com.bytmasoft.domain.models;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,7 +15,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +30,6 @@ import lombok.Setter;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Country extends BaseEntity {
-	
 
 	/**
 	 * 
@@ -49,11 +47,26 @@ public class Country extends BaseEntity {
 	@Column(unique = true)
 	private String abbreviations;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@ApiModelProperty(hidden = true)
 	@XmlElement
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "country")
-	private List<Address> addresses = new ArrayList<>();
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "country")
+	@OneToMany(mappedBy = "country")
+	private Set<Address> addresses = new HashSet<>();
+
+	public void addAddress(Address address) {
+
+		this.addresses.add(address);
+		address.setCountry(this);
+
+	}
+
+	public void removeAddress(Address address) {
+
+		this.addresses.remove(address);
+		address.setCountry(null);
+
+	}
 
 	@Override
 	public String toString() {
