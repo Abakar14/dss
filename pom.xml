@@ -31,6 +31,7 @@
 		<module>dss-web</module>
 		<module>common</module>
 		<module>token-helper</module>
+		<module>token-helper1</module>
 	</modules>
 
 	<dependencies>		
