@@ -1,0 +1,51 @@
+-------------------------------------------------------------------------------
+Test set: com.bytmasoft.um.services.AddressServiceTest
+-------------------------------------------------------------------------------
+Tests run: 14, Failures: 4, Errors: 4, Skipped: 0, Time elapsed: 31.342 s <<< FAILURE! - in com.bytmasoft.um.services.AddressServiceTest
+testCreate  Time elapsed: 0.23 s  <<< ERROR!
+com.bytmasoft.common.exception.MyEntityNotFoundException: There is no country with this id : 4
+	at com.bytmasoft.um.services.AddressServiceTest.getAddresses(AddressServiceTest.java:326)
+	at com.bytmasoft.um.services.AddressServiceTest.testCreate(AddressServiceTest.java:155)
+
+testCountActiveResources  Time elapsed: 0.26 s  <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting:
+ <0>
+to be greater than:
+ <2> 
+	at com.bytmasoft.um.services.AddressServiceTest.testCountActiveResources(AddressServiceTest.java:223)
+
+testFindAllResources  Time elapsed: 0.014 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at com.bytmasoft.um.services.AddressServiceTest.testFindAllResources(AddressServiceTest.java:133)
+
+testFindOne  Time elapsed: 0.02 s  <<< ERROR!
+javax.persistence.EntityNotFoundException: There is no user with this id: 12
+	at com.bytmasoft.um.services.AddressServiceTest.testFindOne(AddressServiceTest.java:60)
+
+testCount  Time elapsed: 0.017 s  <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting:
+ <0L>
+to be greater than:
+ <2L> 
+	at com.bytmasoft.um.services.AddressServiceTest.testCount(AddressServiceTest.java:214)
+
+testFindAddressByUserId  Time elapsed: 0.126 s  <<< ERROR!
+org.springframework.dao.InvalidDataAccessResourceUsageException: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at com.bytmasoft.um.services.AddressServiceTest.testFindAddressByUserId(AddressServiceTest.java:305)
+Caused by: org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+	at com.bytmasoft.um.services.AddressServiceTest.testFindAddressByUserId(AddressServiceTest.java:305)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'bytmasoft.user_address' doesn't exist
+	at com.bytmasoft.um.services.AddressServiceTest.testFindAddressByUserId(AddressServiceTest.java:305)
+
+testFindAllActive  Time elapsed: 0.011 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at com.bytmasoft.um.services.AddressServiceTest.testFindAllActive(AddressServiceTest.java:74)
+
+testUpdate  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at com.bytmasoft.um.services.AddressServiceTest.testUpdate(AddressServiceTest.java:173)
+

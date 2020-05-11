@@ -39,6 +39,7 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentRepository repository;
 	private final RoleService roleService;
 	private final UserUtils<Student> userUtils;
+
 	
 	@Value("${spring.application.name}")
 	private String appName;

@@ -1,0 +1,11 @@
+com\bytmasoft\um\services\CountryServiceTest.class
+com\bytmasoft\um\services\SchoolServiceTest.class
+com\bytmasoft\um\services\AddressServiceTest.class
+com\bytmasoft\um\controller\RoleControllerTest.class
+com\bytmasoft\um\services\LoginServiceTest.class
+com\bytmasoft\um\services\UserManagementServiceTest.class
+com\bytmasoft\um\controller\TeacherControllerTest.class
+com\bytmasoft\um\services\PrivilegeServiceTest.class
+com\bytmasoft\um\services\TeacherServiceTest.class
+com\bytmasoft\um\services\RoleServiceTest.class
+com\bytmasoft\um\controller\AddressControllerTest.class

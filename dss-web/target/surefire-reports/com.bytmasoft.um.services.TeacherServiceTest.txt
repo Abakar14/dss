@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: com.bytmasoft.um.services.TeacherServiceTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.144 s <<< FAILURE! - in com.bytmasoft.um.services.TeacherServiceTest
+testCreate  Time elapsed: 0.112 s  <<< ERROR!
+javax.validation.ConstraintViolationException: 
+Validation failed for classes [com.bytmasoft.domain.models.Teacher] during persist time for groups [javax.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='is required', propertyPath=salt, rootBeanClass=class com.bytmasoft.domain.models.Teacher, messageTemplate='is required'}
+]
+	at com.bytmasoft.um.services.TeacherServiceTest.lambda$testCreate$0(TeacherServiceTest.java:65)
+	at com.bytmasoft.um.services.TeacherServiceTest.testCreate(TeacherServiceTest.java:64)
+

@@ -1,0 +1,96 @@
+-------------------------------------------------------------------------------
+Test set: com.bytmasoft.um.controller.TeacherControllerTest
+-------------------------------------------------------------------------------
+Tests run: 23, Failures: 23, Errors: 0, Skipped: 0, Time elapsed: 0.009 s <<< FAILURE! - in com.bytmasoft.um.controller.TeacherControllerTest
+testActivateAll  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testActivateAll(TeacherControllerTest.java:130)
+
+testFindAllUsersByAgeMoreThan  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testFindAllUsersByAgeMoreThan(TeacherControllerTest.java:31)
+
+testAssignAllUsersToGroup  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testAssignAllUsersToGroup(TeacherControllerTest.java:166)
+
+testGetUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testGetUsers(TeacherControllerTest.java:85)
+
+testCountAllUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testCountAllUsers(TeacherControllerTest.java:58)
+
+testDeactivateUserById  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testDeactivateUserById(TeacherControllerTest.java:157)
+
+testUpdateUser  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testUpdateUser(TeacherControllerTest.java:121)
+
+testAssignRoleToUser  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testAssignRoleToUser(TeacherControllerTest.java:184)
+
+testDeleteInActiveUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testDeleteInActiveUsers(TeacherControllerTest.java:220)
+
+testAssignAddressToUser  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testAssignAddressToUser(TeacherControllerTest.java:193)
+
+testGetAllActiveUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testGetAllActiveUsers(TeacherControllerTest.java:94)
+
+testRegister  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testRegister(TeacherControllerTest.java:112)
+
+testCountInActiveUsers  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testCountInActiveUsers(TeacherControllerTest.java:76)
+
+testFindAllUsersByAgeLessThan  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testFindAllUsersByAgeLessThan(TeacherControllerTest.java:40)
+
+testDeleteUserLong  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testDeleteUserLong(TeacherControllerTest.java:211)
+
+testAssignRoleToAllUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testAssignRoleToAllUsers(TeacherControllerTest.java:175)
+
+testFindUserById  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testFindUserById(TeacherControllerTest.java:22)
+
+testDeleteUser  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testDeleteUser(TeacherControllerTest.java:202)
+
+testActivateUserById  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testActivateUserById(TeacherControllerTest.java:148)
+
+testCountActiveUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testCountActiveUsers(TeacherControllerTest.java:67)
+
+testFindByRequestParams  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testFindByRequestParams(TeacherControllerTest.java:49)
+
+testDeactivateAll  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testDeactivateAll(TeacherControllerTest.java:139)
+
+testGetAllInActiveUsers  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.TeacherControllerTest.testGetAllInActiveUsers(TeacherControllerTest.java:103)
+

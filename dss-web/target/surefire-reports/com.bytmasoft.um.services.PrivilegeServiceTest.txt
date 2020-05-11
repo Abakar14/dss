@@ -1,0 +1,21 @@
+-------------------------------------------------------------------------------
+Test set: com.bytmasoft.um.services.PrivilegeServiceTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.561 s <<< FAILURE! - in com.bytmasoft.um.services.PrivilegeServiceTest
+testCreate  Time elapsed: 0.024 s  <<< ERROR!
+org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [privilege.UK_h7iwbdg4ev8mgvmij76881tx8]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at com.bytmasoft.um.services.PrivilegeServiceTest.lambda$testCreate$2(PrivilegeServiceTest.java:134)
+	at com.bytmasoft.um.services.PrivilegeServiceTest.testCreate(PrivilegeServiceTest.java:132)
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at com.bytmasoft.um.services.PrivilegeServiceTest.lambda$testCreate$2(PrivilegeServiceTest.java:134)
+	at com.bytmasoft.um.services.PrivilegeServiceTest.testCreate(PrivilegeServiceTest.java:132)
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Read' for key 'privilege.UK_h7iwbdg4ev8mgvmij76881tx8'
+	at com.bytmasoft.um.services.PrivilegeServiceTest.lambda$testCreate$2(PrivilegeServiceTest.java:134)
+	at com.bytmasoft.um.services.PrivilegeServiceTest.testCreate(PrivilegeServiceTest.java:132)
+
+testFindPrivilegeByRoleId  Time elapsed: 0.005 s  <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting actual not to be empty
+	at com.bytmasoft.um.services.PrivilegeServiceTest.testFindPrivilegeByRoleId(PrivilegeServiceTest.java:92)
+

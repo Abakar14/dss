@@ -1,10 +1,11 @@
 com\bytmasoft\common\interfaces\model\IByName.class
 com\bytmasoft\common\interfaces\IOperations.class
 com\bytmasoft\common\interfaces\model\IEntity.class
-com\bytmasoft\messages\Messages.class
 com\bytmasoft\common\exception\MyUserAlreadyExistException.class
 com\bytmasoft\CommonConfiguration.class
+com\bytmasoft\common\utils\DSSFormat.class
 com\bytmasoft\common\exception\MyEntityNotFoundException.class
 com\bytmasoft\common\exception\MyValidationException.class
 com\bytmasoft\common\exception\MyForbiddenException.class
 com\bytmasoft\common\exception\MyBadRequestExpception.class
+com\bytmasoft\common\utils\Messages.class

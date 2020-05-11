@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------
+Test set: com.bytmasoft.um.controller.AddressControllerTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 8, Errors: 0, Skipped: 0, Time elapsed: 0.179 s <<< FAILURE! - in com.bytmasoft.um.controller.AddressControllerTest
+testGetCountries  Time elapsed: 0.13 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testGetCountries(AddressControllerTest.java:62)
+
+testAssignAddressToCountry  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testAssignAddressToCountry(AddressControllerTest.java:70)
+
+testCreateAddress  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testCreateAddress(AddressControllerTest.java:38)
+
+testUpateAddress  Time elapsed: 0.004 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testUpateAddress(AddressControllerTest.java:46)
+
+testFindAddressById  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testFindAddressById(AddressControllerTest.java:22)
+
+testFindGroupById  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testFindGroupById(AddressControllerTest.java:54)
+
+testCreateCountry  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testCreateCountry(AddressControllerTest.java:78)
+
+testGetAddresses  Time elapsed: 0.004 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Not yet implemented
+	at com.bytmasoft.um.controller.AddressControllerTest.testGetAddresses(AddressControllerTest.java:30)
+
