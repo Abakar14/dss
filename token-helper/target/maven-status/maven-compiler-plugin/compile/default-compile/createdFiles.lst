@@ -1,7 +1,0 @@
-com\bytmasoft\dss\token\helper\services\UserPrincipalDetailsService.class
-com\bytmasoft\dss\token\helper\utils\TokenUtil.class
-com\bytmasoft\dss\token\helper\repositories\TeacherLoginRepository.class
-com\bytmasoft\dss\token\helper\models\UserPrincipal.class
-com\bytmasoft\dss\token\helper\repositories\StudentLoginRepository.class
-com\bytmasoft\dss\token\helper\repositories\ManagerLoginRepository.class
-com\bytmasoft\TokenHelperApplication.class

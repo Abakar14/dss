@@ -32,26 +32,6 @@ public class ContactPerson extends BaseUser {
 	
 	
 	
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-//	@JoinTable(name = "student_contact_persons", joinColumns = {
-//			@JoinColumn(name = "contact_persion_id", referencedColumnName = "id") }, inverseJoinColumns = {
-//					@JoinColumn(name = "student_id", referencedColumnName = "id") })
-//	List<Student> students = new ArrayList<Student>();
-	
-
-		
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-//	@JoinTable(name = "manager_contact_persons", joinColumns = {
-//			@JoinColumn(name = "contact_persion_id", referencedColumnName = "id") }, inverseJoinColumns = {
-//					@JoinColumn(name = "manager_id", referencedColumnName = "id") })
-//	List<Manager> managers = new ArrayList<Manager>();
-	
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-//	@JoinTable(name = "employee_contact_persons", joinColumns = {
-//			@JoinColumn(name = "contact_persion_id", referencedColumnName = "id") }, inverseJoinColumns = {
-//					@JoinColumn(name = "employee_id", referencedColumnName = "id") })
-//	List<Employee> employees = new ArrayList<Employee>();
-	
 //	@JsonIgnore
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@ManyToMany

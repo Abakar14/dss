@@ -64,11 +64,10 @@ public class Manager extends BaseUser {
 	private Set<School> schools = new HashSet<>();
 			
 	
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@ManyToMany
-	@JoinTable(name = "student_contact_person", joinColumns = {
-			@JoinColumn(name = "contact_person_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "student_id", referencedColumnName = "id") })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(name = "manager_contact_person", joinColumns = {
+			@JoinColumn(name = "manager_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "contact_person_id", referencedColumnName = "id") })
 	private Set<ContactPerson> contactPersons = new HashSet<ContactPerson>();
 	
 	/**

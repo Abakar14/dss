@@ -63,8 +63,8 @@ public class Teacher extends BaseUser {
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@ManyToMany
 	@JoinTable(name = "teacher_contact_person", joinColumns = {
-			@JoinColumn(name = "contact_person_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "teacher_id", referencedColumnName = "id") })
+			@JoinColumn(name = "teacher_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "contact_person_id", referencedColumnName = "id") })
 	private Set<ContactPerson> contactPersons = new HashSet<>();
 
 	/**

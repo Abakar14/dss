@@ -10,10 +10,6 @@
 	<artifactId>persistance</artifactId>
 	<packaging>jar</packaging>
 
-	<properties>
-
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
