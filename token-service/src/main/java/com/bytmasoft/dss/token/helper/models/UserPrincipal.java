@@ -31,7 +31,7 @@ public class UserPrincipal implements UserDetails{
 		
 	}	
 	
-	protected UserPrincipal() {
+	private UserPrincipal() {
 		 
 	}	
 	
