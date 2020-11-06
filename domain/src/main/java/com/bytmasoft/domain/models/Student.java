@@ -95,7 +95,7 @@ public class Student extends BaseUser {
 	 * 
 	 * @param address
 	 */
-	public void romveAddress(Address address) {
+	public void removeAddress(Address address) {
 		this.addresses.remove(address);
 		address.getStudents().remove(this);
 	}

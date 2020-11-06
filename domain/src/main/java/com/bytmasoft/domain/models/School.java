@@ -68,7 +68,7 @@ public class School extends BaseEntity {
 	/**
 	 * string size 5 chars
 	 */
-	@JsonProperty(value = "description")
+	@JsonProperty(value = "prefix")
 	@Size(max = 5)
 	private String prefix;
 

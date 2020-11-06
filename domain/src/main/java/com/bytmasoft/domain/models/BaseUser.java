@@ -85,8 +85,8 @@ public abstract class BaseUser extends BaseEntity  {
 	@Size(min = 8, message = "is required")
 	private String password;
 	
-	@NotNull(message = "is required")
-	@Size(min = 9, max = 9, message = "is required")
+//	@NotNull(message = "is required")
+//	@Size(min = 9, max = 9, message = "is required")
 	private String salt;
 
 	@JsonProperty(value = "birthday")

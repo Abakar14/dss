@@ -59,7 +59,17 @@ public class TokenUtil implements Serializable {
 	public String getUsernameFormToken(String token) throws ParseException, BadJOSEException, JOSEException {
 
 		JWTClaimsSet claimsSet = getAllClaimsFromToken(token);
-		return (String) claimsSet.getClaim("username");
+		if(claimsSet != null) {
+			String username = (String) claimsSet.getClaim("username");
+			
+			if(username != null) {
+				return username;
+			}else {
+				username = "";
+			}
+			
+			return username;
+		}else return "";
 
 	}
 
