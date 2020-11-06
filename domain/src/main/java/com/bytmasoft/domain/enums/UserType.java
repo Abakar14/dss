@@ -7,7 +7,7 @@ package com.bytmasoft.domain.enums;
 
 public enum UserType {
 
-	HUMAN("Some application"),
+	HUMAN("Some Person"),
 	MACHINE("Some application");
 	
 	private String description;

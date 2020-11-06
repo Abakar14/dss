@@ -57,11 +57,9 @@ public class ContactPerson extends BaseUser {
 	
 	@Override
 	public void setType(UserType type) {
-		
-		super.setType(null);
-		this.setType(null);
+		super.setType(type);
 	}
-
+		
 	public void addAddress(Address address) {
 		this.addresses.add(address);
 		address.getContactPersons().add(this);
@@ -72,5 +70,6 @@ public class ContactPerson extends BaseUser {
 		address.getContactPersons().remove(this);
 	}
 	
+		
 
 }
