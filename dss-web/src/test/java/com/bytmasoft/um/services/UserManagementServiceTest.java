@@ -24,8 +24,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bytmasoft.domain.enums.GenderType;
 import com.bytmasoft.domain.enums.UserType;
-import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.persistance.services.TeacherServiceImpl;
 
 /**
