@@ -30,7 +30,6 @@
 		<module>persistance</module>
 		<module>dss-web</module>
 		<module>common</module>
-		<module>../token-helper</module>
 		<module>token-service</module>
 	</modules>
 

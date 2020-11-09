@@ -124,8 +124,8 @@ public abstract class BaseUser extends BaseEntity  {
 
 	
 	public String generateSalt() {
-		
-		return	RandomString.make(9);
+		this.salt = RandomString.make(9);
+		return	this.salt;
 	}
 	
 	public int getAge() {
