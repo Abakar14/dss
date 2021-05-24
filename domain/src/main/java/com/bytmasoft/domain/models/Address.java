@@ -17,13 +17,13 @@ import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bytmasoft.common.utils.HashUtils;
 import com.bytmasoft.domain.enums.AddressType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -96,24 +96,19 @@ public class Address extends BaseEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this.getClass() != obj.getClass())
-			return false;
 
-		if (this == obj)
-			return true;
-
-		final Address address = (Address) obj;
-		return this.getId() == address.getId() && this.getStreet().equals(address.getStreet());
-
+		if (obj instanceof Address) {
+			Address address = (Address) obj;
+			return Objects.equal(this.getId(), address.getId()) && Objects.equal(this.street, address.getStreet());
+		}
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 31;
-		hash = HashUtils.calcHashCode(hash, this.getId());
-		return HashUtils.calcHashCode(hash, this.getStreet());
+
+		return Objects.hashCode(this.getId(), street);
+
 	}
 
 }

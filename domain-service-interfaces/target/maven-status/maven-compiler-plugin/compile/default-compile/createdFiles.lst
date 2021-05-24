@@ -1,0 +1,4 @@
+com\bytmasoft\repository\DSSBaseRepository.class
+com\bytmasoft\repository\DSSUserBaseRepository.class
+com\bytmasoft\service\interfaces\BaseUserService.class
+com\bytmasoft\utils\UserUtils.class

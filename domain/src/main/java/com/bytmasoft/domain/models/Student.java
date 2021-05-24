@@ -18,10 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import com.bytmasoft.common.utils.HashUtils;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -180,24 +180,19 @@ public class Student extends BaseUser {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this.getClass() != obj.getClass())
-			return false;
 
-		if (this == obj)
-			return true;
-
-		final Student st = (Student) obj;
-		return this.getId() == st.getId() && this.getEmail().equals(st.getEmail());
-
+		if (obj instanceof Student) {
+			Student student = (Student) obj;
+			return Objects.equal(this.getId(), student.getId()) && Objects.equal(this.getEmail(), student.getEmail());
+		}
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 31;
-		hash = HashUtils.calcHashCode(hash, this.getId());
-		return HashUtils.calcHashCode(hash, this.getEmail());
+
+		return Objects.hashCode(this.getId(), this.getEmail());
+
 	}
 
 }
