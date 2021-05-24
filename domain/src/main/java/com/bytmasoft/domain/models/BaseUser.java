@@ -1,18 +1,25 @@
 package com.bytmasoft.domain.models;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.regex.Pattern;
 
+import javax.annotation.Nullable;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.util.Assert;
 
 import com.bytmasoft.domain.enums.GenderType;
 import com.bytmasoft.domain.enums.UserType;
@@ -35,19 +42,21 @@ import net.bytebuddy.utility.RandomString;
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseUser extends BaseEntity  {
+public abstract class BaseUser extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7764311919115841229L;
 
-	
-	@ApiModelProperty(notes = "The api will generate the status")
-	@JsonProperty(value = "status")
-	@Size(max = 1)
-	private String status;
-	
+	private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+	private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
+
+//	@ApiModelProperty(notes = "The api will generate the status")
+//	@JsonProperty(value = "status")
+//	@Size(max = 1)
+//	private String status;
+
 	@ApiModelProperty(allowEmptyValue = false)
 	@JsonProperty(value = "gender")
 	@Column(name = "gender", nullable = false)
@@ -76,15 +85,16 @@ public abstract class BaseUser extends BaseEntity  {
 //	@Email
 //	@Column(nullable = false, unique = true)
 //	private String email;
-	@Embedded
+//	@Embedded
 	@Column(unique = true, nullable = false)
-	private EmailAddress emailAddress;
+	private String email;
 
 //	@JsonIgnore
-	@NotNull(message = "is required")
-	@Size(min = 8, message = "is required")
+//	@NotNull(message = "password is required")
+	@Nullable
+	@Size(min = 8, message = "password musst be min 8 characters")
 	private String password;
-	
+
 //	@NotNull(message = "is required")
 //	@Size(min = 9, max = 9, message = "is required")
 	private String salt;
@@ -95,6 +105,8 @@ public abstract class BaseUser extends BaseEntity  {
 
 	@ApiModelProperty(notes = "The api will generate the last login")
 	@JsonProperty(value = "lastlogin")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	@Column(name = "last_login")
 	private LocalDateTime lastLogin;
 
@@ -110,26 +122,45 @@ public abstract class BaseUser extends BaseEntity  {
 	@ApiModelProperty(notes = "The api calcalte the age from the birthday", hidden = true)
 	@JsonProperty(value = "age")
 	@Transient
-	private int age;
+	private int age = 0;
 
-	@JsonProperty(value = "foto")
-	private Blob foto;
+	private String phoneNr;
 
-	
+	private String mobilePhoneNr;
+
+	@JsonProperty(value = "profile_picture")
+	@Lob
+	private byte[] profile_picture;
+
 	public void setPassword(String password) {
-		
+
 		this.password = password;
 	}
 
+	public void setEmail(String email) {
+		Assert.isTrue(isValid(email), "Invalid email address!");
+		this.email = email;
 
-	
-	public String generateSalt() {
-		this.salt = RandomString.make(9);
-		return	this.salt;
 	}
-	
-	public int getAge() {
 
+	public abstract String generateUsername();
+
+	public static boolean isValid(String candidate) {
+
+		return candidate == null ? false : PATTERN.matcher(candidate).matches();
+	}
+
+	/**
+	 * with @PrePersit and PreUpdate change the salt before insert into database
+	 */
+	@PrePersist
+	@PreUpdate
+	public void generateSalt() {
+		this.salt = RandomString.make(9);
+
+	}
+
+	public int getAge() {
 		if (birthday != null) {
 			LocalDate today = LocalDate.now();
 			Period period = Period.between(birthday, today);
@@ -145,9 +176,7 @@ public abstract class BaseUser extends BaseEntity  {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("User [id=").append(this.getId()).append(", firstname=").append(this.getFirstName())
 				.append(", lastname=").append(this.getLastName()).append(", status=").append(this.getStatus())
-				.append(", email=").append(this.emailAddress.toString()).append(", password=").append(this.getPassword())
-				.append("]"
-						);
+				.append(", email=").append(this.email).append(", password=").append(this.getPassword()).append("]");
 
 		return builder.toString();
 	}
@@ -157,7 +186,7 @@ public abstract class BaseUser extends BaseEntity  {
 
 		final int primeNumber = 31;
 		int resutl = 1;
-		resutl = (primeNumber * resutl) + ((this.emailAddress.toString() == null) ? 0 : this.emailAddress.toString().hashCode());
+		resutl = (primeNumber * resutl) + ((this.email == null) ? 0 : this.email.hashCode());
 		return resutl;
 
 	}
@@ -179,7 +208,7 @@ public abstract class BaseUser extends BaseEntity  {
 		}
 
 		final BaseUser user = (BaseUser) obj;
-		if (!this.emailAddress.toString().equals(user.emailAddress.toString())) {
+		if (!this.email.equals(user.email)) {
 			return false;
 		}
 

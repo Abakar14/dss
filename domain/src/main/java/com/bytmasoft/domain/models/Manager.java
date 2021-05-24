@@ -1,8 +1,7 @@
 package com.bytmasoft.domain.models;
 
-
+import java.time.LocalDateTime;
 import java.util.HashSet;
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -46,30 +45,39 @@ public class Manager extends BaseUser {
 			@JoinColumn(name = "manager_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	Set<Role> roles = new HashSet<>();
-	
-	
+
 //	@JsonIgnore
 //	@ManyToMany
-	@ManyToMany(fetch = FetchType.LAZY,  cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "manager_address", joinColumns = {
 			@JoinColumn(name = "manager_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "address_id", referencedColumnName = "id") })
 	private Set<Address> addresses = new HashSet<>();
-	
-	
+
 	@JsonIgnore
 	@ApiModelProperty(hidden = true)
 	@XmlElement
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "manager")
 	private Set<School> schools = new HashSet<>();
-			
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "manager_contact_person", joinColumns = {
 			@JoinColumn(name = "manager_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "contact_person_id", referencedColumnName = "id") })
 	private Set<ContactPerson> contactPersons = new HashSet<ContactPerson>();
-	
+
+	@JsonIgnore
+	@ApiModelProperty(hidden = true)
+	@XmlElement
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "manager")
+	private Set<FileDB> files = new HashSet<>();
+
+	public void addFile(FileDB file) {
+		this.files.add(file);
+		file.setManager(this);
+
+	}
+
 	/**
 	 * 
 	 * @param role
@@ -78,7 +86,7 @@ public class Manager extends BaseUser {
 		this.roles.add(role);
 		role.getManagers().add(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param role
@@ -87,7 +95,7 @@ public class Manager extends BaseUser {
 		this.roles.remove(role);
 		role.getManagers().remove(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param address
@@ -96,7 +104,7 @@ public class Manager extends BaseUser {
 		this.addresses.add(address);
 		address.getManagers().add(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param address
@@ -105,37 +113,49 @@ public class Manager extends BaseUser {
 		this.addresses.remove(address);
 		address.getManagers().remove(this);
 	}
-	
+
 	public void addSchool(School school) {
 		this.schools.add(school);
 		school.setManager(this);
 	}
-	
+
 	public void removeSchool(School school) {
 		this.schools.remove(school);
 		school.setManager(null);
 	}
-		
+
 	/**
 	 * 
 	 * @param contactPerson
 	 */
-	 public void addContactPerson(ContactPerson contactPerson) {
-	 
+	public void addContactPerson(ContactPerson contactPerson) {
+
 		this.contactPersons.add(contactPerson);
 		contactPerson.getManagers().add(this);
 	}
-	
-	 /**
-	  * 
-	  * @param contactPerson
-	  */
+
+	/**
+	 * 
+	 * @param contactPerson
+	 */
 	public void romveContactPerson(ContactPerson contactPerson) {
 		this.contactPersons.remove(contactPerson);
 		contactPerson.getManagers().remove(this);
 	}
-	
-	
-	
-	
+
+	@Override
+	public String generateUsername() {
+		String toconcat = "";
+
+		int day = LocalDateTime.now().getDayOfMonth();
+		if (day < 10) {
+			toconcat = "0" + day;
+		} else {
+			toconcat = "" + day;
+		}
+		return "MA" + this.getLastName().substring(0, this.getLastName().length() - 1)
+				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
+
+	}
+
 }

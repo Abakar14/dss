@@ -5,6 +5,7 @@
     <artifactId>dss</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  
   <artifactId>domain</artifactId>
   <packaging>jar</packaging>
   

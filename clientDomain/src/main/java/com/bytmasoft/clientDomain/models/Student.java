@@ -5,8 +5,7 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @XmlRootElement
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Student extends BaseUser {
 	
 	/**
@@ -38,6 +36,9 @@ public class Student extends BaseUser {
 	
 	
 	private Set<ContactPerson> contactPersons = new HashSet<>();
+	
+//	@JsonProperty(value = "profile_picture")
+//	private byte [] profile_picture;
 	
 	/**
 	 * 
@@ -63,7 +64,7 @@ public class Student extends BaseUser {
 	 */
 	public void addAddress(Address address) {
 		this.addresses.add(address);
-		address.getStudents().add(this);
+//		address.getStudents().add(this);
 	}
 	
 	/**
@@ -72,7 +73,7 @@ public class Student extends BaseUser {
 	 */
 	public void removeAddress(Address address) {
 		this.addresses.remove(address);
-		address.getStudents().remove(this);
+//		address.getStudents().remove(this);
 	}
 	
 	/**
@@ -100,7 +101,7 @@ public class Student extends BaseUser {
 	 public void addContactPerson(ContactPerson contactPerson) {
 	 
 		this.contactPersons.add(contactPerson);
-		contactPerson.getStudents().add(this);
+//		contactPerson.getStudents().add(this);
 	}
 	
 	 /**
@@ -109,7 +110,7 @@ public class Student extends BaseUser {
 	  */
 	public void romveContactPerson(ContactPerson contactPerson) {
 		this.contactPersons.remove(contactPerson);
-		contactPerson.getStudents().remove(this);
+//		contactPerson.getStudents().remove(this);
 	}
 	
 	

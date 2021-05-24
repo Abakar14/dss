@@ -4,7 +4,6 @@ F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDo
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\School.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\enums\AddressType.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Privilege.java
-F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\EmailTest.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\enums\UserType.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\model\interfaces\IByName.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\DSSCalender.java
@@ -14,12 +13,12 @@ F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDo
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Course.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\model\interfaces\IEntity.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\JwtRequest.java
-F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\EmailAddress.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\JwtResponse.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Student.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\enums\RoleType.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Teacher.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Address.java
+F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\StudentList.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Classe.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Role.java
 F:\repos_git\microservices\dss\clientDomain\src\main\java\com\bytmasoft\clientDomain\models\Password.java

@@ -1,12 +1,17 @@
 package com.bytmasoft.domain.models;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
@@ -16,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,13 +32,13 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Employee extends BaseUser{
+public class Employee extends BaseUser {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7118013499884529614L;
-	
+
 	@Fetch(FetchMode.JOIN)
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ManyToMany
@@ -40,8 +46,7 @@ public class Employee extends BaseUser{
 			@JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles = new HashSet<>();
-	
-	
+
 	@JsonIgnore
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@ManyToMany
@@ -49,15 +54,26 @@ public class Employee extends BaseUser{
 			@JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "address_id", referencedColumnName = "id") })
 	private Set<Address> addresses = new HashSet<>();
-	
+
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@ManyToMany
 	@JoinTable(name = "employee_contact_person", joinColumns = {
 			@JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "contact_person_id", referencedColumnName = "id") })
 	Set<ContactPerson> contactPersons = new HashSet<>();
-	
-	
+
+	@JsonIgnore
+	@ApiModelProperty(hidden = true)
+	@XmlElement
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
+	private Set<FileDB> files = new HashSet<>();
+
+	public void addFile(FileDB file) {
+		this.files.add(file);
+		file.setEmployee(this);
+
+	}
+
 	/**
 	 * 
 	 * @param role
@@ -66,7 +82,7 @@ public class Employee extends BaseUser{
 		this.roles.add(role);
 		role.getEmployees().add(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param role
@@ -75,7 +91,7 @@ public class Employee extends BaseUser{
 		this.roles.remove(role);
 		role.getEmployees().remove(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param address
@@ -84,7 +100,7 @@ public class Employee extends BaseUser{
 		this.addresses.add(address);
 		address.getEmployees().add(this);
 	}
-	
+
 	/**
 	 * 
 	 * @param address
@@ -93,29 +109,39 @@ public class Employee extends BaseUser{
 		this.addresses.remove(address);
 		address.getEmployees().remove(this);
 	}
-	
-		
+
 	/**
 	 * 
 	 * @param contactPerson
 	 */
-	 public void addContactPerson(ContactPerson contactPerson) {
-	 
+	public void addContactPerson(ContactPerson contactPerson) {
+
 		this.contactPersons.add(contactPerson);
 		contactPerson.getEmployees().add(this);
 	}
-	
-	 /**
-	  * 
-	  * @param contactPerson
-	  */
+
+	/**
+	 * 
+	 * @param contactPerson
+	 */
 	public void romveContactPerson(ContactPerson contactPerson) {
 		this.contactPersons.remove(contactPerson);
 		contactPerson.getEmployees().remove(this);
-	}	
+	}
 
-	
-	
-	
+	@Override
+	public String generateUsername() {
+		String toconcat = "";
+
+		int day = LocalDateTime.now().getDayOfMonth();
+		if (day < 10) {
+			toconcat = "0" + day;
+		} else {
+			toconcat = "" + day;
+		}
+		return "EM" + this.getLastName().substring(0, this.getLastName().length() - 1)
+				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
+
+	}
 
 }

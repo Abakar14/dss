@@ -27,11 +27,19 @@
 
 	<modules>
 		<module>domain</module>
-		<module>persistance</module>
-		<module>dss-web</module>
+		<module>persistance</module>		
 		<module>common</module>
 		<module>token-service</module>
-		<module>clientDomain</module>
+		<module>clientDomain</module>	
+		<module>domain-service-interfaces</module>
+		<module>student-client</module>
+		<module>address_client</module>
+		<module>employee-client</module>
+		<module>teacher-client</module>
+		<module>authenticatin-client</module>
+		<module>classes-client</module>
+		<module>manager-client</module>
+		<module>permission-client</module>
 	</modules>
 
 	<dependencies>		

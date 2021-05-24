@@ -9,12 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.Employee;
 import com.bytmasoft.domain.models.Manager;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Student;
 import com.bytmasoft.domain.models.Teacher;
 
-public class UserPrincipal implements UserDetails{
+public class UserPrincipal implements UserDetails {
 
 	/**
 	 * 
@@ -23,58 +24,66 @@ public class UserPrincipal implements UserDetails{
 	private BaseUser user;
 	private Set<GrantedAuthority> authorities;
 	private String salz;
-	
+
 	public UserPrincipal(BaseUser user) {
 		this.user = user;
 		this.salz = user.getSalt();
 		getAuthorities();
-		
-	}	
-	
+
+	}
+
 	private UserPrincipal() {
-		 
-	}	
-	
-	
+
+	}
+//
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//
+//		return prepareAuthorities(user.getRoles());
+//	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-	authorities = new HashSet<>();
-		
-		if(user instanceof Teacher) {
-			
+
+		authorities = new HashSet<>();
+
+		if (user instanceof Teacher) {
+
 			this.authorities = prepareAuthorities(((Teacher) user).getRoles());
-	
-		}else if(user instanceof Manager) {
-		
+
+		} else if (user instanceof Manager) {
+
 			this.authorities = prepareAuthorities(((Manager) user).getRoles());
-		}else if(user instanceof Student) {
-		
+		} else if (user instanceof Student) {
+
 			this.authorities = prepareAuthorities(((Student) user).getRoles());
+		} else if (user instanceof Employee) {
+
+			this.authorities = prepareAuthorities(((Employee) user).getRoles());
 		}
-		
-		
-		return authorities;	
+
+		return authorities;
 	}
 
 	/**
 	 * add a privileges and Roles to authorities
+	 * 
 	 * @param roles
 	 * @return
 	 */
-	private Set<GrantedAuthority> prepareAuthorities(Set<Role> roles){
+	private Set<GrantedAuthority> prepareAuthorities(Set<Role> roles) {
 		Set<GrantedAuthority> authorities = new HashSet<>();
-		
+
 		roles.forEach(r -> {
-			
-			authorities.add(new SimpleGrantedAuthority("ROLE_"+r.getType()));
-			
+
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + r.getType()));
+
 			r.getPrivileges().forEach(p -> {
-				
+
 				authorities.add(new SimpleGrantedAuthority(p.getName()));
 			});
 		});
-		
+
 		return authorities;
 	}
 
@@ -112,12 +121,11 @@ public class UserPrincipal implements UserDetails{
 	public boolean isEnabled() {
 		return user.getStatus().equals("A") ? true : false;
 	}
-	
+
 	public String getEmail() {
-		return user.getEmailAddress().toString();
+		return user.getEmail();
 	}
-	
-		
+
 	public String getSalz() {
 		return salz;
 	}

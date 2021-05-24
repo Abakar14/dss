@@ -1,15 +1,20 @@
 package com.bytmasoft.clientDomain.model.interfaces;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -21,11 +26,13 @@ public abstract class BaseEntity implements IEntity {
 	private static final long serialVersionUID = 1L;
 
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	LocalDateTime createdOn;
 
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	LocalDateTime updatedOn;
 
 

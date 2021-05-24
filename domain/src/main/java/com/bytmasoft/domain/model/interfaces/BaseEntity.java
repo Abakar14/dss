@@ -11,8 +11,14 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.DateTimeSerializerBase;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -29,11 +35,15 @@ public abstract class BaseEntity implements IEntity {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(notes = "The api will generate the createdOn", hidden = true)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	LocalDateTime createdOn;
 
 	@ApiModelProperty(notes = "The api will generate the updatedOn", hidden = true)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	LocalDateTime updatedOn;
 
 	@ApiModelProperty(notes = "The api will generate the status")
@@ -41,7 +51,7 @@ public abstract class BaseEntity implements IEntity {
 	@Size(max = 1)
 	String status;
 
-	@Column(nullable = false, columnDefinition = "boolean default false")
+	@Column(nullable = true, columnDefinition = "boolean default false")
 	Boolean deletestatus = false;
 
 	@ApiModelProperty(notes = "The api will generate the insertedBy", hidden = true)

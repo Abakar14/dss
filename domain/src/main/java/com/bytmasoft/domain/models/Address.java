@@ -5,6 +5,7 @@ package com.bytmasoft.domain.models;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.bytmasoft.common.utils.HashUtils;
 import com.bytmasoft.domain.enums.AddressType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,14 +34,15 @@ import lombok.Setter;
  * 
  * @author Mahamat Abakar Date 13.12.2019
  */
+
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 @XmlRootElement
 @Entity
-public class Address extends BaseEntity{
-	
+public class Address extends BaseEntity {
+
 	/**
 	 * 
 	 */
@@ -62,16 +65,16 @@ public class Address extends BaseEntity{
 
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Student> students = new HashSet<>();
-	
+
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Manager> managers = new HashSet<>();
-	
+
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Teacher> teachers = new HashSet<>();
-	
+
 	@ManyToMany(mappedBy = "addresses")
 	private Set<ContactPerson> contactPersons = new HashSet<>();;
-	
+
 	@ManyToMany(mappedBy = "addresses")
 	private Set<Employee> employees = new HashSet<>();
 
@@ -83,49 +86,34 @@ public class Address extends BaseEntity{
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Address [id=").append(this.getId()).append(", country=").append(this.getCountry())
-				.append(", city=").append(this.getCity()).append(", street=").append(this.getStreet())
-				.append(", hausnumber=").append(this.getHauseNumber()).append(", postalcode=")
-				.append(this.getPostalCode()).append(", status=").append(this.getStatus()).append(", type=")
-				.append(this.getType()).append("]");
 
-		return builder.toString();
-	}
-
-	@Override
-	public int hashCode() {
-
-		final int primeNumber = 31;
-		int resutl = 1;
-		resutl = (primeNumber * resutl) + ((street == null) ? 0 : street.hashCode());
-		return resutl;
-
+		return new StringJoiner("; ", this.getClass().getSimpleName() + " [ ", "]").add("id = " + this.getId())
+				.add("country =" + this.getCountry()).add("city = " + this.getCity())
+				.add("street = " + this.getStreet()).add("hausnumber = " + this.getHauseNumber())
+				.add("postalcode = " + this.getPostalCode()).add("status" + this.getStatus())
+				.add("type" + this.getType()).toString();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
 
-		if (this == obj) {
-
+		if (this == obj)
 			return true;
-		}
-
-		if (obj == null) {
-			return false;
-		}
-
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
 
 		final Address address = (Address) obj;
-		if (!street.equals(address.getStreet())) {
-			return false;
-		}
+		return this.getId() == address.getId() && this.getStreet().equals(address.getStreet());
 
-		return true;
+	}
 
+	@Override
+	public int hashCode() {
+		int hash = 31;
+		hash = HashUtils.calcHashCode(hash, this.getId());
+		return HashUtils.calcHashCode(hash, this.getStreet());
 	}
 
 }

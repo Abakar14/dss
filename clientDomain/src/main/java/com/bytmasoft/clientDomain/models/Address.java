@@ -11,10 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bytmasoft.clientDomain.enums.AddressType;
 import com.bytmasoft.clientDomain.model.interfaces.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +25,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 @XmlRootElement
 public class Address extends BaseEntity{
 	
@@ -48,7 +45,7 @@ public class Address extends BaseEntity{
 	private Country country;
 
 	
-	private Set<Student> students = new HashSet<>();
+//	private Set<Student> students = new HashSet<>();
 	
 	private Set<Manager> managers = new HashSet<>();
 	

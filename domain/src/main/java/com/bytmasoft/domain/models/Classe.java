@@ -31,18 +31,23 @@ import lombok.Setter;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Classe extends BaseEntity {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1871735935804856233L;
-	
+
 	private String description;
-	private String designation;
-	
+
+	private String name;
+
 	@Enumerated(EnumType.STRING)
 	private ClasseType type;
-	
+
+	// TODO Abakar Mahamat 01.12.2020 14:43:39
+	// Class supervisor (Lehrer Betreuer)
+	// Class representative (klassensprecher)
+
 	@JsonIgnore
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@ManyToMany
@@ -50,18 +55,15 @@ public class Classe extends BaseEntity {
 			@JoinColumn(name = "classe_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "course_id", referencedColumnName = "id") })
 	private Set<Course> courses = new HashSet<>();
-	
-	public void addCourse(Course course){
+
+	public void addCourse(Course course) {
 		this.courses.add(course);
 		course.getClasses().add(this);
 	}
-	
-	public void removeCourse(Course course){
+
+	public void removeCourse(Course course) {
 		this.courses.remove(course);
 		course.getClasses().remove(this);
 	}
-	
-	
-
 
 }

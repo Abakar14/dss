@@ -1,6 +1,6 @@
-com\bytmasoft\clientDomain\models\EmailTest.class
 com\bytmasoft\clientDomain\models\Teacher.class
 com\bytmasoft\clientDomain\models\Country.class
+com\bytmasoft\clientDomain\models\StudentList.class
 com\bytmasoft\clientDomain\enums\RightType.class
 com\bytmasoft\clientDomain\enums\UserType.class
 com\bytmasoft\clientDomain\enums\ClasseType.class
@@ -26,7 +26,6 @@ com\bytmasoft\clientDomain\enums\AddressType.class
 com\bytmasoft\clientDomain\models\Classe.class
 com\bytmasoft\clientDomain\models\Credentials.class
 com\bytmasoft\clientDomain\models\JwtRequest.class
-com\bytmasoft\clientDomain\models\EmailAddress.class
 com\bytmasoft\clientDomain\enums\ContactPersonType.class
 com\bytmasoft\clientDomain\models\Password.class
 com\bytmasoft\clientDomain\models\Role.class

@@ -1,12 +1,18 @@
 package com.bytmasoft.domain.models;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Fetch;
@@ -15,7 +21,9 @@ import org.hibernate.annotations.FetchMode;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,7 +47,7 @@ public class Teacher extends BaseUser {
 	@JoinTable(name = "teacher_role", joinColumns = {
 			@JoinColumn(name = "teacher_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	Set<Role> roles =new HashSet<>();
+	Set<Role> roles = new HashSet<>();
 
 	@ManyToMany(mappedBy = "teachers")
 	private Set<School> schools = new HashSet<>();
@@ -67,6 +75,18 @@ public class Teacher extends BaseUser {
 					@JoinColumn(name = "contact_person_id", referencedColumnName = "id") })
 	private Set<ContactPerson> contactPersons = new HashSet<>();
 
+	@JsonIgnore
+	@ApiModelProperty(hidden = true)
+	@XmlElement
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "student")
+	private Set<FileDB> files = new HashSet<>();
+
+	public void addFile(FileDB file) {
+		this.files.add(file);
+		file.setTeacher(this);
+
+	}
+
 	/**
 	 * 
 	 * @param role
@@ -85,7 +105,6 @@ public class Teacher extends BaseUser {
 		role.getTeachers().remove(this);
 	}
 
-	
 	public void addCourse(Course course) {
 
 		this.courses.add(course);
@@ -133,6 +152,41 @@ public class Teacher extends BaseUser {
 	public void romveContactPerson(ContactPerson contactPerson) {
 		this.contactPersons.remove(contactPerson);
 		contactPerson.getTeachers().remove(this);
+	}
+
+	@Override
+	public String generateUsername() {
+		String toconcat = "";
+
+		int day = LocalDateTime.now().getDayOfMonth();
+		if (day < 10) {
+			toconcat = "0" + day;
+		} else {
+			toconcat = "" + day;
+		}
+		return "TE" + this.getLastName().substring(0, this.getLastName().length() - 1)
+				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
+
+	}
+
+	@Override
+	public String toString() {
+
+		return new StringJoiner(" | ", this.getClass().getSimpleName() + " [ ", "]").add("ID = " + this.getId())
+				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
+				.add("e-mail = " + this.getEmail()).toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return Objects.equal(this, obj);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 31;
+		return Objects.hashCode(hash, this.getEmail(), this.getId());
 	}
 
 }

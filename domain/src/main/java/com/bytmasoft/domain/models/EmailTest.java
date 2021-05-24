@@ -6,9 +6,9 @@ public class EmailTest {
 //		EmailAddress email = new EmailAddress();
 		
 		Student s = new Student();
-		s.setEmailAddress(new EmailAddress("abakar@gmail.de"));
+		s.setEmail("abakar@gmail.de");
 		
-		System.out.println(s.getEmailAddress().toString());
+		System.out.println(s.getEmail().toString());
 
 	}
 

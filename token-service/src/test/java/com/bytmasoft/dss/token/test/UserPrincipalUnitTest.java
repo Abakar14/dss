@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.bytmasoft.domain.models.BaseUser;
-import com.bytmasoft.domain.models.EmailAddress;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
 import com.bytmasoft.dss.token.helper.models.UserPrincipal;
@@ -26,7 +25,7 @@ class UserPrincipalUnitTest {
 	private static UserPrincipal userPrincipal;
 	private static String username = "Abakar";
 	private static String password = "Aba14";
-	private static EmailAddress email;
+	private static String email;
 	private static String status = "A";
 	private static Role role1, role2;
 	
@@ -36,9 +35,9 @@ class UserPrincipalUnitTest {
 		teacher = new Teacher();
 		teacher.setUsername(username);
 		teacher.setPassword(password);
-		email = new EmailAddress("abakar61@web.de");
+		email = new String("abakar61@web.de");
 		teacher.setStatus(status);
-		teacher.setEmailAddress(email);
+		teacher.setEmail(email);
 		teacher.setSalt(salt);
 		role1 = new Role();
 		role1.setId(1L);

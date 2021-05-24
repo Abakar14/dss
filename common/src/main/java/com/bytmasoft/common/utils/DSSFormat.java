@@ -7,18 +7,18 @@ import java.time.format.DateTimeFormatter;
 public class DSSFormat {
 	
 
-	public static LocalDateTime formateToLocalDateTime(String date, String format) {
+	public static LocalDateTime formateStringToLocalDateTime(String date, String format) {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
 		
-		LocalDateTime formatDateTime = LocalDateTime.parse(date, formatter);
+		LocalDateTime localdatetime = LocalDateTime.parse(date, formatter);
 
 		
-		return formatDateTime;
+		return localdatetime;
 	}
+
 	
-	
-	public static String formateToString(LocalDateTime datetime, String format) {
+	public static String formateLocalDateTimeToString(LocalDateTime datetime, String format) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
 
@@ -27,7 +27,7 @@ public class DSSFormat {
 		 return formatDateTime;
 	}
 	
-	public static String formateToString(LocalDate date, String format) {
+	public static String formateLocalDateToString(LocalDate date, String format) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
 
@@ -37,7 +37,7 @@ public class DSSFormat {
 	}
 	
 	
-	public static LocalDate formatToLocalDate(String stringDate, String format) {
+	public static LocalDate formatStringToLocalDate(String stringDate, String format) {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
 		
@@ -47,15 +47,7 @@ public class DSSFormat {
 		
 	}
 	
-	public static LocalDateTime formatToLocalDateTime(String stringDate, String format) {
-	
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-		
-		LocalDateTime localdatetime = LocalDateTime.parse(stringDate, formatter);
-		
-		return localdatetime;		
-		
-	}
+
 	
 
 

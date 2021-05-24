@@ -1,12 +1,14 @@
 package com.bytmasoft.clientDomain.models;
 
-import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.bytmasoft.clientDomain.enums.GenderType;
 import com.bytmasoft.clientDomain.enums.UserType;
@@ -26,81 +28,65 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
-public abstract class BaseUser extends BaseEntity  {
+public abstract class BaseUser extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -7764311919115841229L;
 
-	
-
 	@JsonProperty(value = "status")
 	@Size(max = 1)
 	private String status;
-	
 
 	@JsonProperty(value = "gender")
 
 	private GenderType gender;
 
-	
 	@NotNull
 	@Size(min = 3, max = 50, message = "firstname must be between {min} and {max} characters long")
-	
 	private String firstName;
-
 
 	@JsonProperty(value = "middelname")
 	@Size(min = 1, message = "is required")
 	private String middelName;
 
-
 	@NotNull(message = "is required")
 	@Size(min = 3, message = "is required")
-
 	private String lastName;
 
-	private EmailAddress emailAddress;
+	private String email;
 
-
-	@NotNull(message = "is required")
-	@Size(min = 8, message = "is required")
+//	@NotNull(message = "is required")
+	@Size(min = 8, message = "password musst be min 8 characters")
 	private String password;
-	
 
 	private String salt;
 
 	@JsonProperty(value = "birthday")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+	@DateTimeFormat(iso = ISO.DATE)
+	@JsonFormat(pattern = "dd.MM.yyyy")
 	private LocalDate birthday;
 
-
 	@JsonProperty(value = "lastlogin")
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	private LocalDateTime lastLogin;
 
-	
 	@JsonProperty(value = "username")
 	private String username;
 
-	@JsonProperty(value = "type")	
+	@JsonProperty(value = "type")
 	private UserType type;
 
-	
 	@JsonProperty(value = "age")
 	private int age;
+	private String phoneNr;
+	private String mobilePhoneNr;
 
-	@JsonProperty(value = "foto")
-	private Blob foto;
+	@JsonProperty(value = "profile_picture")
+	private byte[] profile_picture;
 
-	
-	public void setPassword(String password) {
-		
-		this.password = password;
-	}
-	
-	
 	public int getAge() {
 
 		if (birthday != null) {
@@ -116,11 +102,10 @@ public abstract class BaseUser extends BaseEntity  {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
+
 		builder.append("User [id=").append(this.getId()).append(", firstname=").append(this.getFirstName())
 				.append(", lastname=").append(this.getLastName()).append(", status=").append(this.getStatus())
-				.append(", email=").append(this.emailAddress.toString()).append(", password=").append(this.getPassword())
-				.append("]"
-						);
+				.append(", email=").append(this.email).append(", password=").append(this.getPassword()).append("]");
 
 		return builder.toString();
 	}
@@ -130,7 +115,7 @@ public abstract class BaseUser extends BaseEntity  {
 
 		final int primeNumber = 31;
 		int resutl = 1;
-		resutl = (primeNumber * resutl) + ((this.emailAddress.toString() == null) ? 0 : this.emailAddress.toString().hashCode());
+		resutl = (primeNumber * resutl) + ((this.email == null) ? 0 : this.email.hashCode());
 		return resutl;
 
 	}
@@ -152,7 +137,7 @@ public abstract class BaseUser extends BaseEntity  {
 		}
 
 		final BaseUser user = (BaseUser) obj;
-		if (!this.emailAddress.toString().equals(user.emailAddress.toString())) {
+		if (!this.email.equals(user.email)) {
 			return false;
 		}
 

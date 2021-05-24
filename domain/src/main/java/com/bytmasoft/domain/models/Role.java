@@ -41,7 +41,6 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Role extends BaseEntity {
 
-
 	private static final long serialVersionUID = -8409570516606378132L;
 
 	@Column(unique = true)
@@ -57,7 +56,6 @@ public class Role extends BaseEntity {
 					@JoinColumn(name = "privilege_id", referencedColumnName = "id") })
 	Set<Privilege> privileges = new HashSet<>();
 
-	
 //	@JsonIgnore
 //	@Fetch(FetchMode.JOIN)
 	@ManyToMany(mappedBy = "roles")
@@ -78,13 +76,16 @@ public class Role extends BaseEntity {
 	@ManyToMany(mappedBy = "roles")
 	private Set<Employee> employees = new HashSet<>();
 
+//	@ManyToMany(mappedBy = "roles")
+//	private Set<User> users = new HashSet<>();
+
 	public void addPrivilege(Privilege privilege) {
 
 		this.privileges.add(privilege);
 		privilege.getRoles().add(this);
 
 	}
-	
+
 	public void removePrivilege(Privilege privilege) {
 
 		this.privileges.remove(privilege);

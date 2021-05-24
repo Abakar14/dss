@@ -10,7 +10,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.bytmasoft.domain.enums.UserType;
-import com.bytmasoft.domain.models.EmailAddress;
 import com.bytmasoft.domain.models.Student;
 import com.bytmasoft.domain.models.Teacher;
 
@@ -28,7 +27,7 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 	 * @param email
 	 * @return
 	 */	
-	T findByEmailAddress(EmailAddress email);
+	T findByEmailAddress(String email);
 
 	/**
 	 * 
@@ -136,7 +135,7 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 	 * @param email
 	 * @return a list of {@link Teacher}
 	 */
-	T findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, EmailAddress email);
+	T findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, String email);
 
 	/**
 	 * 

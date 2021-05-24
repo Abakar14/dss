@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.dss.token.helper.models.UserPrincipal;
 import com.bytmasoft.dss.token.helper.repositories.ManagerLoginRepository;
@@ -14,45 +15,63 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class UserPrincipalDetailsService implements UserDetailsService{
-	
+public class UserPrincipalDetailsService implements UserDetailsService {
+
 	private final TeacherLoginRepository teacherLoginRepository;
 	private final ManagerLoginRepository managerLoginRepository;
 	private final StudentLoginRepository StudentLoginRepository;
 
 	@Override
 	public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-				
-		 BaseUser user = findByUsername(username);
+
+		BaseUser user = findByUsername(username);
 
 		if (user != null) {
 
 			return new UserPrincipal(user);
 		} else {
 
-			throw new UsernameNotFoundException("user not found with loginname " + username);
+			throw new DSSEntityNotFoundException("user not found with loginname " + username);
 		}
-		
-		
+
 	}
 
 	private BaseUser findByUsername(String username) {
-		
-		BaseUser user = null;
-		
-		user = this.StudentLoginRepository.findByUsernameOrEmail(username);
-		
-		if(user == null) {
-			user = this.teacherLoginRepository.findByUsernameOrEmail(username);
-			
+
+		BaseUser user = StudentLoginRepository.findByUsernameOrEmail(username);
+
+		if (user == null) {
+			user = teacherLoginRepository.findByUsernameOrEmail(username);
 		}
-		if(user == null) {
-			
-			user = this.managerLoginRepository.findByUsernameOrEmail(username);
+
+		if (user == null) {
+			user = teacherLoginRepository.findByUsernameOrEmail(username);
 		}
-		
-		
+
+		if (user == null) {
+			throw new DSSEntityNotFoundException("There is no User with this username or Email : " + username);
+		}
+
 		return user;
 	}
+
+//	private BaseUser findByUsername(String username) {
+//		
+//		BaseUser user = null;
+//		
+//		user = this.StudentLoginRepository.findByUsernameOrEmail(username);
+//		
+//		if(user == null) {
+//			user = this.teacherLoginRepository.findByUsernameOrEmail(username);
+//			
+//		}
+//		if(user == null) {
+//			
+//			user = this.managerLoginRepository.findByUsernameOrEmail(username);
+//		}
+//		
+//		
+//		return user;
+//	}
 
 }

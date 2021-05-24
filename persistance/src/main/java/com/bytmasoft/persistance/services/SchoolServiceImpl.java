@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.bytmasoft.common.exception.MyEntityNotFoundException;
+import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.models.Address;
 import com.bytmasoft.domain.models.BaseUser;
@@ -42,7 +42,7 @@ public class SchoolServiceImpl implements SchoolService {
 	@Override
 	public School findOne(long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new MyEntityNotFoundException("There is no school with this id: " + id));
+				.orElseThrow(() -> new DSSEntityNotFoundException("There is no school with this id: " + id));
 
 	}
 

@@ -1,12 +1,7 @@
 package com.bytmasoft.persistance.repositories;
 
-import java.util.List;
-
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
-
-import com.bytmasoft.domain.models.EmailAddress;
-import com.bytmasoft.domain.models.Student;
 
 
 /**

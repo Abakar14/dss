@@ -56,8 +56,7 @@ public interface IOperations<T extends Serializable> {
 	 * @return
 	 */
 	T create(final T resource);
-	
-	
+		
 
 	/**
 	 * 

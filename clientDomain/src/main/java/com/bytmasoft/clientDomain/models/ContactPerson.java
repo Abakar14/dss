@@ -44,7 +44,7 @@ public class ContactPerson extends BaseUser {
 	private Set<Employee> employees;
 	
 	
-	private Set<Student> students = new HashSet<>();
+//	private Set<Student> students = new HashSet<>();
 
 	
 	@Override
