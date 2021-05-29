@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,9 +17,6 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.DateTimeSerializerBase;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -33,6 +31,9 @@ public abstract class BaseEntity implements IEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+//	@Value("${spring.application.name}")
+//	private String appName;
 
 	@ApiModelProperty(notes = "The api will generate the createdOn", hidden = true)
 //	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
@@ -72,12 +73,20 @@ public abstract class BaseEntity implements IEntity {
 	@ApiModelProperty(notes = "The database will generate the id", hidden = true)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)	
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
-	
+
 	@PrePersist
-	public void init() {
+	public void prePersist() {
 		this.createdOn = LocalDateTime.now();
+//		this.insertedBy = appName;
+
+	}
+
+	@PreUpdate
+	public void preUpdate() {
+		this.updatedOn = LocalDateTime.now();
+//		this.updatedProg = appName;
 
 	}
 

@@ -4,7 +4,6 @@
  */
 package com.bytmasoft.persistance.services;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class SchoolServiceImpl implements SchoolService {
 
 	private final SchoolRepository repository;
 	private final EntityUtils<School> entityUtils;
-	
+
 	@Value("${spring.application.name}")
 	private String appName;
 
@@ -92,12 +91,12 @@ public class SchoolServiceImpl implements SchoolService {
 	public School create(School resource) {
 
 		boolean isExists = repository.findByName(resource.getName()) != null ? true : false;
-		if(isExists) {
+		if (isExists) {
 			return resource;
-		}else {
+		} else {
 			resource.setInsertedProg(appName);
 			return repository.save(resource);
-			
+
 		}
 	}
 
@@ -165,8 +164,7 @@ public class SchoolServiceImpl implements SchoolService {
 		School school = findOne(id);
 		school.setStatus("I");
 
-		repository.save(this.entityUtils
-				.setUpdateParams(school, appName));
+		repository.save(this.entityUtils.setUpdateParams(school, appName));
 
 	}
 
@@ -211,7 +209,6 @@ public class SchoolServiceImpl implements SchoolService {
 
 	}
 
-
 	@Override
 	public List<School> findSchoolsByUserId(Long id) {
 
@@ -243,8 +240,5 @@ public class SchoolServiceImpl implements SchoolService {
 		});
 
 	}
-
-
-
 
 }

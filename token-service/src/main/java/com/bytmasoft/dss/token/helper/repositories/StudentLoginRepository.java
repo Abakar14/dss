@@ -20,10 +20,13 @@ public interface StudentLoginRepository extends CrudRepository<Student, Long> {
 	/**
 	 * @param username
 	 * @return
-	 */	
+	 */
 //	BaseUser findByUsernameOrEmail(String username, String email);
 	@Query(value = "SELECT s.* FROM Student s WHERE s.username=:usernameOrEmail Or s.email=:usernameOrEmail", nativeQuery = true)
 	Student findByUsernameOrEmail(@Param("usernameOrEmail") String usernameOrEmail);
 
+	@Query(value = "SELECT s.* FROM Student s WHERE (s.username=:usernameOrEmail Or s.email=:usernameOrEmail) and s.password=:password", nativeQuery = true)
+	Student findByUsernameOrEmailAndPassword(@Param("usernameOrEmail") String usernameOrEmail,
+			@Param("password") String password);
 
 }

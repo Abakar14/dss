@@ -7,6 +7,7 @@ F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\excepti
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\exception\DSSFileUploadException.java
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\CommonConfiguration.java
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\utils\ApiError.java
+F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\utils\HashUtils.java
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\exception\DSSValidationException.java
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\exception\DSSConfilictExpception.java
 F:\repos_git\microservices\dss\common\src\main\java\com\bytmasoft\common\utils\DSSFormat.java

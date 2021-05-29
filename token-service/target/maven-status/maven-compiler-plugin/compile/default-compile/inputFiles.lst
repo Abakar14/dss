@@ -1,8 +1,8 @@
+F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\config\ServiceTokenConfig.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\repositories\StudentLoginRepository.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\utils\TokenUtil.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\repositories\EmployeeLoginRepository.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\models\UserPrincipal.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\repositories\TeacherLoginRepository.java
-F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\repositories\UserRepository.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\repositories\ManagerLoginRepository.java
 F:\repos_git\microservices\dss\token-service\src\main\java\com\bytmasoft\dss\token\helper\services\UserPrincipalDetailsService.java

@@ -3,6 +3,7 @@ package com.bytmasoft.domain.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
@@ -12,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +26,7 @@ import com.bytmasoft.domain.enums.UserType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -143,7 +144,8 @@ public abstract class BaseUser extends BaseEntity {
 
 	}
 
-	public abstract String generateUsername();
+	@PrePersist
+	public abstract void generateUsername();
 
 	public static boolean isValid(String candidate) {
 
@@ -153,11 +155,8 @@ public abstract class BaseUser extends BaseEntity {
 	/**
 	 * with @PrePersit and PreUpdate change the salt before insert into database
 	 */
-	@PrePersist
-	@PreUpdate
 	public void generateSalt() {
 		this.salt = RandomString.make(9);
-
 	}
 
 	public int getAge() {
@@ -173,47 +172,29 @@ public abstract class BaseUser extends BaseEntity {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("User [id=").append(this.getId()).append(", firstname=").append(this.getFirstName())
-				.append(", lastname=").append(this.getLastName()).append(", status=").append(this.getStatus())
-				.append(", email=").append(this.email).append(", password=").append(this.getPassword()).append("]");
 
-		return builder.toString();
+		return new StringJoiner(";", this.getClass().getSimpleName() + "[", "]").add("id = " + this.getId())
+				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
+				.add("e-mail = " + this.getEmail()).add("status" + this.getStatus())
+				.add("password" + this.getPassword()).add("type" + this.getType()).toString();
+
 	}
 
 	@Override
 	public int hashCode() {
 
-		final int primeNumber = 31;
-		int resutl = 1;
-		resutl = (primeNumber * resutl) + ((this.email == null) ? 0 : this.email.hashCode());
-		return resutl;
+		return Objects.hashCode(this.getId(), this.getEmail(), this.getUsername());
 
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 
-		if (this == obj) {
-
-			return true;
+		if (obj instanceof BaseUser) {
+			BaseUser user = (BaseUser) obj;
+			return Objects.equal(this.getId(), user.getId()) && Objects.equal(this.getEmail(), user.getEmail());
 		}
-
-		if (obj == null) {
-			return false;
-		}
-
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		final BaseUser user = (BaseUser) obj;
-		if (!this.email.equals(user.email)) {
-			return false;
-		}
-
-		return true;
-
+		return false;
 	}
 
 }

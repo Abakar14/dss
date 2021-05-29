@@ -186,6 +186,7 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * send a user email with link to add password and confirm password
 	 * 
 	 * @param email
+	 * @return true if email was sent
 	 */
 	Boolean sendEmailForChangingPassword(String email);
 
@@ -196,6 +197,13 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 */
 	Boolean changePassword(Long id, String confirmPassword);
 
+	/**
+	 * 
+	 * @param id
+	 * @param password
+	 * @param confirmPassword
+	 * @return true if password is changed else false
+	 */
 	Boolean resetPassword(Long id, String password, String confirmPassword);
 
 	void remerkUsersWithSchoolIdForDelete(Long school_Id);
@@ -203,7 +211,7 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	@Override
 	void update(T t);
 
-	void update(T t, Long id);
+	T update(T t, Long id);
 
 	void remerkUserForDelete(Long id);
 

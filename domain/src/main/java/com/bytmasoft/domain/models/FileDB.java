@@ -50,10 +50,21 @@ public class FileDB extends BaseEntity {
 	@Lob
 	private byte[] data;
 
-	public FileDB(String name, String string, byte[] data) {
+	public FileDB(String name, FileType type, byte[] data) {
 		this.filename = name;
-		this.type = FileType.valueOf(string);
+		this.type = type;
 		this.data = data;
+	}
+
+	/**
+	 * @param filename2
+	 * @param contentType
+	 * @param bytes
+	 */
+	public FileDB(String filename2, String contentType, byte[] bytes) {
+		this.filename = filename2;
+		this.type = FileType.valueOf(contentType);
+		this.data = bytes;
 	}
 
 	@JsonProperty(value = "student")

@@ -154,7 +154,7 @@ public class Student extends BaseUser {
 	}
 
 	@Override
-	public String generateUsername() {
+	public void generateUsername() {
 
 		String toconcat = "";
 
@@ -164,8 +164,8 @@ public class Student extends BaseUser {
 		} else {
 			toconcat = "" + day;
 		}
-		return "ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
-				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
+		this.setUsername("ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
+				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
 
 	}
 

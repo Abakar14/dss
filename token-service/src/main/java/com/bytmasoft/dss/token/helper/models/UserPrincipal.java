@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,23 +25,25 @@ public class UserPrincipal implements UserDetails {
 	private BaseUser user;
 	private Set<GrantedAuthority> authorities;
 	private String salz;
+	private String password;
+	private String username;
 
 	public UserPrincipal(BaseUser user) {
+		this.password = user.getPassword();
 		this.user = user;
+		this.username = user.getUsername();
 		this.salz = user.getSalt();
 		getAuthorities();
 
 	}
 
+	/**
+	 * initiates a new UserPrincipal
+	 */
+	@SuppressWarnings("unused")
 	private UserPrincipal() {
 
 	}
-//
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//
-//		return prepareAuthorities(user.getRoles());
-//	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,12 +92,12 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return user.getPassword();
+		return password;
 	}
 
 	@Override
 	public String getUsername() {
-		return user.getUsername();
+		return username;
 	}
 
 	@Override
@@ -104,12 +107,13 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		if (user.getStatus() != null && !user.getStatus().isEmpty()) {
+
+		if (Strings.isNotEmpty(user.getStatus())) {
 			return user.getStatus().equals("A") ? true : false;
 
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	@Override

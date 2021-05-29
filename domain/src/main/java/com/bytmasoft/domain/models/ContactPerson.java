@@ -85,7 +85,7 @@ public class ContactPerson extends BaseUser {
 	}
 
 	@Override
-	public String generateUsername() {
+	public void generateUsername() {
 		String toconcat = "";
 
 		int day = LocalDateTime.now().getDayOfMonth();
@@ -94,8 +94,8 @@ public class ContactPerson extends BaseUser {
 		} else {
 			toconcat = "" + day;
 		}
-		return "CO" + this.getLastName().substring(0, this.getLastName().length() - 1)
-				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase();
+		this.setUsername("CO" + this.getLastName().substring(0, this.getLastName().length() - 1)
+				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
 
 	}
 

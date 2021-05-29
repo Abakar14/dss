@@ -5,12 +5,9 @@ package com.bytmasoft;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
-import lombok.extern.log4j.Log4j2;
-
 /**
  * @author Mahamat Abakar created on 17.11.2020 at 23:56:10
  */
-@Log4j2
 public class AuthenticationClient {
 
 	private final WebClient webClient;
@@ -21,6 +18,13 @@ public class AuthenticationClient {
 	public AuthenticationClient(WebClient webClient) {
 		this.webClient = webClient;
 
+	}
+
+	/**
+	 * @return the webClient
+	 */
+	public WebClient getWebClient() {
+		return webClient;
 	}
 
 	/************************************

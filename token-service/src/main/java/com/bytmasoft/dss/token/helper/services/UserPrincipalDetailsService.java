@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.domain.models.BaseUser;
 import com.bytmasoft.dss.token.helper.models.UserPrincipal;
-import com.bytmasoft.dss.token.helper.repositories.ManagerLoginRepository;
 import com.bytmasoft.dss.token.helper.repositories.StudentLoginRepository;
 import com.bytmasoft.dss.token.helper.repositories.TeacherLoginRepository;
 
@@ -18,60 +17,30 @@ import lombok.RequiredArgsConstructor;
 public class UserPrincipalDetailsService implements UserDetailsService {
 
 	private final TeacherLoginRepository teacherLoginRepository;
-	private final ManagerLoginRepository managerLoginRepository;
-	private final StudentLoginRepository StudentLoginRepository;
+//	private final ManagerLoginRepository managerLoginRepository;
+	private final StudentLoginRepository studentLoginRepository;
 
 	@Override
-	public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserPrincipal loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 
-		BaseUser user = findByUsername(username);
-
-		if (user != null) {
-
-			return new UserPrincipal(user);
-		} else {
-
-			throw new DSSEntityNotFoundException("user not found with loginname " + username);
-		}
+		return new UserPrincipal(findByUsernameOrEmail(usernameOrEmail));
 
 	}
 
-	private BaseUser findByUsername(String username) {
+	private BaseUser findByUsernameOrEmail(String username) {
 
-		BaseUser user = StudentLoginRepository.findByUsernameOrEmail(username);
-
-		if (user == null) {
-			user = teacherLoginRepository.findByUsernameOrEmail(username);
-		}
+		BaseUser user = studentLoginRepository.findByUsernameOrEmail(username);
 
 		if (user == null) {
 			user = teacherLoginRepository.findByUsernameOrEmail(username);
 		}
 
 		if (user == null) {
-			throw new DSSEntityNotFoundException("There is no User with this username or Email : " + username);
+			throw new DSSEntityNotFoundException(String.format("user with : %s, loginname not found...", username));
+
 		}
 
 		return user;
 	}
-
-//	private BaseUser findByUsername(String username) {
-//		
-//		BaseUser user = null;
-//		
-//		user = this.StudentLoginRepository.findByUsernameOrEmail(username);
-//		
-//		if(user == null) {
-//			user = this.teacherLoginRepository.findByUsernameOrEmail(username);
-//			
-//		}
-//		if(user == null) {
-//			
-//			user = this.managerLoginRepository.findByUsernameOrEmail(username);
-//		}
-//		
-//		
-//		return user;
-//	}
 
 }

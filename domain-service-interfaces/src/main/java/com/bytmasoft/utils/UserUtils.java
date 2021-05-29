@@ -38,6 +38,7 @@ public class UserUtils<T extends BaseUser> {
 
 		t.setUpdatedOn(DSSFormat.formateStringToLocalDateTime(dateStr, dateformat));
 		t.setUpdatedBy(t.getUsername());
+
 		return t;
 	}
 
