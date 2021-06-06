@@ -90,7 +90,7 @@ public class Address extends BaseEntity {
 		return new StringJoiner("; ", this.getClass().getSimpleName() + " [ ", "]").add("id = " + this.getId())
 				.add("country =" + this.getCountry()).add("city = " + this.getCity())
 				.add("street = " + this.getStreet()).add("hausnumber = " + this.getHauseNumber())
-				.add("postalcode = " + this.getPostalCode()).add("status" + this.getStatus())
+				.add("postalcode = " + this.getPostalCode()).add("active" + this.getActive())
 				.add("type" + this.getType()).toString();
 	}
 

@@ -131,8 +131,8 @@ public class Role extends BaseEntity {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("Role [id=").append(this.getId()).append(", name=").append(this.getName()).append(", status=")
-				.append(this.getStatus()).append(", type=").append(this.getType()).append(", privileges=")
+		builder.append("Role [id=").append(this.getId()).append(", name=").append(this.getName()).append(", active=")
+				.append(this.getActive()).append(", type=").append(this.getType()).append(", privileges=")
 				.append(this.getPrivileges()).append("]");
 
 		return builder.toString();

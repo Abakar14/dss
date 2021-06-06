@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -153,6 +154,15 @@ public class Student extends BaseUser {
 		contactPerson.getStudents().remove(this);
 	}
 
+	/**
+	 * This method generate user name with following logic 1- take the day of Month
+	 * for days < 10 added 0 as prefix like 03, 06 2- for the day >= 10 take it with
+	 * out change 3- then add ST for student at beginn 4- ST+ (Lastname - last
+	 * character) + (First char from firstname) + the day of the Month 5- then
+	 * convert all string to uppercase 5- Example Firstname = Mahamat, Lastname =
+	 * Abakar, Day ot the Month 4 then username = STABAKAM04 6- Example Firstname =
+	 * Mahamat, Lastname = Abakar, Day ot the Month 12 then username = STABAKAM12
+	 */
 	@Override
 	public void generateUsername() {
 
@@ -164,8 +174,12 @@ public class Student extends BaseUser {
 		} else {
 			toconcat = "" + day;
 		}
-		this.setUsername("ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
-				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
+		if (StringUtils.isNoneBlank(this.getLastName()) && StringUtils.isNoneBlank(this.getFirstName())) {
+			this.setUsername("ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
+					.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
+		} else {
+			this.setUsername("");
+		}
 
 	}
 
@@ -174,7 +188,7 @@ public class Student extends BaseUser {
 
 		return new StringJoiner("; ", this.getClass().getSimpleName() + " [", "]").add("id = " + this.getId())
 				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
-				.add("e-mail = " + this.getEmail()).add("status" + this.getStatus()).add("type" + this.getType())
+				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + this.getType())
 				.toString();
 	}
 
@@ -183,7 +197,13 @@ public class Student extends BaseUser {
 
 		if (obj instanceof Student) {
 			Student student = (Student) obj;
-			return Objects.equal(this.getId(), student.getId()) && Objects.equal(this.getEmail(), student.getEmail());
+
+			if (student.getId() != null && StringUtils.isNotBlank(student.getEmail())) {
+				return Objects.equal(this.getId(), student.getId())
+						&& Objects.equal(this.getEmail(), student.getEmail());
+
+			}
+
 		}
 		return false;
 	}

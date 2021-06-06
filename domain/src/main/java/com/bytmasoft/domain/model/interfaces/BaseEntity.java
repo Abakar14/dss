@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -48,9 +47,9 @@ public abstract class BaseEntity implements IEntity {
 	LocalDateTime updatedOn;
 
 	@ApiModelProperty(notes = "The api will generate the status")
-	@JsonProperty(value = "status")
-	@Size(max = 1)
-	String status;
+	@JsonProperty(value = "active")
+	@Column(columnDefinition = "Boolean default false")
+	Boolean active = false;
 
 	@Column(nullable = true, columnDefinition = "boolean default false")
 	Boolean deletestatus = false;
@@ -108,7 +107,7 @@ public abstract class BaseEntity implements IEntity {
 	@Override
 	public int hashCode() {
 
-		return 31;
+		return Objects.hashCode(this.getId());
 	}
 
 }

@@ -9,10 +9,6 @@ public interface IEntity extends Serializable {
 
 	void setId(final Long id);
 
-	public String getStatus();
-
-	void setStatus(String status);
-
 	LocalDateTime getCreatedOn();
 
 	void setCreatedOn(LocalDateTime createdOn);

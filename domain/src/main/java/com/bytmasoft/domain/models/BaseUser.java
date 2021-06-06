@@ -6,7 +6,6 @@ import java.time.Period;
 import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -66,38 +66,33 @@ public abstract class BaseUser extends BaseEntity {
 
 	@ApiModelProperty(allowEmptyValue = false)
 //	@JsonProperty(value = "firstname")
-	@NotNull
+	@NotNull(message = "Lastname is required and must not be null or empty")
 	@Size(min = 3, max = 50, message = "firstname must be between {min} and {max} characters long")
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "first_name")
 	private String firstName;
 
 	@ApiModelProperty(allowEmptyValue = true)
 	@JsonProperty(value = "middelname")
-	@Size(min = 1, message = "is required")
 	private String middelName;
 
 //	@JsonProperty(value = "lastname")
-	@NotNull(message = "is required")
-	@Size(min = 3, message = "is required")
+	@NotNull(message = "Lastname is required and must not be null or empty")
+	@Size(min = 3, max = 50, message = "Lastname must be between {min} and {max} characters long")
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
 //	@JsonProperty(value = "email")
-//	@Email
-//	@Column(nullable = false, unique = true)
-//	private String email;
-//	@Embedded
-	@Column(unique = true, nullable = false)
+	@Email(message = "Email should be valid")
+	@NotNull(message = "Email cannot be null or empty")
+	@Column(unique = true)
 	private String email;
 
 //	@JsonIgnore
-//	@NotNull(message = "password is required")
-	@Nullable
-	@Size(min = 8, message = "password musst be min 8 characters")
+	@NotNull(message = "password cannot be a null or empty")
+	@Size(min = 8, message = "password musst be {min} characters")
 	private String password;
 
-//	@NotNull(message = "is required")
-//	@Size(min = 9, max = 9, message = "is required")
+	@NotNull(message = "salt should not be null")
 	private String salt;
 
 	@JsonProperty(value = "birthday")
@@ -113,7 +108,9 @@ public abstract class BaseUser extends BaseEntity {
 
 	@ApiModelProperty(notes = "The api will generate the username")
 	@JsonProperty(value = "username")
-	@Column(unique = true, nullable = false)
+	@Column(unique = true)
+	@NotNull(message = "Username cannot be null or empty")
+	@Size(min = 3, max = 30)
 	private String username;
 
 	@JsonProperty(value = "type")
@@ -139,7 +136,7 @@ public abstract class BaseUser extends BaseEntity {
 	}
 
 	public void setEmail(String email) {
-		Assert.isTrue(isValid(email), "Invalid email address!");
+		Assert.isTrue(isValid(email), "Your email is invalid please add valide email!");
 		this.email = email;
 
 	}
@@ -175,7 +172,7 @@ public abstract class BaseUser extends BaseEntity {
 
 		return new StringJoiner(";", this.getClass().getSimpleName() + "[", "]").add("id = " + this.getId())
 				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
-				.add("e-mail = " + this.getEmail()).add("status" + this.getStatus())
+				.add("e-mail = " + this.getEmail()).add("active" + this.getActive())
 				.add("password" + this.getPassword()).add("type" + this.getType()).toString();
 
 	}

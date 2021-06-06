@@ -10,15 +10,14 @@ public interface IOperations<T extends Serializable> {
 	 * @param id
 	 * @return one element
 	 */
-	T findOne(final long id);
-	
+	T findOne(final Long id);
+
 	/**
 	 * 
 	 * @param status
 	 * @return a list of T
 	 */
 	List<T> findByStatus(String status);
-
 
 	/**
 	 * 
@@ -31,7 +30,12 @@ public interface IOperations<T extends Serializable> {
 	 * @return a list of all active element
 	 */
 	List<T> findAllInActive();
-	
+
+	/**
+	 * 
+	 * @return a list of all elements that remarked for delete
+	 */
+	List<T> findAllRemarkedForDelete();
 
 	/**
 	 * 
@@ -56,7 +60,6 @@ public interface IOperations<T extends Serializable> {
 	 * @return
 	 */
 	T create(final T resource);
-		
 
 	/**
 	 * 
@@ -68,7 +71,7 @@ public interface IOperations<T extends Serializable> {
 	 * 
 	 * @param id for that element to delete
 	 */
-	void deleteById(final long id);
+	void deleteById(final Long id);
 
 	/**
 	 * delete all elements
@@ -117,14 +120,12 @@ public interface IOperations<T extends Serializable> {
 	 */
 	void deactivateAll();
 
-
 	/**
 	 * 
 	 * @param user_id
 	 */
-	void remerkForDelete(Long id);
-	
-	void remerkByStatusForDelete(String status);
-	
+	void remarkForDelete(Long id);
+
+	void remarkByStatusForDelete(String status);
 
 }

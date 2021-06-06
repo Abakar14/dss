@@ -155,7 +155,6 @@ public class Manager extends BaseUser {
 		}
 		this.setUsername("MA" + this.getLastName().substring(0, this.getLastName().length() - 1)
 				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
-
 	}
 
 }

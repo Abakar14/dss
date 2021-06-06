@@ -166,7 +166,6 @@ public class Teacher extends BaseUser {
 		}
 		this.setUsername("TE" + this.getLastName().substring(0, this.getLastName().length() - 1)
 				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
-
 	}
 
 	@Override

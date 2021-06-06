@@ -32,8 +32,6 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
 public class Privilege extends BaseEntity {
 
-
-
 	/**
 	 * 
 	 */
@@ -45,12 +43,12 @@ public class Privilege extends BaseEntity {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "privileges")
 	Set<Role> roles = new HashSet<>();
-	
+
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("Privilege [id=").append(this.getId()).append(", name=").append(this.getName())
-				.append(", status=").append(this.getStatus()).append(", roles=").append(this.getRoles()).append("]");
+				.append(", active=").append(this.getActive()).append(", roles=").append(this.getRoles()).append("]");
 
 		return builder.toString();
 	}

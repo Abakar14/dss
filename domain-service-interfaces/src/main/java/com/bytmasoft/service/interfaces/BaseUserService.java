@@ -14,26 +14,26 @@ import com.bytmasoft.domain.model.interfaces.BaseEntity;
 
 public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 
-	T addProfilePicture(MultipartFile profilePic, Long student_id) throws IOException;
+	public T addProfilePicture(MultipartFile profilePic, Long student_id) throws IOException;
 
-	List<T> findByEmail(String email);
+	public T findByEmail(String email);
 
 	/**
 	 * @param lastName
 	 */
-	List<T> findByLastName(String lastName);
+	public List<T> findByLastName(String lastName);
 
 	/**
 	 * 
 	 * @param fistName
 	 */
-	List<T> findByFirstName(String fistName);
+	public List<T> findByFirstName(String fistName);
 
 	/**
 	 * 
 	 * @param lastName
 	 */
-	List<T> findByMiddelName(String lastName);
+	public List<T> findByMiddelName(String lastName);
 
 	/**
 	 * 
@@ -41,88 +41,96 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param lastname
 	 * @return
 	 */
-	List<T> findByFirstNameAndLastName(String firstname, String lastname);
+	public List<T> findByFirstNameAndLastName(String firstname, String lastname);
 
 	/**
 	 * 
 	 * @param birthday
 	 * @return a list of {@link T}
 	 */
-	List<T> findByBirthday(LocalDate birthday);
+	public List<T> findByBirthday(LocalDate birthday);
 
 	/**
 	 * 
 	 * @param lastLogin
 	 * @return a list of {@link T}
 	 */
-	List<T> findByLastLogin(LocalDateTime lastLogin);
+	public List<T> findByLastLogin(LocalDateTime lastLogin);
 
 	/**
 	 * 
 	 * @param loginname
 	 * @return a {@link T}
 	 */
-	List<T> findByUsername(String username);
+	public T findByUsername(String username);
 
 	/**
 	 * 
 	 * @param lastLogin
 	 * @return a list of {@link T}
 	 */
-	List<T> findByType(UserType type);
+	public List<T> findByType(UserType type);
 
 	/**
 	 * 
 	 * @param rightsName
 	 */
-	void assignRoleToUser(Long user_id, Long role_id);
+	public void assignRoleToUser(Long user_id, Long role_id);
 
 	/**
 	 * 
 	 * @param rightsName
 	 */
-	void assignRoleToUsers(String role);
+	public void assignRoleToUsers(String role);
 
 	/**
+	 * This method assign a role witd role_id to all students
+	 * 
 	 * @param roleId
 	 */
-	void assignRoleToUsers(Long roleId);
+	public void assignRoleToUsers(Long roleId);
 
 	/**
 	 * 
 	 * @param groupName
 	 * @return List of T
 	 */
-	List<T> findUsersByRoleName(String rolename);
+	public List<T> findUsersByRoleName(String rolename);
 
-	List<T> findUserByFirstnameSorted(String firstname, String sortBy, String sortOrder);
+	public List<T> findUserByFirstnameSorted(String firstname, String sortBy, String sortOrder);
 
-	List<T> findUserByFirstnamePaged(String firstname, int page, int size);
+	public List<T> findUserByFirstnamePaged(String firstname, int page, int size);
 
-	List<T> findByFirstNameContainingIgnoreCase(String firstname);
+	public List<T> findByFirstNameContainingIgnoreCase(String firstname);
 
-	List<T> findByLastNameContainingIgnoreCase(String lastname);
+	public List<T> findByLastNameContainingIgnoreCase(String lastname);
 
-	List<T> findAllSortedBy(String sortOrder, String... properties);
+	public List<T> findAllSortedBy(String sortOrder, String... properties);
 
-	/**
-	 * @param age
-	 * @return a list of {@link T}
-	 */
-	List<T> findUsersByAgeMoreThan(int age);
+	public List<T> findAllRemarkedForDeleteSortedBy(String sortOrder, String... properties);
+
+	public List<T> findAllInActiveSortedBy(String sortOrder, String... properties);
 
 	/**
 	 * @param age
 	 * @return a list of {@link T}
 	 */
-	List<T> findUsersByAgeLessThan(int age);
+	public List<T> findUsersByAgeMoreThan(int age);
+
+	/**
+	 * @param age
+	 * @return a list of {@link T}
+	 */
+	public List<T> findUsersByAgeLessThan(int age);
 
 	/**
 	 * 
 	 * @param requestParams
 	 * @return a list of {@link T}
 	 */
-	List<T> findByRequestParams(Map<String, String> requestParams);
+	public List<T> findByRequestParams(Map<String, String> requestParams);
+
+	public T findOneByRequestParams(Map<String, String> requestParams);
 
 	/**
 	 * @param firstname
@@ -130,14 +138,14 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param email
 	 * @return
 	 */
-	List<T> findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, String email);
+	public List<T> findByFirstNameAndLastNameAndEmailAddress(String firstname, String lastname, String email);
 
 	/**
 	 * 
 	 * @param name
 	 * @return
 	 */
-	List<T> findByFirstNameOrLastName(String name);
+	public List<T> findByFirstNameOrLastName(String firstname, String lastname);
 
 	/**
 	 * @param firstname
@@ -145,42 +153,37 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param loginname
 	 * @return
 	 */
-	List<T> findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname);
+	public T findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname);
 
 	/**
 	 * @param user_id
 	 * @param address_id
 	 */
-	void assignAddressToUser(Long user_id, Long address_id);
+	public void assignAddressToUser(Long user_id, Long address_id);
 
 	/**
-	 * @param user
-	 * @param oldPassword
-	 * @return
+	 * 
+	 * @param id
+	 * @param password
+	 * @return true if given password is equal the exist one
 	 */
-	boolean isPasswordValid(T user, String oldPassword);
+	public boolean isPasswordValid(Long id, String password);
 
-	List<T> findUsersByRoleId(Long role_id);
+	public List<T> findUsersByRoleId(Long role_id);
 
-	List<T> findUsersByPrivilegeId(Long privilege_id);
+	public List<T> findUsersByPrivilegeId(Long privilege_id);
 
 	/**
 	 * @param user_id
 	 * @param role_id
 	 * @return
 	 */
-	T findUserByUserIdAndRoleId(Long teacher_id, Long role_id);
-
-	/**
-	 * @param teacher_id
-	 * @return
-	 */
-	T findUserById(Long teacher_id);
+	public T findUserByUserIdAndRoleId(Long teacher_id, Long role_id);
 
 	/**
 	 * @return
 	 */
-	List<T> findUsers();
+	public List<T> findUsers();
 
 	/**
 	 * send a user email with link to add password and confirm password
@@ -188,14 +191,18 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param email
 	 * @return true if email was sent
 	 */
-	Boolean sendEmailForChangingPassword(String email);
+	public Boolean sendEmailForChangingPassword(String email);
 
 	/**
 	 * @param id
 	 * @param confirmPassword
 	 * @return
 	 */
-	Boolean changePassword(Long id, String confirmPassword);
+	public Boolean changePassword(Long id, String confirmPassword);
+
+	public Boolean checkIfUsernameIsExisit(String username);
+
+	public Boolean checkIfEmailIsExisit(String username);
 
 	/**
 	 * 
@@ -204,15 +211,13 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param confirmPassword
 	 * @return true if password is changed else false
 	 */
-	Boolean resetPassword(Long id, String password, String confirmPassword);
+	public Boolean resetPassword(Long id, String password, String confirmPassword);
 
-	void remerkUsersWithSchoolIdForDelete(Long school_Id);
+	public void remarkUsersWithSchoolIdForDelete(Long school_Id);
 
 	@Override
-	void update(T t);
+	public void update(T t);
 
-	T update(T t, Long id);
-
-	void remerkUserForDelete(Long id);
+	public T update(T t, Long id);
 
 }

@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -107,13 +106,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-
-		if (Strings.isNotEmpty(user.getStatus())) {
-			return user.getStatus().equals("A") ? true : false;
-
-		}
-
-		return false;
+		return user.getActive();
 	}
 
 	@Override
@@ -123,7 +116,7 @@ public class UserPrincipal implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return user.getStatus().equals("A") ? true : false;
+		return user.getActive();
 	}
 
 	public String getEmail() {

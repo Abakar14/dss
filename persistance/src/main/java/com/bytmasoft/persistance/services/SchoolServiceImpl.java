@@ -39,7 +39,7 @@ public class SchoolServiceImpl implements SchoolService {
 	private String appName;
 
 	@Override
-	public School findOne(long id) {
+	public School findOne(Long id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new DSSEntityNotFoundException("There is no school with this id: " + id));
 
@@ -107,7 +107,7 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public void deleteById(long id) {
+	public void deleteById(Long id) {
 		repository.deleteById(id);
 
 	}
@@ -216,15 +216,13 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public void remerkForDelete(Long id) {
-
+	public void remarkForDelete(Long id) {
 		School s = this.findOne(id);
 		if (s != null) {
 			s.setDeletestatus(true);
 			this.entityUtils.setUpdateParams(s, appName);
 
 		}
-
 	}
 
 	@Override
@@ -233,7 +231,13 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public void remerkByStatusForDelete(String status) {
+	public List<School> findAllRemarkedForDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void remarkByStatusForDelete(String status) {
 		findByStatus(status).forEach(c -> {
 			c.setDeletestatus(true);
 			this.update(c);
