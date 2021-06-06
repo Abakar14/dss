@@ -52,13 +52,6 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 
 	/**
 	 * 
-	 * @param status
-	 * @return return a list of {@link Teacher}
-	 */
-	List<T> findByStatus(String status);
-
-	/**
-	 * 
 	 * @param lastLogin
 	 * @return a list of {@link Teacher}
 	 */
@@ -189,6 +182,6 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 
 	List<T> findByActiveTrue();
 
-	List<T> findByActiveFalse(int age);
+	List<T> findByActiveFalse();
 
 }

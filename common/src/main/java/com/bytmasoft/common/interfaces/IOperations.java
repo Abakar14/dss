@@ -14,10 +14,15 @@ public interface IOperations<T extends Serializable> {
 
 	/**
 	 * 
-	 * @param status
-	 * @return a list of T
+	 * @return a list of active users
 	 */
-	List<T> findByStatus(String status);
+	List<T> findByActiveTrue();
+
+	/**
+	 * 
+	 * @return a list of inactive users
+	 */
+	List<T> findByActiveFalse();
 
 	/**
 	 * 
@@ -126,6 +131,6 @@ public interface IOperations<T extends Serializable> {
 	 */
 	void remarkForDelete(Long id);
 
-	void remarkByStatusForDelete(String status);
+	void remarkByStatusForDelete(boolean status);
 
 }

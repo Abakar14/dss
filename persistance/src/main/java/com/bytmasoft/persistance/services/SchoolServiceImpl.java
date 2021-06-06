@@ -226,8 +226,15 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<School> findByStatus(String status) {
-		return repository.findByStatus(status);
+	public List<School> findByActiveFalse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<School> findByActiveTrue() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -237,11 +244,18 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public void remarkByStatusForDelete(String status) {
-		findByStatus(status).forEach(c -> {
-			c.setDeletestatus(true);
-			this.update(c);
-		});
+	public void remarkByStatusForDelete(boolean status) {
+		if (status) {
+			findByActiveTrue().forEach(sch -> {
+				sch.setDeletestatus(true);
+				this.update(sch);
+			});
+		} else {
+			findByActiveFalse().forEach(sch -> {
+				sch.setDeletestatus(true);
+				this.update(sch);
+			});
+		}
 
 	}
 
