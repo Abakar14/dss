@@ -85,8 +85,6 @@ public abstract class BaseEntity implements IEntity {
 	@PreUpdate
 	public void preUpdate() {
 		this.updatedOn = LocalDateTime.now();
-//		this.updatedProg = appName;
-
 	}
 
 	@Override
