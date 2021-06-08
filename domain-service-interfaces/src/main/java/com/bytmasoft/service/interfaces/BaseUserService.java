@@ -180,10 +180,10 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 */
 	public T findUserByUserIdAndRoleId(Long teacher_id, Long role_id);
 
-	/**
-	 * @return
-	 */
-	public List<T> findUsers();
+//	/**
+//	 * @return
+//	 */
+//	public List<T> findUsers();
 
 	/**
 	 * send a user email with link to add password and confirm password
