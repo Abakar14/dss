@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 import com.bytmasoft.domain.enums.UserType;
 import com.bytmasoft.domain.model.interfaces.BaseEntity;
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 
 /**
  * @author Mahamat Date 13.04.2020 : 23:05:44
@@ -27,19 +27,18 @@ public class UserPredicates {
 		return u -> ((BaseEntity) u).getDeletestatus().booleanValue() == false;
 	}
 
-	public static Predicate<BaseUser> isMachine() {
-		return u -> u.getType().equals(UserType.MACHINE);
+	public static Predicate<User> isMachine() {
+		return u -> u.getUserType().equals(UserType.MACHINE);
 	}
-	
-	public static Predicate<BaseUser> isHuman() {
-		return u -> u.getType().equals(UserType.HUMAN);
+
+	public static Predicate<User> isHuman() {
+		return u -> u.getUserType().equals(UserType.HUMAN);
 	}
 
 	public static <T> List<T> filterUsers(List<T> users, Predicate<T> predicate) {
 
 		return users.stream().filter(predicate).collect(Collectors.toList());
 	}
-
 
 	public static <T> List<T> filterPages(Page<T> users, Predicate<T> predicate) {
 

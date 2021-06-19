@@ -12,14 +12,14 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 import com.bytmasoft.domain.models.Role;
 import com.bytmasoft.domain.models.Teacher;
 import com.bytmasoft.dss.token.helper.models.UserPrincipal;
 
 class UserPrincipalUnitTest {
 
-	private static BaseUser teacher;
+	private static User teacher;
 	private static String salt = "Aba14mah";
 	private static UserPrincipal userPrincipal;
 	private static String username = "Abakar";
@@ -31,7 +31,7 @@ class UserPrincipalUnitTest {
 	@BeforeAll
 	private static void setup() {
 		teacher = new Teacher();
-		teacher.setUsername(username);
+		teacher.setLoginname(username);
 		teacher.setPassword(password);
 		email = new String("abakar61@web.de");
 		teacher.setActive(status);

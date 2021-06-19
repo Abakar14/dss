@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.bytmasoft.common.exception.DSSEntityNotFoundException;
 import com.bytmasoft.domain.enums.SchoolType;
 import com.bytmasoft.domain.models.Address;
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 import com.bytmasoft.domain.models.School;
 import com.bytmasoft.persistance.repositories.SchoolRepository;
 import com.bytmasoft.persistance.service.interfaces.SchoolService;
@@ -195,7 +195,7 @@ public class SchoolServiceImpl implements SchoolService {
 	}
 
 	@Override
-	public List<BaseUser> findUsersBySchoolId(Long school_id) {
+	public List<User> findUsersBySchoolId(Long school_id) {
 //		School school = findOne(school_id);
 //		return school.getUsers();
 		return null;

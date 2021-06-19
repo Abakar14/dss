@@ -3,6 +3,7 @@ package com.bytmasoft.domain.models;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,12 +15,14 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -32,7 +35,7 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Employee extends BaseUser {
+public class Employee extends User {
 
 	/**
 	 * 
@@ -130,7 +133,7 @@ public class Employee extends BaseUser {
 	}
 
 	@Override
-	public void generateUsername() {
+	public void generateLoginname() {
 
 		String toconcat = "";
 
@@ -140,8 +143,40 @@ public class Employee extends BaseUser {
 		} else {
 			toconcat = "" + day;
 		}
-		this.setUsername("EM" + this.getLastName().substring(0, this.getLastName().length() - 1)
+		this.setLoginname("EM" + this.getLastName().substring(0, this.getLastName().length() - 1)
 				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
+	}
+
+	@Override
+	public String toString() {
+
+		return new StringJoiner("; ", this.getClass().getSimpleName() + " [", "]").add("id = " + this.getId())
+				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
+				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + getUserType())
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (obj instanceof Employee) {
+			Employee employee = (Employee) obj;
+
+			if (employee.getId() != null && StringUtils.isNotBlank(employee.getEmail())) {
+				return Objects.equal(this.getId(), employee.getId())
+						&& Objects.equal(this.getEmail(), employee.getEmail());
+
+			}
+
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hashCode(this.getId(), this.getEmail());
+
 	}
 
 }

@@ -1,4 +1,4 @@
-F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\repository\DSSUserBaseRepository.java
-F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\service\interfaces\BaseUserService.java
+F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\repository\UserRepository.java
+F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\service\interfaces\UserService.java
 F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\repository\DSSBaseRepository.java
 F:\repos_git\microservices\dss\domain-service-interfaces\src\main\java\com\bytmasoft\utils\UserUtils.java

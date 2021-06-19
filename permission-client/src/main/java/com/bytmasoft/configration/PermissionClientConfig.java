@@ -23,7 +23,7 @@ public class PermissionClientConfig {
 //	private String url = "student-service/um/api/v1/";
 
 	@Bean
-	public PermissionClient studentClient(WebClient webClient) {
+	public PermissionClient permissionClient(WebClient webClient) {
 		return new PermissionClient(webClient);
 	}
 

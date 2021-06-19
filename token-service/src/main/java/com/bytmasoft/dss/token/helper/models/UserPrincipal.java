@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 import com.bytmasoft.domain.models.Employee;
 import com.bytmasoft.domain.models.Manager;
 import com.bytmasoft.domain.models.Role;
@@ -21,16 +21,16 @@ public class UserPrincipal implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = 6507182070784569574L;
-	private BaseUser user;
+	private User user;
 	private Set<GrantedAuthority> authorities;
 	private String salz;
 	private String password;
 	private String username;
 
-	public UserPrincipal(BaseUser user) {
+	public UserPrincipal(User user) {
 		this.password = user.getPassword();
 		this.user = user;
-		this.username = user.getUsername();
+		this.username = user.getLoginname();
 		this.salz = user.getSalt();
 		getAuthorities();
 

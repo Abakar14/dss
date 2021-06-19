@@ -3,6 +3,7 @@ package com.bytmasoft.service.interfaces;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bytmasoft.common.interfaces.IOperations;
 import com.bytmasoft.domain.enums.UserType;
-import com.bytmasoft.domain.model.interfaces.BaseEntity;
+import com.bytmasoft.domain.models.User;
 
-public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
+public interface UserService<T extends User> extends IOperations<T> {
 
-	public T addProfilePicture(MultipartFile profilePic, Long student_id) throws IOException;
+	public T addProfilePicture(MultipartFile profilePic, Long user_id) throws IOException;
 
 	public T findByEmail(String email);
 
@@ -112,18 +113,6 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	public List<T> findAllInActiveSortedBy(String sortOrder, String... properties);
 
 	/**
-	 * @param age
-	 * @return a list of {@link T}
-	 */
-	public List<T> findUsersByAgeMoreThan(int age);
-
-	/**
-	 * @param age
-	 * @return a list of {@link T}
-	 */
-	public List<T> findUsersByAgeLessThan(int age);
-
-	/**
 	 * 
 	 * @param requestParams
 	 * @return a list of {@link T}
@@ -151,7 +140,7 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 * @param firstname
 	 * @param lastname
 	 * @param loginname
-	 * @return
+	 * @return user
 	 */
 	public T findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname);
 
@@ -200,9 +189,9 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 	 */
 	public Boolean changePassword(Long id, String confirmPassword);
 
-	public Boolean checkIfUsernameIsExisit(String username);
+	public Boolean checkIfLoginnameIsExisit(String loginname);
 
-	public Boolean checkIfEmailIsExisit(String username);
+	public Boolean checkIfEmailIsExisit(String email);
 
 	/**
 	 * 
@@ -220,4 +209,15 @@ public interface BaseUserService<T extends BaseEntity> extends IOperations<T> {
 
 	public T update(T t, Long id);
 
+	/**
+	 * @param age
+	 * @return a list of {@link T}
+	 */
+	public List<T> findUsersByAgeLessThan(int age);
+
+	public List<T> findUsersByAgeGreaterThan(int age);
+
+	public List<T> findUsersByAgeBetween(int startAge, int endAge);
+
+	public List<T> findUsersByAgeIn(Collection<Integer> ages);
 }

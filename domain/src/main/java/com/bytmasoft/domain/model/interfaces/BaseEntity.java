@@ -46,7 +46,7 @@ public abstract class BaseEntity implements IEntity {
 	@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
 	LocalDateTime updatedOn;
 
-	@ApiModelProperty(notes = "The api will generate the status")
+	@ApiModelProperty(notes = "Set status of student active=true or false")
 	@JsonProperty(value = "active")
 	@Column(columnDefinition = "Boolean default false")
 	Boolean active = false;

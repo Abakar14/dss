@@ -3,6 +3,7 @@ package com.bytmasoft.domain.models;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,10 +15,12 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bytmasoft.domain.enums.UserType;
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -30,7 +33,7 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class ContactPerson extends BaseUser {
+public class ContactPerson extends User {
 
 	/**
 	 * 
@@ -69,11 +72,6 @@ public class ContactPerson extends BaseUser {
 
 	}
 
-	@Override
-	public void setType(UserType type) {
-		super.setType(type);
-	}
-
 	public void addAddress(Address address) {
 		this.addresses.add(address);
 		address.getContactPersons().add(this);
@@ -85,7 +83,7 @@ public class ContactPerson extends BaseUser {
 	}
 
 	@Override
-	public void generateUsername() {
+	public void generateLoginname() {
 		String toconcat = "";
 		int day = LocalDateTime.now().getDayOfMonth();
 		if (day < 10) {
@@ -94,8 +92,40 @@ public class ContactPerson extends BaseUser {
 			toconcat = "" + day;
 		}
 
-		this.setUsername("CO" + this.getLastName().substring(0, this.getLastName().length() - 1)
+		this.setLoginname("CO" + this.getLastName().substring(0, this.getLastName().length() - 1)
 				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
+	}
+
+	@Override
+	public String toString() {
+
+		return new StringJoiner("; ", this.getClass().getSimpleName() + " [", "]").add("id = " + this.getId())
+				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
+				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + getUserType())
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (obj instanceof ContactPerson) {
+			ContactPerson contactPerson = (ContactPerson) obj;
+
+			if (contactPerson.getId() != null && StringUtils.isNotBlank(contactPerson.getEmail())) {
+				return Objects.equal(this.getId(), contactPerson.getId())
+						&& Objects.equal(this.getEmail(), contactPerson.getEmail());
+
+			}
+
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hashCode(this.getId(), this.getEmail());
+
 	}
 
 }

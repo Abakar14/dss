@@ -5,20 +5,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bytmasoft.common.exception.DSSEntityNotFoundException;
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 import com.bytmasoft.dss.token.helper.models.UserPrincipal;
-import com.bytmasoft.dss.token.helper.repositories.StudentLoginRepository;
-import com.bytmasoft.dss.token.helper.repositories.TeacherLoginRepository;
+import com.bytmasoft.dss.token.helper.repositories.ManagerLoginRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class UserPrincipalDetailsService implements UserDetailsService {
+public class ManagerPrincipalDetailsService implements UserDetailsService {
 
-	private final TeacherLoginRepository teacherLoginRepository;
-//	private final ManagerLoginRepository managerLoginRepository;
-	private final StudentLoginRepository studentLoginRepository;
+	private final ManagerLoginRepository managerLoginRepository;
 
 	@Override
 	public UserPrincipal loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
@@ -27,13 +24,9 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
 	}
 
-	private BaseUser findByUsernameOrEmail(String username) {
+	private User findByUsernameOrEmail(String username) {
 
-		BaseUser user = studentLoginRepository.findByUsernameOrEmail(username);
-
-		if (user == null) {
-			user = teacherLoginRepository.findByUsernameOrEmail(username);
-		}
+		User user = managerLoginRepository.findByUsernameOrEmail(username);
 
 		if (user == null) {
 			throw new DSSEntityNotFoundException(String.format("user with : %s, loginname not found...", username));

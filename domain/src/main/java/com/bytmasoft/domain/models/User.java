@@ -43,7 +43,7 @@ import net.bytebuddy.utility.RandomString;
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseUser extends BaseEntity {
+public abstract class User extends BaseEntity {
 
 	/**
 	 * 
@@ -53,15 +53,10 @@ public abstract class BaseUser extends BaseEntity {
 	private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 	private static final Pattern PATTERN = Pattern.compile(EMAIL_REGEX);
 
-//	@ApiModelProperty(notes = "The api will generate the status")
-//	@JsonProperty(value = "status")
-//	@Size(max = 1)
-//	private String status;
-
 	@ApiModelProperty(allowEmptyValue = false)
 	@JsonProperty(value = "gender")
 	@Column(name = "gender", nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Enumerated(value = EnumType.STRING)
 	private GenderType gender;
 
 	@ApiModelProperty(allowEmptyValue = false)
@@ -107,20 +102,20 @@ public abstract class BaseUser extends BaseEntity {
 	private LocalDateTime lastLogin;
 
 	@ApiModelProperty(notes = "The api will generate the username")
-	@JsonProperty(value = "username")
+	@JsonProperty(value = "loginname")
 	@Column(unique = true)
-	@NotNull(message = "Username cannot be null or empty")
+	@NotNull(message = "loginname cannot be null or empty")
 	@Size(min = 3, max = 30)
-	private String username;
+	private String loginname;
 
 	@JsonProperty(value = "type")
-	@Enumerated(EnumType.STRING)
-	private UserType type;
+	@Enumerated(value = EnumType.STRING)
+	private UserType userType;
 
 	@ApiModelProperty(notes = "The api calcalte the age from the birthday", hidden = true)
 	@JsonProperty(value = "age")
 	@Transient
-	private int age = 0;
+	private Integer age = 0;
 
 	private String phoneNr;
 
@@ -130,23 +125,18 @@ public abstract class BaseUser extends BaseEntity {
 	@Lob
 	private byte[] profile_picture;
 
-	public void setPassword(String password) {
-
-		this.password = password;
-	}
-
 	public void setEmail(String email) {
-		Assert.isTrue(isValid(email), "Your email is invalid please add valide email!");
+		Assert.isTrue(isEmailValid(email), "Your email is invalid please add valide email!");
 		this.email = email;
 
 	}
 
 	@PrePersist
-	public abstract void generateUsername();
+	public abstract void generateLoginname();
 
-	public static boolean isValid(String candidate) {
+	public static boolean isEmailValid(String email) {
 
-		return candidate == null ? false : PATTERN.matcher(candidate).matches();
+		return email == null ? false : PATTERN.matcher(email).matches();
 	}
 
 	/**
@@ -156,7 +146,7 @@ public abstract class BaseUser extends BaseEntity {
 		this.salt = RandomString.make(9);
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		if (birthday != null) {
 			LocalDate today = LocalDate.now();
 			Period period = Period.between(birthday, today);
@@ -173,22 +163,22 @@ public abstract class BaseUser extends BaseEntity {
 		return new StringJoiner(";", this.getClass().getSimpleName() + "[", "]").add("id = " + this.getId())
 				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
 				.add("e-mail = " + this.getEmail()).add("active" + this.getActive())
-				.add("password" + this.getPassword()).add("type" + this.getType()).toString();
+				.add("password" + this.getPassword()).add("type" + this.getUserType()).toString();
 
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hashCode(this.getId(), this.getEmail(), this.getUsername());
+		return Objects.hashCode(this.getId(), this.getEmail(), this.getLoginname());
 
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 
-		if (obj instanceof BaseUser) {
-			BaseUser user = (BaseUser) obj;
+		if (obj instanceof User) {
+			User user = (User) obj;
 			return Objects.equal(this.getId(), user.getId()) && Objects.equal(this.getEmail(), user.getEmail());
 		}
 		return false;

@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
-import com.bytmasoft.domain.models.BaseUser;
+import com.bytmasoft.domain.models.User;
 
 import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
-public class UserUtils<T extends BaseUser> {
+public class UserUtils<T extends User> {
 
 	public String generateLoginname(T t) {
 
@@ -29,7 +29,7 @@ public class UserUtils<T extends BaseUser> {
 	public T setUpdateParams(T t, String appName) {
 		t.setUpdatedProg(appName);
 		t.setUpdatedOn(LocalDateTime.now());
-		t.setUpdatedBy(t.getUsername());
+		t.setUpdatedBy(t.getLoginname());
 		return t;
 	}
 

@@ -2,7 +2,6 @@ package com.bytmasoft.repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -11,8 +10,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.bytmasoft.domain.enums.UserType;
-import com.bytmasoft.domain.models.Student;
-import com.bytmasoft.domain.models.Teacher;
 
 /**
  * 
@@ -20,7 +17,7 @@ import com.bytmasoft.domain.models.Teacher;
  * @author Mahamat Abakar Date 10.12.2019
  */
 @NoRepositoryBean
-public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository<T, ID> {
+public interface UserRepository<T, ID> extends PagingAndSortingRepository<T, ID> {
 
 	/**
 	 * 
@@ -32,49 +29,49 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 	/**
 	 * 
 	 * @param lastName
-	 * @return a list of {@link Student}
+	 * @return
 	 */
 	List<T> findByLastName(String lastName);
 
 	/**
 	 * 
 	 * @param fistName
-	 * @return @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByFirstName(String fistName);
 
 	/**
 	 * 
 	 * @param birthday
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByBirthday(LocalDate birthday);
 
 	/**
 	 * 
 	 * @param lastLogin
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByLastLogin(LocalDateTime lastLogin);
 
 	/**
 	 * 
-	 * @param username
-	 * @return a {@link Teacher}
+	 * @param loginname
+	 * @return
 	 */
-	List<T> findByUsername(String username);
+	List<T> findByLoginname(String loginname);
 
 	/**
 	 * 
 	 * @param lastLogin
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
-	List<T> findByType(UserType type);
+	List<T> findByUserType(UserType userType);
 
 	/**
 	 * 
 	 * @param lastName
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByMiddelName(String lastName);
 
@@ -82,30 +79,21 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 	 * 
 	 * @param firstname
 	 * @param lastname
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	public List<T> findByFirstNameAndLastName(String firstname, String lastname);
 
 	/**
 	 * 
-	 * @param firstname
-	 * @param lastname
-	 * @param status
-	 * @return a list of {@link Teacher}
-	 */
-	public List<T> findByFirstNameAndLastNameAndStatus(String firstname, String lastname, String status);
-
-	/**
-	 * 
 	 * @param lastName
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	public List<T> findByLastNameContainingIgnoreCase(String lastName);
 
 	/**
 	 * 
 	 * @param firstname
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	public List<T> findByFirstNameContainingIgnoreCase(String firstname);
 
@@ -113,43 +101,43 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 	 * @param firstname
 	 * @param lastname
 	 * @param loginname
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
-	T findByFirstNameAndLastNameAndUsername(String firstname, String lastname, String loginname);
+	T findByFirstNameAndLastNameAndLoginname(String firstname, String lastname, String loginname);
 
 	/**
 	 * @param firstname
 	 * @param lastname
 	 * @param email
-	 * @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByFirstNameAndLastNameAndEmail(String firstname, String lastname, String email);
 
 	/**
 	 * 
 	 * @param string
-	 * @return @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByFirstNameContainsOrderByFirstNameAsc(String string);
 
 	/**
 	 * 
 	 * @param fistName
-	 * @return @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByFirstNameContainsOrderByFirstNameDesc(String fistName);
 
 	/**
 	 * 
 	 * @param string
-	 * @return @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByLastNameContainsOrderByLastNameAsc(String string);
 
 	/**
 	 * 
 	 * @param string
-	 * @return @return a list of {@link Teacher}
+	 * @return
 	 */
 	List<T> findByLastNameContainsOrderByLastNameDesc(String string);
 
@@ -161,27 +149,16 @@ public interface DSSUserBaseRepository<T, ID> extends PagingAndSortingRepository
 
 	public List<T> findByFirstNameOrderByFirstNameAsc(String firstname);
 
-	/**
-	 * @param age
-	 */
-	List<T> findByAgeGreeterThan(int age);
+	public List<T> findByBirthdayAfter(LocalDate date);
 
-	List<T> findByAgeLessThan(int age);
+	public List<T> findByBirthdayBefore(LocalDate date);
 
-	List<T> findByAgeBetween(int startAge, int endAge);
+	public List<T> findByFirstNameOrBirthdayBefore(String firstname, LocalDate birthday);
 
-	List<T> findByAgeIn(Collection<Integer> ages);
+	public List<T> findByFirstNameOrBirthdayAndActive(String firstname, LocalDate birthday, Boolean active);
 
-	List<T> findByBirthdayAfter(LocalDate date);
+	public List<T> findByActiveTrue();
 
-	List<T> findByBirthdayBefore(LocalDate date);
-
-	List<T> findByFirstNameOrBirthdayBefore(String firstname, LocalDate birthday);
-
-	List<T> findByFirstNameOrBirthdayAndActive(String firstname, LocalDate birthday, Boolean active);
-
-	List<T> findByActiveTrue();
-
-	List<T> findByActiveFalse();
+	public List<T> findByActiveFalse();
 
 }

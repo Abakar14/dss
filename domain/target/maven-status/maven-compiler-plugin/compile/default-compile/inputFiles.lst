@@ -18,7 +18,6 @@ F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\model\interfaces\IEntity.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\Student.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\enums\RoleType.java
-F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\BaseUser.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\EmployeeDocument.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\Address.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\enums\UserType.java
@@ -29,6 +28,7 @@ F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\enums\FileType.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\Country.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\Privilege.java
+F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\User.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\Employee.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\model\interfaces\BaseEntity.java
 F:\repos_git\microservices\dss\domain\src\main\java\com\bytmasoft\domain\models\MailProperties.java

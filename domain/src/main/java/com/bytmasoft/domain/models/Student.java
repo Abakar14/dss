@@ -35,7 +35,7 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Student extends BaseUser {
+public class Student extends User {
 
 	/**
 	 * 
@@ -164,7 +164,7 @@ public class Student extends BaseUser {
 	 * Mahamat, Lastname = Abakar, Day ot the Month 12 then username = STABAKAM12
 	 */
 	@Override
-	public void generateUsername() {
+	public void generateLoginname() {
 
 		String toconcat = "";
 
@@ -175,10 +175,10 @@ public class Student extends BaseUser {
 			toconcat = "" + day;
 		}
 		if (StringUtils.isNoneBlank(this.getLastName()) && StringUtils.isNoneBlank(this.getFirstName())) {
-			this.setUsername("ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
+			this.setLoginname("ST" + this.getLastName().substring(0, this.getLastName().length() - 1)
 					.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
 		} else {
-			this.setUsername("");
+			this.setLoginname("");
 		}
 
 	}
@@ -188,7 +188,7 @@ public class Student extends BaseUser {
 
 		return new StringJoiner("; ", this.getClass().getSimpleName() + " [", "]").add("id = " + this.getId())
 				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
-				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + this.getType())
+				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + getUserType())
 				.toString();
 	}
 

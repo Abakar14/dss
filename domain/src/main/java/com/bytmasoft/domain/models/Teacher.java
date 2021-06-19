@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -34,7 +35,7 @@ import lombok.Setter;
 @Entity
 @XmlRootElement
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Long.class)
-public class Teacher extends BaseUser {
+public class Teacher extends User {
 
 	/**
 	 * 
@@ -155,7 +156,7 @@ public class Teacher extends BaseUser {
 	}
 
 	@Override
-	public void generateUsername() {
+	public void generateLoginname() {
 		String toconcat = "";
 
 		int day = LocalDateTime.now().getDayOfMonth();
@@ -164,28 +165,40 @@ public class Teacher extends BaseUser {
 		} else {
 			toconcat = "" + day;
 		}
-		this.setUsername("TE" + this.getLastName().substring(0, this.getLastName().length() - 1)
+		this.setLoginname("TE" + this.getLastName().substring(0, this.getLastName().length() - 1)
 				.concat(this.getFirstName().substring(0, 1)).concat(toconcat).toUpperCase());
 	}
 
 	@Override
 	public String toString() {
 
-		return new StringJoiner(" | ", this.getClass().getSimpleName() + " [ ", "]").add("ID = " + this.getId())
+		return new StringJoiner("; ", this.getClass().getSimpleName() + " [", "]").add("id = " + this.getId())
 				.add("firstname =" + this.getFirstName()).add("lastname = " + this.getLastName())
-				.add("e-mail = " + this.getEmail()).toString();
+				.add("e-mail = " + this.getEmail()).add("status" + this.getActive()).add("type" + getUserType())
+				.toString();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return Objects.equal(this, obj);
 
+		if (obj instanceof Teacher) {
+			Teacher teacher = (Teacher) obj;
+
+			if (teacher.getId() != null && StringUtils.isNotBlank(teacher.getEmail())) {
+				return Objects.equal(this.getId(), teacher.getId())
+						&& Objects.equal(this.getEmail(), teacher.getEmail());
+
+			}
+
+		}
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = 31;
-		return Objects.hashCode(hash, this.getEmail(), this.getId());
+
+		return Objects.hashCode(this.getId(), this.getEmail());
+
 	}
 
 }
