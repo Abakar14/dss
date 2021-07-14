@@ -54,5 +54,4 @@ logging:
     org.springframework: info
     org.hibernate: debug
     
-example:
- property: hallo from Git
+example: hallo from Git
