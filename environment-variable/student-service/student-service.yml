@@ -9,7 +9,7 @@ jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
-    password: dss2021
+    password: dss2021-microservices
 
 #used to enable /refresh endpoint, to demonstrate dynamic configuration changes.
 management:
@@ -29,8 +29,8 @@ spring:
 #Database properties
   datasource:
     url: jdbc:mysql://localhost:3306/bytmasoft?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: ENC(gSLMgo8n3pLQfYrEzFQP6Q==)
-    password: ENC(V0UCwunGYKfGoY+FhvAmlh7H4gDQkiSx)
+    username: ENC(bCpMGi1AP1CqeVI7GldKpQ==)
+    password: ENC(fJgmmPEh0XzhLHUoTBQ0KNwbD9Sq2OGD)
     
 #Hibernate Properties 
   jpa:
@@ -55,7 +55,7 @@ dss:
 
 ##Security
 jwt:
- secret: bytmasoft4322333841D8A6C8C18C53B
+ secret: ENC(8El+XLg/nix1nZqgEI0TekMACyJRS96FgrMcsDj+qL4=)
  token:
   lifetime: 180000
    
