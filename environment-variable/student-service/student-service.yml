@@ -1,1 +1,72 @@
-test
+#server config           
+server:
+  servlet:
+    context-path: /dss/api/v1  
+  port: 8082
+  
+#jasypt key
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: dss2021
+
+#used to enable /refresh endpoint, to demonstrate dynamic configuration changes.
+management:
+  endpoint:
+    refresh:
+      enabled: true 
+           
+#test profile
+spring:
+  application:
+    name: student-service
+#this config for configration servive
+#  config:
+ #   import:
+#      optional:configserver:http//localhost:8888   
+    
+#Database properties
+  datasource:
+    url: jdbc:mysql://localhost:3306/bytmasoft?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ENC(gSLMgo8n3pLQfYrEzFQP6Q==)
+    password: ENC(V0UCwunGYKfGoY+FhvAmlh7H4gDQkiSx)
+    
+#Hibernate Properties 
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
+        
+    #generate-ddl: true        
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.H2Dialect
+      
+    
+#Application propterties
+
+dss:
+  date:
+   format: yyyy-MM-dd HH:mm:ss
+
+##Security
+jwt:
+ secret: bytmasoft4322333841D8A6C8C18C53B
+ token:
+  lifetime: 180000
+   
+#Logging properties
+logging:
+  level:
+    root: INFO   
+    '[org.springframework.web]': DEBUG
+    '[org.springframework.security]': INFO
+    '[org.hibernate.sql]': DEBUG
+    #'[org.hibernate.type]': TRACE
+    '[org.hibernate.type.descriptor.sql]': TRACE
+      
+message: Hello world
