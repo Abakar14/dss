@@ -53,5 +53,6 @@ logging:
   level:
     org.springframework: info
     org.hibernate: debug
+    
 example:
-  property: Hallo from Git  
+ property: hallo from Git
